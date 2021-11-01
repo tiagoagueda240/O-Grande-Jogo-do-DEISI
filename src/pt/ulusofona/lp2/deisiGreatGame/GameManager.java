@@ -4,47 +4,31 @@ import javax.swing.*;
 import java.util.*;
 
 public class GameManager {
+    ArrayList<Programmer> programadores;
+    int nrCasas;
 
     public GameManager() {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
-        ArrayList<Programmer> adicionaJogador = new ArrayList<>(); // adiciona os jogadores
+
         if (boardSize <= 1){
             return false;
         }
         for (int i = 0; i < playerInfo.length; i++) {
-            Programmer player = new Programmer();
-            ArrayList<String> guardLanguages = new ArrayList<>(); // cada programador tem n linguagens
-            for (int j = 0; j < playerInfo[j].length; j++) {
-                switch (j) {
-                    case 0:
-                        player.iD = Integer.parseInt(playerInfo[i][j]);
-                    case 1:
-                        player.name = playerInfo[i][j];
-                    case 2:
-                        Collections.addAll(guardLanguages, playerInfo[i][j].split(";"));
-                        player.languages = guardLanguages;
-                    case 3:
-                        player.colorAvatar = ProgrammerColor.valueOf(playerInfo[i][j]);
-                }
-            }
-            adicionaJogador.add(player); // adiciona á lista
+            ArrayList<String> languages = new ArrayList();
+            Collections.addAll(languages, playerInfo[i][2].split(";"));
+            Programmer player = new Programmer(playerInfo[i][1], languages, Integer.parseInt(playerInfo[i][0]), ProgrammerColor.valueOf(playerInfo[i][3]), 0, false);
+            programadores.add(player); // adiciona á lista
         }
         HashSet<Integer> idDuplicado = new HashSet<>(); // não pode haver iDs repetidos
         HashSet<ProgrammerColor> colorDuplicado = new HashSet<>(); // não pode haver cores repetidas
-        for (Programmer adicionaJogadores : adicionaJogador) {
-            if (adicionaJogadores.iD < 1 || !idDuplicado.add(adicionaJogadores.iD)) {
+        for (Programmer programador : programadores) {
+            if (!Programmer.verificaProgramador(programador, idDuplicado, colorDuplicado)) {
                 return false;
             }
-            if (adicionaJogadores.name == null && Objects.equals(adicionaJogadores.getName(), "")) {
-                return false;
-            }
-            if (adicionaJogadores.colorAvatar == null && !colorDuplicado.add(adicionaJogadores.colorAvatar)) {
-                return false;
-            }
-            idDuplicado.add(adicionaJogadores.iD);
-            colorDuplicado.add(adicionaJogadores.colorAvatar);
+            idDuplicado.add(programador.iD);
+            colorDuplicado.add(programador.colorAvatar);
         }
         return true;
 
@@ -58,27 +42,48 @@ public class GameManager {
     }
 
     public ArrayList<Programmer> getProgrammers() {
-
-        return null;
+        return programadores;
     }
 
     public ArrayList<Programmer> getProgrammers(int position) {
+        ArrayList<Programmer> programadoresNaPosicao = new ArrayList<>();
+        for (Programmer programador: programadores){
+            if (programador.getPosicao() == position){
+                programadoresNaPosicao.add(programador);
+            }
+        }
+        if (programadoresNaPosicao.size() == 0 || position > nrCasas){ // Verificar numero de casas
+            return null;
+        }
 
-        return null;
+        return programadoresNaPosicao;
     }
 
     public int getCurrentPlayerID() {
-
+        for (Programmer programador: programadores){
+            if (programador.verificaEstado()){
+                return programador.getId();
+            }
+        }
         return 0;
     }
 
     public boolean moveCurrentPlayer(int nrPositions) {
-
+        int idProgramadorAtual = getCurrentPlayerID();
+        for (Programmer programador: programadores){
+            if (programador.getId() == idProgramadorAtual && nrPositions > 0 && nrPositions <= 6){
+                programador.mover(nrPositions); //falta verificar se está fora do tabuleiro
+            }
+        }
         return false;
     }
 
     public boolean gameIsOver() {
-
+        for (Programmer programador: programadores){
+            if (programador.getPosicao() == nrCasas){
+                return true;
+            }
+        }
         return false;
     }
 
