@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
 
 public class GameManager {
@@ -19,13 +20,13 @@ public class GameManager {
         for (int i = 0; i < playerInfo.length; i++) {
             ArrayList<String> languages = new ArrayList();
             Collections.addAll(languages, playerInfo[i][2].split(";"));
-            Programmer player = new Programmer(playerInfo[i][1], languages, Integer.parseInt(playerInfo[i][0]), ProgrammerColor.valueOf(playerInfo[i][3]), 0, false);
+            Programmer player = new Programmer(playerInfo[i][1], languages, Integer.parseInt(playerInfo[i][0]), ProgrammerColor.valueOf(playerInfo[i][3].toUpperCase()), 0, false);
             programadores.add(player); // adiciona á lista
         }
         HashSet<Integer> idDuplicado = new HashSet<>(); // não pode haver iDs repetidos
         HashSet<ProgrammerColor> colorDuplicado = new HashSet<>(); // não pode haver cores repetidas
         for (Programmer programador : programadores) {
-            if (!programador.verificaProgramador(idDuplicado, colorDuplicado) && programadores.size() > 4 && programadores.size() * 2 > nrCasas) {
+            if (!programador.verificaProgramador(idDuplicado, colorDuplicado) && (programadores.size() > 4 || programadores.size() < 2) && programadores.size() * 2 > nrCasas) {
                 return false;
             }
             idDuplicado.add(programador.iD);
@@ -38,7 +39,17 @@ public class GameManager {
     }
 
     public String getImagePng(int position) {
-
+        if (position > nrCasas){
+            return null;
+        }
+        if (position == nrCasas){
+            return "vitoria.png";
+        }
+        for (Programmer programador: programadores) {
+            if (programador.getPosicao() == position) {
+                return String.valueOf(programador.getColor());
+            }
+        }
         return null;
     }
 
@@ -48,12 +59,12 @@ public class GameManager {
 
     public ArrayList<Programmer> getProgrammers(int position) {
         ArrayList<Programmer> programadoresNaPosicao = new ArrayList<>();
-        for (Programmer programador: programadores){
+        for (Programmer programador: programadores) {
             if (programador.getPosicao() == position){
                 programadoresNaPosicao.add(programador);
             }
         }
-        if (programadoresNaPosicao.size() == 0 || position > nrCasas){ // Verificar numero de casas
+        if (programadoresNaPosicao.size() == 0 || position > nrCasas) { // Verificar numero de casas
             return null;
         }
 
@@ -119,8 +130,19 @@ public class GameManager {
     }
 
     public JPanel getAuthorsPanel() {
+        JPanel painel = new JPanel();
+        painel.setSize(new Dimension(300, 300));
+        JLabel linha1 = new JLabel();
+        linha1.setText("Projeto Deisi Great Game");
+        painel.add(linha1);
+        JLabel linha2 = new JLabel();
+        linha1.setText("Tiago Águeda a22001757");
+        painel.add(linha2);
+        JLabel linha3 = new JLabel();
+        linha1.setText("João Antas a22002629");
+        painel.add(linha3);
 
-        return null;
+        return painel;
     }
 
     class ComparadorDePosicoes implements Comparator<Programmer> {
