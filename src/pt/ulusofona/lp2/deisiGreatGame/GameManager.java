@@ -6,15 +6,16 @@ import java.util.*;
 public class GameManager {
     ArrayList<Programmer> programadores;
     int nrCasas;
+    int turnos = 0;
 
     public GameManager() {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
-
         if (boardSize <= 1){
             return false;
         }
+        nrCasas = boardSize;
         for (int i = 0; i < playerInfo.length; i++) {
             ArrayList<String> languages = new ArrayList();
             Collections.addAll(languages, playerInfo[i][2].split(";"));
@@ -24,7 +25,7 @@ public class GameManager {
         HashSet<Integer> idDuplicado = new HashSet<>(); // não pode haver iDs repetidos
         HashSet<ProgrammerColor> colorDuplicado = new HashSet<>(); // não pode haver cores repetidas
         for (Programmer programador : programadores) {
-            if (!Programmer.verificaProgramador(programador, idDuplicado, colorDuplicado)) {
+            if (!programador.verificaProgramador(idDuplicado, colorDuplicado) && programadores.size() > 4 && programadores.size() * 2 > nrCasas) {
                 return false;
             }
             idDuplicado.add(programador.iD);
@@ -72,7 +73,15 @@ public class GameManager {
         int idProgramadorAtual = getCurrentPlayerID();
         for (Programmer programador: programadores){
             if (programador.getId() == idProgramadorAtual && nrPositions > 0 && nrPositions <= 6){
-                programador.mover(nrPositions); //falta verificar se está fora do tabuleiro
+                if (programador.getPosicao() + nrPositions <= nrCasas){
+                    programador.mover(nrPositions); //falta verificar se está fora do tabuleiro
+                    turnos++;
+                }else{
+                    programador.recua(nrPositions, nrCasas); //falta verificar se está fora do tabuleiro
+                    turnos++;
+                }
+
+                return true;
             }
         }
         return false;
@@ -88,12 +97,41 @@ public class GameManager {
     }
 
     public ArrayList<String> getGameResults() {
+        Collections.sort(programadores, new ComparadorDePosicoes());
+        ArrayList<String> resultados = new ArrayList<>();
+        resultados.add("O GRANDE JOGO DO DEISI");
+        resultados.add("\n");
+        resultados.add("NR. DE TURNOS");
+        resultados.add(String.valueOf(turnos));
+        resultados.add("\n");
+        resultados.add("VENCEDOR");
+        resultados.add(programadores.get(0).getName() + " " + programadores.get(0).getPosicao());
+        resultados.add("\n");
+        resultados.add("RESTANTES");
+        for (Programmer programador: programadores){
+            if (programadores.get(0).getId() == programador.getId()){
+                break;
+            }
+            resultados.add(programador.getName() + " " + programador.getPosicao());
+        }
 
-        return null;
+        return resultados;
     }
 
     public JPanel getAuthorsPanel() {
 
         return null;
+    }
+
+    class ComparadorDePosicoes implements Comparator<Programmer> {
+        public int compare(Programmer o1, Programmer o2) {
+            if (o1.getPosicao() > o2.getPosicao()) {
+                return -1;
+            } else if (o1.getPosicao() < o2.getPosicao()) {
+                return +1;
+            } else {
+                return 0;
+            }
+        }
     }
 }

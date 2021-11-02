@@ -44,30 +44,36 @@ public class Programmer {
         return posicao;
     }
 
-    public int mover(int posicoes){
-        return posicao + posicoes;
+    public void mover(int posicoes){
+        posicao += posicoes;
+    }
+
+    public void recua(int posicoes, int nrCasas) {
+        posicao = nrCasas - (nrCasas - posicao - posicoes);
+
+
     }
 
     public boolean verificaEstado(){ return estado;}
-/**
-    public ArrayList<String> setLanguages(String listaLinguas, int posicao){
-        Collections.addAll(languages, listaLinguas.split(";"));
-        return languages;
-    }
-*/
+    /**
+     public ArrayList<String> setLanguages(String listaLinguas, int posicao){
+     Collections.addAll(languages, listaLinguas.split(";"));
+     return languages;
+     }
+     */
 
-public static boolean verificaProgramador(Programmer programador, HashSet<Integer> idDuplicado, HashSet<ProgrammerColor> colorDuplicado){
-    if (programador.iD < 1 || !idDuplicado.add(programador.iD)) {
-        return false;
+    public boolean verificaProgramador(HashSet<Integer> idDuplicado, HashSet<ProgrammerColor> colorDuplicado) {
+        if (!idDuplicado.add(iD)) {
+            return false;
+        }
+        if (name == null && Objects.equals(getName(), "")) {
+            return false;
+        }
+        if (colorAvatar == null && !colorDuplicado.add(colorAvatar)) {
+            return false; //verificar se é uma das cores do enum
+        }
+        return true;
     }
-    if (programador.name == null && Objects.equals(programador.getName(), "")) {
-        return false;
-    }
-    if (programador.colorAvatar == null && !colorDuplicado.add(programador.colorAvatar)) {
-        return false;
-    }
-    return true;
-}
     @Override
     public String toString() {
         return "Programmer{" +
