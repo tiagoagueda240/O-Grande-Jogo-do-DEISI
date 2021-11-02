@@ -50,8 +50,6 @@ public class Programmer {
 
     public void recua(int posicoes, int nrCasas) {
         posicao = nrCasas - (nrCasas - posicao - posicoes);
-
-
     }
 
     public boolean verificaEstado(){ return estado;}
