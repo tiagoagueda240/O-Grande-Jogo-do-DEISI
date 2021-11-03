@@ -58,15 +58,18 @@ public class GameManager {
     }
 
     public ArrayList<Programmer> getProgrammers(int position) {
+        if (position < 1 || position > nrCasas){
+            return null;
+        }
         ArrayList<Programmer> programadoresNaPosicao = new ArrayList<>();
         for (Programmer programador: programadores) {
             if (programador.getPosicao() == position){
                 programadoresNaPosicao.add(programador);
             }
         }
-        if (programadoresNaPosicao.size() == 0 || position > nrCasas) { // Verificar numero de casas
+        /*if (programadoresNaPosicao.size() == 0 || position > nrCasas) { // Verificar numero de casas
             return null;
-        }
+        }*/
 
         return programadoresNaPosicao;
     }
@@ -81,9 +84,11 @@ public class GameManager {
     }
 
     public boolean moveCurrentPlayer(int nrPositions) {
-        int idProgramadorAtual = getCurrentPlayerID();
+        if (nrPositions < 1 || nrPositions > 6){
+            return false;
+        }
         for (Programmer programador: programadores){
-            if (programador.getId() == idProgramadorAtual && nrPositions > 0 && nrPositions <= 6){
+            if (programador.getId() == getCurrentPlayerID() && nrPositions > 0 && nrPositions <= 6){
                 if (programador.getPosicao() + nrPositions <= nrCasas){
                     programador.mover(nrPositions); //falta verificar se está fora do tabuleiro
                     turnos++;
