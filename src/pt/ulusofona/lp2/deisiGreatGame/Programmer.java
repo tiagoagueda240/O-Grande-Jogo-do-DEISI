@@ -26,8 +26,6 @@ public class Programmer {
     public Programmer() {
     }
 
-
-
     public int getId() {
         return iD;
     }
@@ -72,6 +70,7 @@ public class Programmer {
         }
         return true;
     }
+
     @Override
     public String toString() {
         return "Programmer{" +
