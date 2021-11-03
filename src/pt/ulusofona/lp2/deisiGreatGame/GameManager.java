@@ -13,7 +13,7 @@ public class GameManager {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
-        if (boardSize <= 1){
+        if (boardSize <= 1) {
             return false;
         }
         nrCasas = boardSize;
@@ -39,10 +39,10 @@ public class GameManager {
     }
 
     public String getImagePng(int position) {
-        if (position > nrCasas){
+        if (position > nrCasas) {
             return null;
         }
-        if (position == nrCasas){
+        if (position == nrCasas) {
             return "vitoria.png";
         }
         for (Programmer programador: programadores) {
@@ -63,7 +63,7 @@ public class GameManager {
         }
         ArrayList<Programmer> programadoresNaPosicao = new ArrayList<>();
         for (Programmer programador: programadores) {
-            if (programador.getPosicao() == position){
+            if (programador.getPosicao() == position) {
                 programadoresNaPosicao.add(programador);
             }
         }
@@ -75,8 +75,8 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID() {
-        for (Programmer programador: programadores){
-            if (programador.verificaEstado()){
+        for (Programmer programador: programadores) {
+            if (programador.verificaEstado()) {
                 return programador.getId();
             }
         }
@@ -84,16 +84,16 @@ public class GameManager {
     }
 
     public boolean moveCurrentPlayer(int nrPositions) {
-        if (nrPositions < 1 || nrPositions > 6){
+        if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }
-        for (Programmer programador: programadores){
+        for (Programmer programador: programadores) {
             if (programador.getId() == getCurrentPlayerID() && nrPositions > 0 && nrPositions <= 6){
-                if (programador.getPosicao() + nrPositions <= nrCasas){
+                if (programador.getPosicao() + nrPositions <= nrCasas) {
                     programador.mover(nrPositions); //falta verificar se está fora do tabuleiro
                     turnos++;
                 }else{
-                    programador.recua(nrPositions, nrCasas); //falta verificar se está fora do tabuleiro
+                    programador.recuar(nrPositions, nrCasas); //falta verificar se está fora do tabuleiro
                     turnos++;
                 }
 

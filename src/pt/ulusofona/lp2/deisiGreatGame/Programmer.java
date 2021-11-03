@@ -38,21 +38,21 @@ public class Programmer {
         return colorAvatar;
     }
 
-    public int getPosicao(){
+    public int getPosicao() {
         return posicao;
     }
 
-    public void mover(int posicoes){
+    public void mover(int posicoes) {
         posicao += posicoes;
     }
 
-    public void recua(int posicoes, int nrCasas) {
+    public void recuar(int posicoes, int nrCasas) {
         posicao = nrCasas - (nrCasas - posicao - posicoes);
     }
 
     public boolean verificaEstado(){ return estado;}
     /**
-     public ArrayList<String> setLanguages(String listaLinguas, int posicao){
+     public ArrayList<String> setLanguages(String listaLinguas, int posicao) {
      Collections.addAll(languages, listaLinguas.split(";"));
      return languages;
      }
