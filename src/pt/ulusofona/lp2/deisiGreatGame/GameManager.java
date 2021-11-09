@@ -89,7 +89,7 @@ public class GameManager {
 
     public int getCurrentPlayerID() {
         for (Programmer programador: programadores) {
-            if (programador.posicao == turnos) {
+            if (programador.getPosicao() == turnos) {
                 return programador.getId();
             }
         }
