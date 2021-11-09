@@ -73,13 +73,14 @@ public class Programmer {
 
     @Override
     public String toString() {
-        return "Programmer{" +
-                "name='" + name + '\'' +
-                ", languages=" + languages +
-                ", iD=" + iD +
-                ", colorAvatar=" + colorAvatar +
-                ", casaPartida=" + posicao +
-                ", estado='" + estado + '\'' +
-                '}';
+        StringBuilder listaLinguas = new StringBuilder();
+        Collections.sort(languages);
+        for (String lingua: languages){
+            listaLinguas.append(lingua);
+            if (lingua != languages.get(languages.size() - 1)){
+                listaLinguas.append("; ");
+            }
+        }
+        return iD + " | " + name + " | " + posicao + " | " + listaLinguas + " | " + estado;
     }
 }

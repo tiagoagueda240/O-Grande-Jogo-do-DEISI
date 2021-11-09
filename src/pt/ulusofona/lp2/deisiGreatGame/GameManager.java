@@ -19,7 +19,8 @@ public class GameManager {
         nrCasas = boardSize;
         for (int i = 0; i < playerInfo.length; i++) {
             ArrayList<String> languages = new ArrayList();
-            Collections.addAll(languages, playerInfo[i][2].split(";"));
+            languages.addAll(Arrays.asList(playerInfo[i][2].split(";")));
+            //Collections.addAll(languages, playerInfo[i][2].split(";"));
             Programmer player = new Programmer(playerInfo[i][1], languages, Integer.parseInt(playerInfo[i][0]), ProgrammerColor.valueOf(playerInfo[i][3].toUpperCase()), 0, false);
             programadores.add(player); // adiciona á lista
         }
