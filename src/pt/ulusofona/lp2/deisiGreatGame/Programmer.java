@@ -12,9 +12,9 @@ public class Programmer {
     int iD;
     ProgrammerColor colorAvatar;
     int posicao = 1; // primeira posição do tabuleiro
-    boolean estado = false; // se o jogador está em jogo ou não
+    String estado = "Em Jogo"; // se o jogador está em jogo ou não
 
-    public Programmer(String name, ArrayList<String> languages, int iD, ProgrammerColor colorAvatar, int posicao, boolean estado) {
+    public Programmer(String name, ArrayList<String> languages, int iD, ProgrammerColor colorAvatar, int posicao, String estado) {
         this.name = name;
         this.languages = languages;
         this.iD = iD;
@@ -50,9 +50,6 @@ public class Programmer {
         posicao = nrCasas - (nrCasas - posicao - posicoes);
     }
 
-    public boolean verificaEstado() {
-        return estado;
-    }
 
 
     @Override

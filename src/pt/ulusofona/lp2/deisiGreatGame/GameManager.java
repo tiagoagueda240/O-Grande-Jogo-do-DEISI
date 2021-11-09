@@ -28,8 +28,9 @@ public class GameManager {
             player.languages = languages;
             player.colorAvatar = ProgrammerColor.valueOf(playerInfo[i][3].toUpperCase());
             programadores.add(player);
+
         }
-        if ((programadores.size() > 4 || programadores.size() < 2) && programadores.size() * 2 > nrCasas){
+        if (programadores.size() > 4 || programadores.size() < 2 || programadores.size() * 2 > nrCasas){
             return false;
         }
         HashSet<Integer> idDuplicado = new HashSet<>(); // não pode haver iDs repetidos
@@ -88,7 +89,7 @@ public class GameManager {
 
     public int getCurrentPlayerID() {
         for (Programmer programador: programadores) {
-            if (programador.verificaEstado()) {
+            if (programador.posicao == turnos) {
                 return programador.getId();
             }
         }
