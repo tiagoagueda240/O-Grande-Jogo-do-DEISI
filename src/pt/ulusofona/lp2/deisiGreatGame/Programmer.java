@@ -51,7 +51,7 @@ public class Programmer {
     }
 
     public boolean verificaEstado(){ return estado;}
-    
+
 
     @Override
     public String toString() {
