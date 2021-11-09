@@ -1,7 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 public enum ProgrammerColor {
-    PURPLE("purplePlayer.png"), BLUE("bluePlayer.png"), GREEN("greenPlayer.png"), BROWN("brownPlayer.png");
+    PURPLE("playerPurple.png"), BLUE("playerBlue.png"), GREEN("playerGreen.png"), BROWN("playerBrown.png");
 
     String cor;
 

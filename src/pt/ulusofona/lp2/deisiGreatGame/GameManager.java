@@ -56,7 +56,7 @@ public class GameManager {
             return null;
         }
         if (position == nrCasas) {
-            return "vitoria.png";
+            return "glory.png";
         }
         for (Programmer programador: programadores) {
             if (programador.getPosicao() == position) {
