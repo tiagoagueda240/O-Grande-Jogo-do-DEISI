@@ -5,7 +5,7 @@ import java.awt.*;
 import java.util.*;
 
 public class GameManager {
-    ArrayList<Programmer> programadores;
+    ArrayList<Programmer> programadores = new ArrayList<>();
     int nrCasas;
     int turnos = 0;
 
@@ -27,9 +27,6 @@ public class GameManager {
             player.name = playerInfo[i][1];
             player.languages = languages;
             player.colorAvatar = ProgrammerColor.valueOf(playerInfo[i][3].toUpperCase());
-            if (player != null){
-                programadores.add(player);
-            }
             programadores.add(player);
         }
         if ((programadores.size() > 4 || programadores.size() < 2) && programadores.size() * 2 > nrCasas){
