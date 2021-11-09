@@ -16,6 +16,7 @@ public class GameManager {
         if (boardSize <= 1) {
             return false;
         }
+
         nrCasas = boardSize;
         for (int i = 0; i < playerInfo.length; i++) {
             ArrayList<String> languages = new ArrayList();
@@ -26,6 +27,9 @@ public class GameManager {
             player.name = playerInfo[i][1];
             player.languages = languages;
             player.colorAvatar = ProgrammerColor.valueOf(playerInfo[i][3].toUpperCase());
+            if (player != null){
+                programadores.add(player);
+            }
             programadores.add(player);
         }
         if ((programadores.size() > 4 || programadores.size() < 2) && programadores.size() * 2 > nrCasas){
