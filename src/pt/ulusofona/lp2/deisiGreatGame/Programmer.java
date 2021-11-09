@@ -50,16 +50,18 @@ public class Programmer {
         posicao = nrCasas - (nrCasas - posicao - posicoes);
     }
 
-    public boolean verificaEstado(){ return estado;}
+    public boolean verificaEstado() {
+        return estado;
+    }
 
 
     @Override
     public String toString() {
         StringBuilder listaLinguas = new StringBuilder();
         Collections.sort(languages);
-        for (String lingua: languages){
+        for (String lingua : languages) {
             listaLinguas.append(lingua);
-            if (lingua != languages.get(languages.size() - 1)){
+            if (lingua != languages.get(languages.size() - 1)) {
                 listaLinguas.append("; ");
             }
         }
