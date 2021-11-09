@@ -12,7 +12,7 @@ public class Programmer {
     int iD;
     ProgrammerColor colorAvatar;
     int posicao = 1; // primeira posição do tabuleiro
-    boolean estado; // se o jogador está em jogo ou não
+    boolean estado = false; // se o jogador está em jogo ou não
 
     public Programmer(String name, ArrayList<String> languages, int iD, ProgrammerColor colorAvatar, int posicao, boolean estado) {
         this.name = name;
@@ -51,25 +51,7 @@ public class Programmer {
     }
 
     public boolean verificaEstado(){ return estado;}
-    /**
-     public ArrayList<String> setLanguages(String listaLinguas, int posicao) {
-     Collections.addAll(languages, listaLinguas.split(";"));
-     return languages;
-     }
-     */
-
-    public boolean verificaProgramador(HashSet<Integer> idDuplicado, HashSet<ProgrammerColor> colorDuplicado) {
-        if (!idDuplicado.add(iD)) {
-            return false;
-        }
-        if (name == null && Objects.equals(getName(), "")) {
-            return false;
-        }
-        if (colorAvatar == null && !colorDuplicado.add(colorAvatar)) {
-            return false; //verificar se é uma das cores do enum
-        }
-        return true;
-    }
+    
 
     @Override
     public String toString() {

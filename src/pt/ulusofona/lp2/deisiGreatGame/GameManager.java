@@ -21,17 +21,27 @@ public class GameManager {
             ArrayList<String> languages = new ArrayList();
             languages.addAll(Arrays.asList(playerInfo[i][2].split(";")));
             //Collections.addAll(languages, playerInfo[i][2].split(";"));
-            Programmer player = new Programmer(playerInfo[i][1], languages, Integer.parseInt(playerInfo[i][0]), ProgrammerColor.valueOf(playerInfo[i][3].toUpperCase()), 0, false);
-            programadores.add(player); // adiciona á lista
+            Programmer player = new Programmer();
+            player.iD = Integer.parseInt(playerInfo[i][0]);
+            player.name = playerInfo[i][1];
+            player.languages = languages;
+            player.colorAvatar = ProgrammerColor.valueOf(playerInfo[i][3].toUpperCase());
+            programadores.add(player);
+        }
+        if ((programadores.size() > 4 || programadores.size() < 2) && programadores.size() * 2 > nrCasas){
+            return false;
         }
         HashSet<Integer> idDuplicado = new HashSet<>(); // não pode haver iDs repetidos
         HashSet<ProgrammerColor> colorDuplicado = new HashSet<>(); // não pode haver cores repetidas
         for (Programmer programador : programadores) {
-            if (!programador.verificaProgramador(idDuplicado, colorDuplicado) && (programadores.size() > 4 || programadores.size() < 2) && programadores.size() * 2 > nrCasas) {
+            if (programador.getId() == 0 || !colorDuplicado.add(programador.getColor()) || !idDuplicado.add(programador.getId()) ||
+                    programador.getColor() == null || programador.getName().equals("")) {
                 return false;
             }
-            idDuplicado.add(programador.iD);
-            colorDuplicado.add(programador.colorAvatar);
+            idDuplicado.add(programador.getId());
+            colorDuplicado.add(programador.getColor());
+            getImagePng(1);
+            getImagePng(boardSize);
         }
         return true;
 
