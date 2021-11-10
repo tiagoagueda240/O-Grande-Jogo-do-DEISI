@@ -47,7 +47,7 @@ public class Programmer {
     }
 
     public void recuar(int posicoes, int nrCasas) {
-        posicao = nrCasas - (nrCasas - posicao - posicoes);
+        posicao = nrCasas + (nrCasas - posicao - posicoes);
     }
 
 
