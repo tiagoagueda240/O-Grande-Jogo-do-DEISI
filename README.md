@@ -2,7 +2,7 @@
 <h1 align="center"> O Grande Jogo do DEISI </h1>
 
 ![](separador.png?raw=true "Separador")
-<h2 id="about-the-project"> :pencil: Diagrama UML</h2>
+<h2> :pencil: Diagrama UML</h2>
 ![](diagrama.png?raw=true "Diagrama")
 
 ![](separador.png?raw=true "Separador")
