@@ -7,7 +7,8 @@ import java.util.*;
 public class GameManager {
     ArrayList<Programmer> programadores = new ArrayList<>();
     int nrCasas;
-    int turnos = 0;
+    int nrTurnos = 1;
+    int turnoAtual = 1;
 
     public GameManager() {
     }
@@ -30,7 +31,7 @@ public class GameManager {
             programadores.add(player);
 
         }
-        if (programadores.size() > 4 || programadores.size() < 2 || programadores.size() * 2 > nrCasas){
+        if (programadores.size() > 4 || programadores.size() < 2 || nrCasas < programadores.size() * 2 ){
             return false;
         }
         HashSet<Integer> idDuplicado = new HashSet<>(); // não pode haver iDs repetidos
@@ -58,11 +59,12 @@ public class GameManager {
         if (position == nrCasas) {
             return "glory.png";
         }
+        /*
         for (Programmer programador: programadores) {
             if (programador.getPosicao() == position) {
                 return String.valueOf(programador.getColor());
             }
-        }
+        }*/
         return null;
     }
 
@@ -88,12 +90,7 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID() {
-        for (Programmer programador: programadores) {
-            if (programador.getPosicao() == turnos) {
-                return programador.getId();
-            }
-        }
-        return 0;
+        return programadores.get(turnoAtual - 1).getId();
     }
 
     public boolean moveCurrentPlayer(int nrPositions) {
@@ -104,10 +101,20 @@ public class GameManager {
             if (programador.getId() == getCurrentPlayerID() && nrPositions > 0 && nrPositions <= 6){
                 if (programador.getPosicao() + nrPositions <= nrCasas) {
                     programador.mover(nrPositions); //falta verificar se está fora do tabuleiro
-                    turnos++;
+                    if (turnoAtual > programadores.size()){
+                        turnoAtual = 1;
+                    }else{
+                        turnoAtual++;
+                    }
+                    nrTurnos++;
                 }else{
                     programador.recuar(nrPositions, nrCasas); //falta verificar se está fora do tabuleiro
-                    turnos++;
+                    if (turnoAtual > programadores.size()){
+                        turnoAtual = 1;
+                    }else {
+
+                        nrTurnos++;
+                    }
                 }
 
                 return true;
@@ -131,7 +138,7 @@ public class GameManager {
         resultados.add("O GRANDE JOGO DO DEISI");
         resultados.add("\n");
         resultados.add("NR. DE TURNOS");
-        resultados.add(String.valueOf(turnos));
+        resultados.add(String.valueOf(nrTurnos));
         resultados.add("\n");
         resultados.add("VENCEDOR");
         resultados.add(programadores.get(0).getName() + " " + programadores.get(0).getPosicao());
