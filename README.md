@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/tiagoagueda240/Projeto-LP2-a22001757-a22002629/master/readme/lusofona-logo.png?token=AS37C3SZFGQY76J63UE4XFLBRQVAQ")
+![](https://raw.githubusercontent.com/tiagoagueda240/Projeto-LP2-a22001757-a22002629/master/readme/lusofona-logo.png)
 <h1 align="center"> O Grande Jogo do DEISI </h1>
 
 ![](https://raw.githubusercontent.com/tiagoagueda240/Projeto-LP2-a22001757-a22002629/master/readme/rainbow.png?token=AS37C3SZFGQY76J63UE4XFLBRQVAQ)
