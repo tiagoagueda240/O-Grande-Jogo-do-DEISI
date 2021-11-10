@@ -8,5 +8,7 @@
 
 ![](separador.png?raw=true "Separador")
 <h2 id="about-the-project"> :black_nib: Desenvolvido por:</h2>
-<h5>Tiago Águeda - a22001757</h5>
-<h5>João Antas - a22002629</h5>
+<h5>Diagrama que descreve a primeira parte do projeto.</h5>
+![](separador.png?raw=true "Separador")
+<h4>Tiago Águeda - a22001757</h4>
+<h4>João Antas - a22002629</h4>
