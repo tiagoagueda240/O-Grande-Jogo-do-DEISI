@@ -12,5 +12,4 @@ public enum ProgrammerColor {
     public String toString() {
         return cor;
     }
-
 }

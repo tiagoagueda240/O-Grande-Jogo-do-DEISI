@@ -154,7 +154,7 @@ public class GameManager {
         resultados.add("");
         resultados.add("VENCEDOR");
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
-        resultados.add(programadores.get(0).getName() + " " + programadores.get(0).getPosicao());
+        resultados.add(programadores.get(0).getName());
         resultados.add("");
         resultados.add("RESTANTES");
         for (Programmer programador: programadores){
