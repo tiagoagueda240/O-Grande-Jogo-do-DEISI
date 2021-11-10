@@ -4,10 +4,10 @@
 ![](separador.png?raw=true "Separador")
 
 <h2> :pencil: Diagrama UML</h2>
-<h5>Diagrama que descreve a primeira parte do projeto.</h5>
-![](diagrama.png?raw=true "Diagrama")
 
--
+![](diagrama.png?raw=true "Diagrama")
+<h5>Diagrama que descreve a primeira parte do projeto.</h5>
+
 
 ![](separador.png?raw=true "Separador")
 
