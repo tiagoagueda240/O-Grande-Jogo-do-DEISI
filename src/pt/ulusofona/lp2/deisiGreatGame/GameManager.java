@@ -44,13 +44,15 @@ public class GameManager {
             ArrayList<String> languages = new ArrayList();
             languages.addAll(Arrays.asList(playerInfo[i][2].split(";")));
             //Collections.addAll(languages, playerInfo[i][2].split(";"));
-            Programmer player = new Programmer();
-            player.iD = Integer.parseInt(playerInfo[i][0]);
-            player.name = playerInfo[i][1];
-            player.languages = languages;
-            player.colorAvatar = encontrarCor(playerInfo[i][3].toUpperCase());
-            programadores.add(player);
 
+            int iD = Integer.parseInt(playerInfo[i][0]);
+            String name = playerInfo[i][1];
+            ProgrammerColor colorAvatar = encontrarCor(playerInfo[i][3].toUpperCase());
+
+            //if (){
+                Programmer player = new Programmer(name,languages,iD, colorAvatar, 0, "Em Jogo");
+                programadores.add(player);
+            //}
         }
         if (programadores.size() > 4 || programadores.size() < 2 || nrCasas < programadores.size() * 2 ){
             return false;
@@ -64,9 +66,10 @@ public class GameManager {
             }
             idDuplicado.add(programador.getId());
             colorDuplicado.add(programador.getColor());
-            getImagePng(1);
-            getImagePng(boardSize);
         }
+        programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
+        getImagePng(1);
+        getImagePng(boardSize);
         return true;
 
         // O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
@@ -148,13 +151,13 @@ public class GameManager {
         Collections.sort(programadores, new ComparadorDePosicoes());
         ArrayList<String> resultados = new ArrayList<>();
         resultados.add("O GRANDE JOGO DO DEISI");
-        resultados.add("\n");
+        resultados.add("");
         resultados.add("NR. DE TURNOS");
         resultados.add(String.valueOf(nrTurnos));
-        resultados.add("\n");
+        resultados.add("");
         resultados.add("VENCEDOR");
         resultados.add(programadores.get(0).getName() + " " + programadores.get(0).getPosicao());
-        resultados.add("\n");
+        resultados.add("");
         resultados.add("RESTANTES");
         for (Programmer programador: programadores){
             if (programadores.get(0).getId() == programador.getId()){
