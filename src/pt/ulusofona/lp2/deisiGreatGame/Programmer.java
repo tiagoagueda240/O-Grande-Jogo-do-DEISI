@@ -50,8 +50,6 @@ public class Programmer {
         posicao = nrCasas + (nrCasas - posicao - posicoes);
     }
 
-
-
     @Override
     public String toString() {
         StringBuilder listaLinguas = new StringBuilder();
