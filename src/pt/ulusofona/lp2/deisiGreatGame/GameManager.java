@@ -8,7 +8,26 @@ public class GameManager {
     ArrayList<Programmer> programadores = new ArrayList<>();
     int nrCasas;
     int nrTurnos = 1;
-    int turnoAtual = 1;
+    int turnoAtual = 0;
+
+    ProgrammerColor encontrarCor(String cor){
+        switch (cor){
+            case "PURPLE":
+                return ProgrammerColor.PURPLE;
+
+            case "BLUE":
+            return ProgrammerColor.BLUE;
+
+            case "GREEN":
+                return ProgrammerColor.GREEN;
+
+            case "BROWN":
+                return ProgrammerColor.BROWN;
+
+            default:
+                return null;
+        }
+    }
 
     public GameManager() {
     }
@@ -17,6 +36,8 @@ public class GameManager {
         if (boardSize <= 1) {
             return false;
         }
+
+
 
         nrCasas = boardSize;
         for (int i = 0; i < playerInfo.length; i++) {
@@ -27,7 +48,7 @@ public class GameManager {
             player.iD = Integer.parseInt(playerInfo[i][0]);
             player.name = playerInfo[i][1];
             player.languages = languages;
-            player.colorAvatar = ProgrammerColor.valueOf(playerInfo[i][3].toUpperCase());
+            player.colorAvatar = encontrarCor(playerInfo[i][3].toUpperCase());
             programadores.add(player);
 
         }
@@ -37,7 +58,7 @@ public class GameManager {
         HashSet<Integer> idDuplicado = new HashSet<>(); // não pode haver iDs repetidos
         HashSet<ProgrammerColor> colorDuplicado = new HashSet<>(); // não pode haver cores repetidas
         for (Programmer programador : programadores) {
-            if (programador.getId() == 0 || !colorDuplicado.add(programador.getColor()) || !idDuplicado.add(programador.getId()) ||
+            if (programador.getId() == 0 || colorDuplicado.contains(programador.getColor()) || idDuplicado.contains(programador.getId()) ||
                     programador.getColor() == null || programador.getName().equals("")) {
                 return false;
             }
@@ -90,7 +111,7 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID() {
-        return programadores.get(turnoAtual - 1).getId();
+        return programadores.get(turnoAtual).getId();
     }
 
     public boolean moveCurrentPlayer(int nrPositions) {
@@ -101,18 +122,18 @@ public class GameManager {
             if (programador.getId() == getCurrentPlayerID() && nrPositions > 0 && nrPositions <= 6){
                 if (programador.getPosicao() + nrPositions <= nrCasas) {
                     programador.mover(nrPositions); //falta verificar se está fora do tabuleiro
-                    if (turnoAtual > programadores.size()){
-                        turnoAtual = 1;
+                    if (turnoAtual >= programadores.size()){
+                        turnoAtual = 0;
                     }else{
                         turnoAtual++;
                     }
                     nrTurnos++;
                 }else{
                     programador.recuar(nrPositions, nrCasas); //falta verificar se está fora do tabuleiro
-                    if (turnoAtual > programadores.size()){
-                        turnoAtual = 1;
+                    if (turnoAtual >= programadores.size()){
+                        turnoAtual = 0;
                     }else {
-
+                        turnoAtual++;
                         nrTurnos++;
                     }
                 }
