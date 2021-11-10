@@ -33,30 +33,32 @@ public class GameManager {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+        programadores.clear();
+        nrTurnos = 1;
+        turnoAtual = 0;
+
         if (boardSize <= 1) {
             return false;
         }
-
-
 
         nrCasas = boardSize;
         for (int i = 0; i < playerInfo.length; i++) {
             ArrayList<String> languages = new ArrayList();
             languages.addAll(Arrays.asList(playerInfo[i][2].split(";")));
-            //Collections.addAll(languages, playerInfo[i][2].split(";"));
             Programmer player = new Programmer();
             player.iD = Integer.parseInt(playerInfo[i][0]);
             player.name = playerInfo[i][1];
             player.languages = languages;
             player.colorAvatar = encontrarCor(playerInfo[i][3].toUpperCase());
             programadores.add(player);
-
         }
+
         if (programadores.size() > 4 || programadores.size() < 2 || nrCasas < programadores.size() * 2 ){
             return false;
         }
-        HashSet<Integer> idDuplicado = new HashSet<>(); // não pode haver iDs repetidos
+
         HashSet<ProgrammerColor> colorDuplicado = new HashSet<>(); // não pode haver cores repetidas
+        HashSet<Integer> idDuplicado = new HashSet<>(); // não pode haver iDs repetidos
         for (Programmer programador : programadores) {
             if (programador.getId() == 0 || colorDuplicado.contains(programador.getColor()) || idDuplicado.contains(programador.getId()) ||
                     programador.getColor() == null || programador.getName().equals("")) {
@@ -64,13 +66,12 @@ public class GameManager {
             }
             idDuplicado.add(programador.getId());
             colorDuplicado.add(programador.getColor());
-            getImagePng(1);
-            getImagePng(boardSize);
+
         }
+        programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
+        getImagePng(1);
+        getImagePng(boardSize);
         return true;
-
-        // O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
-
     }
 
     public String getImagePng(int position) {
@@ -80,12 +81,12 @@ public class GameManager {
         if (position == nrCasas) {
             return "glory.png";
         }
-        /*
+
         for (Programmer programador: programadores) {
             if (programador.getPosicao() == position) {
-                return String.valueOf(programador.getColor());
+                return "player" + programador.getColor().toString() + ".png";
             }
-        }*/
+        }
         return null;
     }
 
@@ -145,7 +146,6 @@ public class GameManager {
     }
 
     public ArrayList<String> getGameResults() {
-        Collections.sort(programadores, new ComparadorDePosicoes());
         ArrayList<String> resultados = new ArrayList<>();
         resultados.add("O GRANDE JOGO DO DEISI");
         resultados.add("");
@@ -153,12 +153,13 @@ public class GameManager {
         resultados.add(String.valueOf(nrTurnos));
         resultados.add("");
         resultados.add("VENCEDOR");
+        programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
         resultados.add(programadores.get(0).getName() + " " + programadores.get(0).getPosicao());
         resultados.add("");
         resultados.add("RESTANTES");
         for (Programmer programador: programadores){
             if (programadores.get(0).getId() == programador.getId()){
-                break;
+                continue;
             }
             resultados.add(programador.getName() + " " + programador.getPosicao());
         }
@@ -180,17 +181,5 @@ public class GameManager {
         painel.add(linha3);
 
         return painel;
-    }
-
-    class ComparadorDePosicoes implements Comparator<Programmer> {
-        public int compare(Programmer o1, Programmer o2) {
-            if (o1.getPosicao() > o2.getPosicao()) {
-                return -1;
-            } else if (o1.getPosicao() < o2.getPosicao()) {
-                return +1;
-            } else {
-                return 0;
-            }
-        }
     }
 }

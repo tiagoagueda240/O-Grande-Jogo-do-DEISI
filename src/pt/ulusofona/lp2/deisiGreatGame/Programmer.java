@@ -30,11 +30,11 @@ public class Programmer {
         return iD;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    ProgrammerColor getColor() {
+    public ProgrammerColor getColor() {
         return colorAvatar;
     }
 
