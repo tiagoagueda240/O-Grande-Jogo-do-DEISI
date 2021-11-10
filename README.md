@@ -7,7 +7,7 @@
 <h4 align="center">Diagrama que descreve a primeira parte do projeto.</h4>
 
 
-![](separador.png?raw=true "Separador")
+![---------------------------](separador.png?raw=true "Separador")
 
 <h2 id="about-the-project"> :black_nib: Desenvolvido por:</h2>
 
