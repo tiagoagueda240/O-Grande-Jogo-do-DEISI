@@ -119,29 +119,20 @@ public class GameManager {
             return false;
         }
         for (Programmer programador: programadores) {
-            if (programador.getId() == getCurrentPlayerID() && nrPositions > 0 && nrPositions <= 6){
+            if (programador.getId() == getCurrentPlayerID()){
                 if (programador.getPosicao() + nrPositions <= nrCasas) {
-                    programador.mover(nrPositions); //falta verificar se está fora do tabuleiro
-                    if (turnoAtual >= programadores.size()){
-                        turnoAtual = 0;
-                    }else{
-                        turnoAtual++;
-                    }
-                    nrTurnos++;
+                    programador.mover(nrPositions); // falta verificar se está fora do tabuleiro
                 }else{
-                    programador.recuar(nrPositions, nrCasas); //falta verificar se está fora do tabuleiro
-                    if (turnoAtual >= programadores.size()){
-                        turnoAtual = 0;
-                    }else {
-                        turnoAtual++;
-                        nrTurnos++;
-                    }
+                    programador.recuar(nrPositions, nrCasas);
                 }
-
-                return true;
             }
         }
-        return false;
+        turnoAtual++;
+        nrTurnos++;
+        if(turnoAtual >= programadores.size()) {
+            turnoAtual = 0;
+        }
+        return true;
     }
 
     public boolean gameIsOver() {
