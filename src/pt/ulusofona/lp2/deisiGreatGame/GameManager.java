@@ -45,11 +45,7 @@ public class GameManager {
         for (int i = 0; i < playerInfo.length; i++) {
             ArrayList<String> languages = new ArrayList();
             languages.addAll(Arrays.asList(playerInfo[i][2].split(";")));
-            Programmer player = new Programmer();
-            player.iD = Integer.parseInt(playerInfo[i][0]);
-            player.name = playerInfo[i][1];
-            player.languages = languages;
-            player.colorAvatar = encontrarCor(playerInfo[i][3].toUpperCase());
+            Programmer player = new Programmer(playerInfo[i][1], languages, Integer.parseInt(playerInfo[i][0]), encontrarCor(playerInfo[i][3].toUpperCase()), 1, "Em Jogo");
             programadores.add(player);
         }
 
@@ -168,18 +164,21 @@ public class GameManager {
     }
 
     public JPanel getAuthorsPanel() {
-        JPanel painel = new JPanel();
-        painel.setSize(new Dimension(300, 300));
+        JPanel creditos = new JPanel();
+        creditos.setSize(new Dimension(300, 300));
         JLabel linha1 = new JLabel();
         linha1.setText("Projeto Deisi Great Game");
-        painel.add(linha1);
+        creditos.add(linha1);
+
         JLabel linha2 = new JLabel();
         linha1.setText("Tiago Águeda a22001757");
-        painel.add(linha2);
+        creditos.add(linha2);
+
         JLabel linha3 = new JLabel();
         linha1.setText("João Antas a22002629");
-        painel.add(linha3);
+        creditos.add(linha3);
 
-        return painel;
+
+        return creditos;
     }
 }
