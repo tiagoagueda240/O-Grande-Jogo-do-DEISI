@@ -81,10 +81,10 @@ public class GameManager {
     }
 
     public String getImagePng(int position) {
-        if (position > nrCasas) {
+        if (position > nrCasas) { // verificação do jogador saiu do tabuleiro
             return null;
         }
-        if (position == nrCasas) {
+        if (position == nrCasas) {// verifica se o jogador chegou a ultima casa
             return "glory.png";
         }
 
@@ -163,12 +163,11 @@ public class GameManager {
         resultados.add("");
         resultados.add("RESTANTES");
         for (Programmer programador: programadores){
-            if (programadores.get(0).getId() == programador.getId()){
+            if (programadores.get(0).getId() == programador.getId()){ // percorre os jogadores
                 continue;
             }
-            resultados.add(programador.getName() + " " + programador.getPosicao());
+            resultados.add(programador.getName() + " " + programador.getPosicao()); // adiciona o nome e o valor da posição
         }
-
         return resultados;
     }
 
@@ -186,7 +185,6 @@ public class GameManager {
         JLabel linha3 = new JLabel();
         linha1.setText("João Antas a22002629");
         credits.add(linha3);
-
 
         return credits;
     }
