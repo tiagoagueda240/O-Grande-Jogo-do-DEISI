@@ -3,9 +3,12 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class GameManager {
     ArrayList<Programmer> programadores = new ArrayList<>();
+    ArrayList<Abismo> abismos = new ArrayList<>();
+    ArrayList<Ferramenta> ferramentas = new ArrayList<>();
     int nrCasas;
     int nrTurnos = 1; // nr de turnos jogados
     int turnoAtual = 0; // turno atual, pode ser: 0, 1, 2 ou 3
@@ -32,7 +35,80 @@ public class GameManager {
         }
     }
 
+    Abismo criarAbismo(String[] info){
+        switch (info[1]){
+            case "0":
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "1":
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "2":
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "3":
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "4":
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "5":
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "6":
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "7":
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "8":
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "9":
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+
+            default:
+                return null;
+        }
+    }
+
+    Ferramenta criarFerramentas(String[] info){
+        switch (info[1]){
+            case "0":
+                return new Ferramenta("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "1":
+                return new Ferramenta("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "2":
+                return new Ferramenta("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "3":
+                return new Ferramenta("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "4":
+                return new Ferramenta("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "5":
+                return new Ferramenta("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "6":
+                return new Ferramenta("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "7":
+                return new Ferramenta("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "8":
+                return new Ferramenta("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+            case "9":
+                return new Ferramenta("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+
+            default:
+                return null;
+        }
+    }
+
+
+
     public GameManager() {
+    }
+
+    boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
+        boolean verifica = createInitialBoard(playerInfo, worldSize);
+        if (!verifica){
+            return false;
+        }
+        for (int i = 0; i < abyssesAndTools.length; i++){
+            if (abyssesAndTools[i][0].equals("0")){
+                abismos.add(criarAbismo(abyssesAndTools[i]));
+            }else if(abyssesAndTools[i][0].equals("1")){
+                ferramentas.add(criarFerramentas(abyssesAndTools[i]));
+            }
+        }
+        return true;
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
@@ -96,16 +172,36 @@ public class GameManager {
         return null;
     }
 
-    public ArrayList<Programmer> getProgrammers() {
-        return programadores;
+    String getTitle(int position){
+        if (position < 1 || position > nrCasas){
+            return null;
+        }
+        for (Ferramenta ferramenta: ferramentas){
+            if (ferramenta.getPosicao() == position){
+                return ferramenta.getTitulo();
+            }
+        }
+        for (Abismo abismo: abismos){
+            if (abismo.getPosicao() == position){
+                return abismo.getTitulo();
+            }
+        }
+        return null;
     }
+/*
+    public List<Programmer> getProgrammers(boolean includeDefeated) {
 
-    public ArrayList<Programmer> getProgrammers(int position) {
+        return ;
+    }
+*/
+
+
+    public List<Programmer> getProgrammers(int position) {
         // Verifica se a posição passada nos parametros está dentro do tabuleiro
         if (position < 1 || position > nrCasas){
             return null;
         }
-        ArrayList<Programmer> programadoresNaPosicao = new ArrayList<>();
+        List<Programmer> programadoresNaPosicao = new ArrayList<>();
         for (Programmer programmer: programadores) {
             if (programmer.getPosicao() == position) { //Verifica se há jogadores na posição
                 programadoresNaPosicao.add(programmer);
@@ -117,6 +213,10 @@ public class GameManager {
 
     public int getCurrentPlayerID() {
         return programadores.get(turnoAtual).getId();
+    }
+
+    String getProgrammersInfo(){
+
     }
 
     public boolean moveCurrentPlayer(int nrPositions) {
@@ -150,8 +250,8 @@ public class GameManager {
         return false;
     }
 
-    public ArrayList<String> getGameResults() {
-        ArrayList<String> resultados = new ArrayList<>();
+    public List<String> getGameResults() {
+        List<String> resultados = new ArrayList<>();
         resultados.add("O GRANDE JOGO DO DEISI");
         resultados.add("");
         resultados.add("NR. DE TURNOS");

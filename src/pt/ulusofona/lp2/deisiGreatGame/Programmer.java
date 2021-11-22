@@ -13,6 +13,7 @@ public class Programmer {
     ProgrammerColor colorAvatar;
     int posicao = 1; // primeira posição do tabuleiro
     String estado = "Em Jogo"; // se o jogador está em jogo ou não
+    ArrayList<String> ferramentas = new ArrayList();
 
     public Programmer(String name, ArrayList<String> languages, int iD, ProgrammerColor colorAvatar, int posicao, String estado) {
         this.name = name;
@@ -60,6 +61,18 @@ public class Programmer {
                 listaLinguas.append("; ");
             }
         }
-        return iD + " | " + name + " | " + posicao + " | " + listaLinguas + " | " + estado;
+        if (ferramentas.size() == 0){
+            return iD + " | " + name + " | " + posicao + " | " + listaLinguas + " | " + estado + " | " + "No tools";
+        }else{
+            StringBuilder listaFerramentas = new StringBuilder();
+            for (String ferramenta : ferramentas){
+                listaFerramentas.append(ferramenta);
+                if (ferramenta != ferramentas.get(ferramentas.size() - 1)) {
+                    listaFerramentas.append("; ");
+                }
+            }
+            return iD + " | " + name + " | " + posicao + " | " + listaLinguas + " | " + estado + listaFerramentas.toString();
+        }
+
     }
 }
