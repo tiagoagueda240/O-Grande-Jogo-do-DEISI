@@ -38,25 +38,25 @@ public class GameManager {
     Abismo criarAbismo(String[] info){
         switch (info[1]){
             case "0":
-                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[3]));
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[2]));
             case "1":
-                return new Abismo("Erro de lógico", 1, Integer.valueOf(info[3]));
+                return new Abismo("Erro de lógico", 1, Integer.valueOf(info[2]));
             case "2":
-                return new Abismo("Exception", 2, Integer.valueOf(info[3]));
+                return new Abismo("Exception", 2, Integer.valueOf(info[2]));
             case "3":
-                return new Abismo("File Not Found Exception", 3, Integer.valueOf(info[3]));
+                return new Abismo("File Not Found Exception", 3, Integer.valueOf(info[2]));
             case "4":
-                return new Abismo("Crash (aka Rebentanço)", 4, Integer.valueOf(info[3]));
+                return new Abismo("Crash (aka Rebentanço)", 4, Integer.valueOf(info[2]));
             case "5":
-                return new Abismo("Duplicated Code", 5, Integer.valueOf(info[3]));
+                return new Abismo("Duplicated Code", 5, Integer.valueOf(info[2]));
             case "6":
-                return new Abismo("Efeitos secundários", 6, Integer.valueOf(info[3]));
+                return new Abismo("Efeitos secundários", 6, Integer.valueOf(info[2]));
             case "7":
-                return new Abismo("Blue Screen Of Death", 7, Integer.valueOf(info[3]));
+                return new Abismo("Blue Screen Of Death", 7, Integer.valueOf(info[2]));
             case "8":
-                return new Abismo("Ciclo infinito", 8, Integer.valueOf(info[3]));
+                return new Abismo("Ciclo infinito", 8, Integer.valueOf(info[2]));
             case "9":
-                return new Abismo("Segmentation Fault", 9, Integer.valueOf(info[3]));
+                return new Abismo("Segmentation Fault", 9, Integer.valueOf(info[2]));
 
             default:
                 return null;
@@ -66,17 +66,17 @@ public class GameManager {
     Ferramenta criarFerramentas(String[] info){
         switch (info[1]){
             case "0":
-                return new Ferramenta("Herança", 0, Integer.valueOf(info[3]));
+                return new Ferramenta("Herança", 0, Integer.valueOf(info[2]));
             case "1":
-                return new Ferramenta("Programação Funcional", 1, Integer.valueOf(info[3]));
+                return new Ferramenta("Programação Funcional", 1, Integer.valueOf(info[2]));
             case "2":
-                return new Ferramenta("Testes unitários", 2, Integer.valueOf(info[3]));
+                return new Ferramenta("Testes unitários", 2, Integer.valueOf(info[2]));
             case "3":
-                return new Ferramenta("Tratamento de Excepções", 3, Integer.valueOf(info[3]));
+                return new Ferramenta("Tratamento de Excepções", 3, Integer.valueOf(info[2]));
             case "4":
-                return new Ferramenta("IDE", 4, Integer.valueOf(info[3]));
+                return new Ferramenta("IDE", 4, Integer.valueOf(info[2]));
             case "5":
-                return new Ferramenta("Ajuda do Professor", 5, Integer.valueOf(info[3]));
+                return new Ferramenta("Ajuda do Professor", 5, Integer.valueOf(info[2]));
 
             default:
                 return null;
