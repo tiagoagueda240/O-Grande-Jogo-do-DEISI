@@ -51,6 +51,21 @@ public class Programmer {
         posicao = nrCasas + (nrCasas - posicao - posicoes);
     }
 
+    public String criaListaFerramentas(){
+        StringBuilder listaFerramentas = new StringBuilder();
+        if (ferramentas.size() == 0){
+            return "No tools";
+        }else{
+            for (String ferramenta : ferramentas){
+                listaFerramentas.append(ferramenta);
+                if (ferramenta != ferramentas.get(ferramentas.size() - 1)) {
+                    listaFerramentas.append(";");
+                }
+            }
+            return listaFerramentas.toString();
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder listaLinguas = new StringBuilder();
@@ -62,16 +77,9 @@ public class Programmer {
             }
         }
         if (ferramentas.size() == 0){
-            return iD + " | " + name + " | " + posicao + " | " + listaLinguas + " | " + estado + " | " + "No tools";
+            return iD + " | " + name + " | " + posicao + " | " + listaLinguas + " | " + estado + " | " + criaListaFerramentas();
         }else{
-            StringBuilder listaFerramentas = new StringBuilder();
-            for (String ferramenta : ferramentas){
-                listaFerramentas.append(ferramenta);
-                if (ferramenta != ferramentas.get(ferramentas.size() - 1)) {
-                    listaFerramentas.append("; ");
-                }
-            }
-            return iD + " | " + name + " | " + posicao + " | " + listaLinguas + " | " + estado + listaFerramentas.toString();
+            return iD + " | " + name + " | " + posicao + " | " + listaLinguas + " | " + estado + criaListaFerramentas();
         }
 
     }

@@ -178,12 +178,12 @@ public class GameManager {
         }
         return null;
     }
-/*
-    public List<Programmer> getProgrammers(boolean includeDefeated) {
 
-        return ;
+    public List<Programmer> getProgrammers(boolean includeDefeated) {
+        List<Programmer> programadoresNaPosicao = new ArrayList<>();
+        return programadoresNaPosicao;
     }
-*/
+
 
     public List<Programmer> getProgrammers(int position) {
         // Verifica se a posição passada nos parametros está dentro do tabuleiro
@@ -204,10 +204,18 @@ public class GameManager {
         return programadores.get(turnoAtual).getId();
     }
 
-    /* String getProgrammersInfo(){
+    String getProgrammersInfo(){
+        StringBuilder listaJogadores = new StringBuilder();
+        for (Programmer programador: programadores){
+            listaJogadores.append(programador.getName() + " : " + programador.criaListaFerramentas());
+            if (programador != programadores.get(programadores.size() - 1)) {
+                listaJogadores.append(" | ");
+            }
 
+        }
+        return listaJogadores.toString();
     }
-    */
+
 
     public boolean moveCurrentPlayer(int nrPositions) {
         if (nrPositions < 1 || nrPositions > 6) {
@@ -228,6 +236,10 @@ public class GameManager {
             turnoAtual = 0;
         }
         return true;
+    }
+
+    String reactToAbyssOrTool(){
+        return "Benfica";
     }
 
     public boolean gameIsOver() {
