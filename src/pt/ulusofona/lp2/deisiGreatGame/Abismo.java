@@ -15,9 +15,14 @@ public class Abismo {
         return posicao;
     }
 
+    public int getId(){
+        return id;
+    }
+
     public String getTitulo(){
         return titulo;
     }
+
 
     @Override
     public String toString() {

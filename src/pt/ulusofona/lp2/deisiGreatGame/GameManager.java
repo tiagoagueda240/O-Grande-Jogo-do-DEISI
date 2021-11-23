@@ -12,6 +12,14 @@ public class GameManager {
     int nrCasas;
     int nrTurnos = 1; // nr de turnos jogados
     int turnoAtual = 0; // turno atual, pode ser: 0, 1, 2 ou 3
+    int nrDado;
+    static HashMap<String, ArrayList<String>> listaTools = new HashMap<>();
+
+    static void crialistaTools(){
+        ArrayList<String> ferramentasPossiveis = new ArrayList<>();
+        //ferramentasPossiveis.add();
+        listaTools.put("", ferramentasPossiveis);
+    }
 
     /*
     * Função que retorna o enum
@@ -98,6 +106,8 @@ public class GameManager {
                 ferramentas.add(criarFerramentas(abyssesAndTools[i]));
             }
         }
+        abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));
+        ferramentas.sort(Comparator.comparing((Ferramenta ferramenta1) -> ferramenta1.getPosicao()));
         return true;
     }
 
@@ -159,6 +169,18 @@ public class GameManager {
                 return "player" + programmer.getColor().toString() + ".png";
             }
         }
+
+        for (Abismo abismo: abismos) {
+            if (abismo.getPosicao() == position) {
+                return abismo.getTitulo() + ".png";
+            }
+        }
+
+        for (Ferramenta ferramenta: ferramentas) {
+            if (ferramenta.getPosicao() == position) {
+                return ferramenta.getTitulo() + ".png";
+            }
+        }
         return null;
     }
 
@@ -180,8 +202,17 @@ public class GameManager {
     }
 
     public List<Programmer> getProgrammers(boolean includeDefeated) {
-        List<Programmer> programadoresNaPosicao = new ArrayList<>();
-        return programadoresNaPosicao;
+        List<Programmer> listaProgramadores = new ArrayList<>();
+        if (includeDefeated){
+            listaProgramadores = programadores;
+        }else{
+            for (Programmer programador: programadores){
+                if (programador.getEstado().equals("Em Jogo")){
+                    listaProgramadores.add(programador);
+                }
+            }
+        }
+        return listaProgramadores;
     }
 
 
@@ -221,25 +252,75 @@ public class GameManager {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }
+        nrDado = nrPositions;
         for (Programmer programador: programadores) {
             if (programador.getId() == getCurrentPlayerID()){
                 if (programador.getPosicao() + nrPositions <= nrCasas) { // Verifica se o jogador pode andar sem ultrapassar a meta
                     programador.mover(nrPositions);
                 }else{
-                    programador.recuar(nrPositions, nrCasas);
+                    programador.avancarRecuar(nrPositions, nrCasas);
+                }
+                for (Ferramenta ferramenta: ferramentas){
+                    if (ferramenta.getPosicao() == programador.getPosicao()){
+                        programador.addFerramenta(ferramenta.getTitulo());
+                    }
                 }
             }
         }
-        turnoAtual++;
-        nrTurnos++;
-        if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
-            turnoAtual = 0;
-        }
+        reactToAbyssOrTool();
+
         return true;
     }
 
-    String reactToAbyssOrTool(){
-        return "Benfica";
+
+    public String reactToAbyssOrTool(){
+        for (Abismo abismo : abismos){
+            if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()){
+                HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getId());
+                if (programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)){
+                    return null;
+                }else{
+                    //efeitos dos abismos
+                    if (abismo.getId() == 0){
+                        programadores.get(turnoAtual).recuar(1);
+                    }else if (abismo.getId() == 1){
+                        programadores.get(turnoAtual).recuar(nrDado/2);
+                    }else if (abismo.getId() == 2){
+                        programadores.get(turnoAtual).recuar(2);
+                    }else if (abismo.getId() == 3){
+                        programadores.get(turnoAtual).recuar(3);
+                    }else if (abismo.getId() == 4){
+                        programadores.get(turnoAtual).posicaoInicial();
+                    }else if (abismo.getId() == 5){//
+                        programadores.get(turnoAtual).recuar(nrDado);
+                    }else if (abismo.getId() == 6){
+
+                    }else if (abismo.getId() == 7){
+                        programadores.get(turnoAtual).perdeu();
+                    }else if (abismo.getId() == 8){
+
+                    }else if (abismo.getId() == 9){
+                        ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
+                        for (Programmer programador : programadores){
+                            if(programador.getPosicao() == abismo.getPosicao()){
+                                jogadoresEmPosicao.add(programador);
+                            }
+                        }
+                        if (jogadoresEmPosicao.size() >= 2){
+                            for (Programmer programador : jogadoresEmPosicao){
+                                programador .recuar(3);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
+            turnoAtual = 0;
+        }
+        turnoAtual++;
+        nrTurnos++;
+        return null;
     }
 
     public boolean gameIsOver() {
@@ -290,4 +371,48 @@ public class GameManager {
 
         return credits;
     }
+
+
+
+
+
+    public HashSet<String> ferramentasUteis(int id){
+        HashSet<String> listaFerramentas = new HashSet<>();
+        switch (id){
+            case 0:
+                listaFerramentas.add("teste1");
+                break;
+            case 1:
+                listaFerramentas.add("teste2");
+                break;
+            case 2:
+                listaFerramentas.add("teste3");
+                break;
+            case 3:
+                listaFerramentas.add("teste4");
+                break;
+            case 4:
+                listaFerramentas.add("teste5");
+                break;
+            case 5:
+                listaFerramentas.add("teste6");
+                break;
+            case 6:
+                listaFerramentas.add("teste7");
+                break;
+            case 7:
+                listaFerramentas.add("teste8");
+                break;
+            case 8:
+                listaFerramentas.add("teste9");
+                break;
+            case 9:
+                listaFerramentas.add("teste10");
+                break;
+            default:
+                return null;
+        }
+        return listaFerramentas;
+    }
+
 }
