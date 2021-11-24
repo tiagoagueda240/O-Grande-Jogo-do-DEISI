@@ -22,8 +22,8 @@ public class GameManager {
     }
 
     /*
-    * Função que retorna o enum
-    */
+     * Função que retorna o enum
+     */
     ProgrammerColor encontrarCor(String cor){
         switch (cor){
             case "PURPLE":
@@ -113,8 +113,8 @@ public class GameManager {
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
         /*
-        *  Fazer reset
-        */
+         *  Fazer reset
+         */
         programadores.clear();
         nrTurnos = 1;
         turnoAtual = 0;
@@ -279,6 +279,11 @@ public class GameManager {
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()){
                 HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getId());
                 if (programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)){
+                    turnoAtual++;
+                    nrTurnos++;
+                    if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
+                        turnoAtual = 0;
+                    }
                     return null;
                 }else{
                     //efeitos dos abismos

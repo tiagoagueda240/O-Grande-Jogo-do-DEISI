@@ -98,36 +98,36 @@ public class Programmer {
             return listaFerramentas.toString();
         }
     }
-/*
-    public void ativaAbismo(int id){
-        HashSet<String> listaFerramentas = new HashSet();
-        for (String ferramenta: ferramentas){
-            listaFerramentas.add(ferramenta);
+    /*
+        public void ativaAbismo(int id){
+            HashSet<String> listaFerramentas = new HashSet();
+            for (String ferramenta: ferramentas){
+                listaFerramentas.add(ferramenta);
+            }
+            switch (id){
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+            }
         }
-        switch (id){
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-        }
-    }
-*/
+    */
     @Override
     public String toString() {
         StringBuilder listaLinguas = new StringBuilder();
@@ -139,9 +139,9 @@ public class Programmer {
             }
         }
         if (ferramentas.size() == 0){
-            return iD + " | " + name + " | " + posicao + " | " + listaLinguas + " | " + estado + " | " + criaListaFerramentas();
+            return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + estado + " | " + listaLinguas;
         }else{
-            return iD + " | " + name + " | " + posicao + " | " + listaLinguas + " | " + estado + criaListaFerramentas();
+            return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + estado + listaLinguas;
         }
 
     }
