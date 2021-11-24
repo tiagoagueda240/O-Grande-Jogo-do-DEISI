@@ -30,7 +30,7 @@ public class Programmer {
         posicao = 1;
     }
     public void perdeu(){
-        estado = "Perdeu";
+        estado = "Derrotado";
     }
     public int getId() {
         return iD;
