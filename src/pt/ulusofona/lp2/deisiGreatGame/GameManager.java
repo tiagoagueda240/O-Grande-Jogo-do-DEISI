@@ -268,7 +268,6 @@ public class GameManager {
                 }
             }
         }
-        reactToAbyssOrTool();
 
         return true;
     }
@@ -278,14 +277,7 @@ public class GameManager {
         for (Abismo abismo : abismos){
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()){
                 HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getId());
-                if (programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)){
-                    turnoAtual++;
-                    nrTurnos++;
-                    if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
-                        turnoAtual = 0;
-                    }
-                    return null;
-                }else{
+                if (!programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)){
                     //efeitos dos abismos
                     if (abismo.getId() == 0){
                         programadores.get(turnoAtual).recuar(1);
@@ -318,6 +310,7 @@ public class GameManager {
                             }
                         }
                     }
+                    break;
                 }
             }
         }
@@ -423,3 +416,4 @@ public class GameManager {
     }
 
 }
+
