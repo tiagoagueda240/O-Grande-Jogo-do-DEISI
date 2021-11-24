@@ -94,7 +94,7 @@ public class GameManager {
     public GameManager() {
     }
 
-    boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
+    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
         boolean verifica = createInitialBoard(playerInfo, worldSize);
         if (!verifica){
             return false;
@@ -184,7 +184,7 @@ public class GameManager {
         return null;
     }
 
-    String getTitle(int position){
+    public String getTitle(int position){
         if (position < 1 || position > nrCasas){
             return null;
         }
@@ -235,7 +235,7 @@ public class GameManager {
         return programadores.get(turnoAtual).getId();
     }
 
-    String getProgrammersInfo(){
+    public String getProgrammersInfo(){
         StringBuilder listaJogadores = new StringBuilder();
         for (Programmer programador: programadores){
             listaJogadores.append(programador.getName() + " : " + programador.criaListaFerramentas());
@@ -257,6 +257,7 @@ public class GameManager {
             if (programador.getId() == getCurrentPlayerID()){
                 if (programador.getPosicao() + nrPositions <= nrCasas) { // Verifica se o jogador pode andar sem ultrapassar a meta
                     programador.mover(nrPositions);
+
                 }else{
                     programador.avancarRecuar(nrPositions, nrCasas);
                 }
@@ -315,11 +316,12 @@ public class GameManager {
                 }
             }
         }
+        turnoAtual++;
+        nrTurnos++;
         if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
         }
-        turnoAtual++;
-        nrTurnos++;
+
         return null;
     }
 
