@@ -20,8 +20,6 @@ public class TestGameManager {
         boolean movimento = gameManagerTestes.moveCurrentPlayer(5);
         movimento = gameManagerTestes.moveCurrentPlayer(6);
         movimento = gameManagerTestes.moveCurrentPlayer(6);
-
-
         assertEquals(1, gameManagerTestes.programadores.get(1).getPosicao());
     }
 
@@ -32,7 +30,6 @@ public class TestGameManager {
         boolean movimento = gameManagerTestes.moveCurrentPlayer(5);
         movimento = gameManagerTestes.moveCurrentPlayer(6);
         movimento = gameManagerTestes.moveCurrentPlayer(2);
-
         assertEquals(14, gameManagerTestes.programadores.get(0).getPosicao());
     }
 

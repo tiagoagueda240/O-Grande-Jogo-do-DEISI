@@ -9,8 +9,8 @@ public class Abismo {
         this.titulo = titulo;
         this.id = id;
         this.posicao = posicao;
-
     }
+
     public int getPosicao(){
         return posicao;
     }

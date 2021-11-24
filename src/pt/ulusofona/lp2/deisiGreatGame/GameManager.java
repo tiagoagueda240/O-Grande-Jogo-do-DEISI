@@ -21,9 +21,7 @@ public class GameManager {
         listaTools.put("", ferramentasPossiveis);
     }
 
-    /*
-     * Função que retorna o enum
-     */
+    // Função que retorna o enum
     ProgrammerColor encontrarCor(String cor){
         switch (cor){
             case "PURPLE":
@@ -112,9 +110,8 @@ public class GameManager {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
-        /*
-         *  Fazer reset
-         */
+
+        // Fazer reset
         programadores.clear();
         nrTurnos = 1;
         turnoAtual = 0;
@@ -131,7 +128,7 @@ public class GameManager {
             programadores.add(player);
         }
 
-        //Valida tamanho do tabuleiro
+        // Valida tamanho do tabuleiro
         if (programadores.size() > 4 || programadores.size() < 2 || nrCasas < programadores.size() * 2 ){
             return false;
         }
@@ -139,7 +136,7 @@ public class GameManager {
         HashSet<ProgrammerColor> colorDuplicado = new HashSet<>(); // não pode haver cores repetidas
         HashSet<Integer> idDuplicated = new HashSet<>(); // não pode haver iDs repetidos
 
-        //Percorrer todos os jogadores para fazer todas as verificações enunciadas no enunciado
+        // Percorrer todos os jogadores para fazer todas as verificações enunciadas no enunciado
         for (Programmer programmer : programadores) {
             if (programmer.getId() == 0 || colorDuplicado.contains(programmer.getColor()) || idDuplicated.contains(programmer.getId()) ||
                     programmer.getColor() == null || programmer.getName().equals("")) {
@@ -147,9 +144,8 @@ public class GameManager {
             }
             idDuplicated.add(programmer.getId());
             colorDuplicado.add(programmer.getColor());
-
         }
-        //Ordena os jogadores por ordem dos ids
+        // Ordena os jogadores por ordem dos ids
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
         getImagePng(1);
         getImagePng(boardSize);
@@ -215,7 +211,6 @@ public class GameManager {
         return listaProgramadores;
     }
 
-
     public List<Programmer> getProgrammers(int position) {
         // Verifica se a posição passada nos parametros está dentro do tabuleiro
         if (position < 1 || position > nrCasas){
@@ -223,7 +218,7 @@ public class GameManager {
         }
         List<Programmer> programadoresNaPosicao = new ArrayList<>();
         for (Programmer programmer: programadores) {
-            if (programmer.getPosicao() == position) { //Verifica se há jogadores na posição
+            if (programmer.getPosicao() == position) { // Verifica se há jogadores na posição
                 programadoresNaPosicao.add(programmer);
             }
         }
@@ -242,11 +237,9 @@ public class GameManager {
             if (programador != programadores.get(programadores.size() - 1)) {
                 listaJogadores.append(" | ");
             }
-
         }
         return listaJogadores.toString();
     }
-
 
     public boolean moveCurrentPlayer(int nrPositions) {
         if (nrPositions < 1 || nrPositions > 6) {
@@ -262,10 +255,8 @@ public class GameManager {
                 }
             }
         }
-
         return true;
     }
-
 
     public String reactToAbyssOrTool(){
         String mensagem = "";
@@ -328,18 +319,15 @@ public class GameManager {
         if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
         }
-
         if (mensagem.equals("")){
             return null;
         }else{
             return mensagem;
         }
-
-
     }
 
     public boolean gameIsOver() {
-        //Verifica se algum jogador chegou ao fim
+        // Verifica se algum jogador chegou ao fim
         for (Programmer programador: programadores){
             if (programador.getPosicao() == nrCasas){
                 return true;
@@ -387,7 +375,6 @@ public class GameManager {
         return credits;
     }
 
-
     public HashSet<String> ferramentasUteis(int id){
         HashSet<String> listaFerramentas = new HashSet<>();
         switch (id){
@@ -429,6 +416,4 @@ public class GameManager {
         }
         return listaFerramentas;
     }
-
 }
-
