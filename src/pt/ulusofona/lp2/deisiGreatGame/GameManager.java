@@ -274,6 +274,7 @@ public class GameManager {
 
 
     public String reactToAbyssOrTool(){
+        String mensagem = "";
         for (Abismo abismo : abismos){
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()){
                 HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getId());
@@ -281,22 +282,29 @@ public class GameManager {
                     //efeitos dos abismos
                     if (abismo.getId() == 0){
                         programadores.get(turnoAtual).recuar(1);
+                        mensagem = "Teste 1";
                     }else if (abismo.getId() == 1){
                         programadores.get(turnoAtual).recuar(nrDado/2);
+                        mensagem = "Teste 2";
                     }else if (abismo.getId() == 2){
                         programadores.get(turnoAtual).recuar(2);
+                        mensagem = "Teste 3";
                     }else if (abismo.getId() == 3){
                         programadores.get(turnoAtual).recuar(3);
+                        mensagem = "Teste 4";
                     }else if (abismo.getId() == 4){
                         programadores.get(turnoAtual).posicaoInicial();
+                        mensagem = "Teste 5";
                     }else if (abismo.getId() == 5){//
                         programadores.get(turnoAtual).recuar(nrDado);
+                        mensagem = "Teste 6";
                     }else if (abismo.getId() == 6){
-
+                        mensagem = "Teste 7";
                     }else if (abismo.getId() == 7){
                         programadores.get(turnoAtual).perdeu();
+                        mensagem = "Teste 8";
                     }else if (abismo.getId() == 8){
-
+                        mensagem = "Teste 9";
                     }else if (abismo.getId() == 9){
                         ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
                         for (Programmer programador : programadores){
@@ -309,6 +317,7 @@ public class GameManager {
                                 programador .recuar(3);
                             }
                         }
+                        mensagem = "Teste 10";
                     }
                     break;
                 }
@@ -320,7 +329,7 @@ public class GameManager {
             turnoAtual = 0;
         }
 
-        return null;
+        return mensagem;
     }
 
     public boolean gameIsOver() {

@@ -22,7 +22,7 @@ public class TestGameManager {
         movimento = gameManagerTestes.moveCurrentPlayer(6);
 
 
-        assertEquals(7, gameManagerTestes.programadores.get(1).getPosicao());
+        assertEquals(1, gameManagerTestes.programadores.get(1).getPosicao());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class TestGameManager {
         movimento = gameManagerTestes.moveCurrentPlayer(6);
         movimento = gameManagerTestes.moveCurrentPlayer(2);
 
-        assertEquals(8, gameManagerTestes.programadores.get(0).getPosicao());
+        assertEquals(14, gameManagerTestes.programadores.get(0).getPosicao());
     }
 
     @Test
@@ -49,6 +49,6 @@ public class TestGameManager {
         movimento = gameManagerTestes.moveCurrentPlayer(2);
         movimento = gameManagerTestes.moveCurrentPlayer(2);
         movimento = gameManagerTestes.moveCurrentPlayer(4);
-        assertEquals(12, gameManagerTestes.programadores.get(2).getPosicao());
+        assertEquals(1, gameManagerTestes.programadores.get(2).getPosicao());
     }
 }
