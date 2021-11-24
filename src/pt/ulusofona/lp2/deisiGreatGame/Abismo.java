@@ -23,7 +23,6 @@ public class Abismo {
         return titulo;
     }
 
-
     @Override
     public String toString() {
         return titulo;

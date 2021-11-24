@@ -257,7 +257,6 @@ public class GameManager {
             if (programador.getId() == getCurrentPlayerID()){
                 if (programador.getPosicao() + nrPositions <= nrCasas) { // Verifica se o jogador pode andar sem ultrapassar a meta
                     programador.mover(nrPositions);
-
                 }else{
                     programador.avancarRecuar(nrPositions, nrCasas);
                 }
@@ -283,29 +282,29 @@ public class GameManager {
                     //efeitos dos abismos
                     if (abismo.getId() == 0){
                         programadores.get(turnoAtual).recuar(1);
-                        mensagem = "Teste 1";
+                        mensagem = "Teve um erro de sintaxe, recua 2 casas!";
                     }else if (abismo.getId() == 1){
                         programadores.get(turnoAtual).recuar(nrDado/2);
-                        mensagem = "Teste 2";
+                        mensagem = "Teve um erro de lógica, recua" + nrDado/2 + "casas!";
                     }else if (abismo.getId() == 2){
                         programadores.get(turnoAtual).recuar(2);
-                        mensagem = "Teste 3";
+                        mensagem = "Exception! Recua 2 casas.";
                     }else if (abismo.getId() == 3){
                         programadores.get(turnoAtual).recuar(3);
-                        mensagem = "Teste 4";
+                        mensagem = "File Not Found Exception! Recua 3 casas.";
                     }else if (abismo.getId() == 4){
                         programadores.get(turnoAtual).posicaoInicial();
-                        mensagem = "Teste 5";
-                    }else if (abismo.getId() == 5){//
+                        mensagem = "Crashou o programa! Volta a casa de partida.";
+                    }else if (abismo.getId() == 5){
                         programadores.get(turnoAtual).recuar(nrDado);
-                        mensagem = "Teste 6";
+                        mensagem = "Duplicated Code! Volte para a casa onde estava antes desta jogada.";
                     }else if (abismo.getId() == 6){
-                        mensagem = "Teste 7";
+                        mensagem = "Teve um efeito secundário, recua no tempo 2 jogadas.";
                     }else if (abismo.getId() == 7){
                         programadores.get(turnoAtual).perdeu();
-                        mensagem = "Teste 8";
+                        mensagem = "Blue Screen of Death! Perdeu o jogo.";
                     }else if (abismo.getId() == 8){
-                        mensagem = "Teste 9";
+                        mensagem = "Ciclo infinito! Aguarde por ajuda.";
                     }else if (abismo.getId() == 9){
                         ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
                         for (Programmer programador : programadores){
@@ -318,7 +317,7 @@ public class GameManager {
                                 programador .recuar(3);
                             }
                         }
-                        mensagem = "Teste 10";
+                        mensagem = "Segmentation Fault! Se tiver companhia recua 3 casas.";
                     }
                     break;
                 }
@@ -389,29 +388,29 @@ public class GameManager {
     }
 
 
-
-
-
     public HashSet<String> ferramentasUteis(int id){
         HashSet<String> listaFerramentas = new HashSet<>();
         switch (id){
             case 0:
                 listaFerramentas.add("Ajuda do Professor");
+                listaFerramentas.add("IDE");
                 break;
             case 1:
                 listaFerramentas.add("Ajuda do Professor");
                 break;
             case 2:
                 listaFerramentas.add("Ajuda do Professor");
+                listaFerramentas.add("Tratamento de excepções");
                 break;
             case 3:
                 listaFerramentas.add("Ajuda do Professor");
+                listaFerramentas.add("Tratamento de excepções");
                 break;
             case 4:
-                listaFerramentas.add("teste5");
+                listaFerramentas.add("Testes unitários");
                 break;
             case 5:
-                listaFerramentas.add("teste6");
+                listaFerramentas.add("Herança");
                 break;
             case 6:
                 listaFerramentas.add("teste7");
