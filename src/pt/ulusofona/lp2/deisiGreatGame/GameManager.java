@@ -274,7 +274,7 @@ public class GameManager {
 
 
     public String reactToAbyssOrTool(){
-        String mensagem = "";
+        String mensagem = null;
         for (Abismo abismo : abismos){
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()){
                 HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getId());
