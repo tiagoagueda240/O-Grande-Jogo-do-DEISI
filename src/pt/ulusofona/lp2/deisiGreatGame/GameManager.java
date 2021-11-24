@@ -387,16 +387,16 @@ public class GameManager {
         HashSet<String> listaFerramentas = new HashSet<>();
         switch (id){
             case 0:
-                listaFerramentas.add("teste1");
+                listaFerramentas.add("Ajuda do Professor");
                 break;
             case 1:
-                listaFerramentas.add("teste2");
+                listaFerramentas.add("Ajuda do Professor");
                 break;
             case 2:
-                listaFerramentas.add("teste3");
+                listaFerramentas.add("Ajuda do Professor");
                 break;
             case 3:
-                listaFerramentas.add("teste4");
+                listaFerramentas.add("Ajuda do Professor");
                 break;
             case 4:
                 listaFerramentas.add("teste5");
