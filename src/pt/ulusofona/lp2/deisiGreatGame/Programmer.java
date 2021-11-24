@@ -139,9 +139,9 @@ public class Programmer {
             }
         }
         if (ferramentas.size() == 0){
-            return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + estado + " | " + listaLinguas;
+            return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + listaLinguas + " | " + estado;
         }else{
-            return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + estado + listaLinguas;
+            return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + listaLinguas + " | " + estado;
         }
 
     }
