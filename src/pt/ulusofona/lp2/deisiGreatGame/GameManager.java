@@ -261,11 +261,6 @@ public class GameManager {
                 }else{
                     programador.avancarRecuar(nrPositions, nrCasas);
                 }
-                for (Ferramenta ferramenta: ferramentas){
-                    if (ferramenta.getPosicao() == programador.getPosicao()){
-                        programador.addFerramenta(ferramenta.getTitulo());
-                    }
-                }
             }
         }
 
@@ -275,6 +270,12 @@ public class GameManager {
 
     public String reactToAbyssOrTool(){
         String mensagem = "";
+        for (Ferramenta ferramenta: ferramentas){
+            if (ferramenta.getPosicao() == programadores.get(turnoAtual).getPosicao()){
+                programadores.get(turnoAtual).addFerramenta(ferramenta.getTitulo());
+                return "ferramenta";
+            }
+        }
         for (Abismo abismo : abismos){
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()){
                 HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getId());
