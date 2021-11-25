@@ -124,13 +124,13 @@ public class GameManager {
 
         for (Abismo abismo: abismos) {
             if (abismo.getPosicao() == position) {
-                return abismo.getTitulo() + ".png";
+                return "abismo" + abismo.getId() + ".png";
             }
         }
 
         for (Ferramenta ferramenta: ferramentas) {
             if (ferramenta.getPosicao() == position) {
-                return ferramenta.getTitulo() + ".png";
+                return "ferramenta" + ferramenta.getId() + ".png";
             }
         }
         return null;
@@ -238,31 +238,31 @@ public class GameManager {
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)){
                     // efeitos dos abismos
                     if (abismo.getTitulo().equals("Erro de sintaxe")){
-                        programadores.get(turnoAtual).recuar(1);
+                        //programadores.get(turnoAtual).recuar(1);
                         mensagem = "Teste 1";
                     }else if (abismo.getTitulo().equals("Erro de lógica")){
-                        programadores.get(turnoAtual).recuar(nrDado/2);
+                        //programadores.get(turnoAtual).recuar(nrDado/2);
                         mensagem = "Teste 2";
                     }else if (abismo.getTitulo().equals("Exception")){
-                        programadores.get(turnoAtual).recuar(2);
+                        //programadores.get(turnoAtual).recuar(-2);
                         mensagem = "Teste 3";
                     }else if (abismo.getTitulo().equals("File Not Found Exception")){
-                        programadores.get(turnoAtual).recuar(3);
+                        //programadores.get(turnoAtual).recuar(3);
                         mensagem = "Teste 4";
                     }else if (abismo.getTitulo().equals("Crash (aka Rebentanço)")){
-                        programadores.get(turnoAtual).posicaoInicial();
+                       // programadores.get(turnoAtual).posicaoInicial();
                         mensagem = "Teste 5";
                     }else if (abismo.getTitulo().equals("Duplicated Code")){//
-                        programadores.get(turnoAtual).recuar(nrDado);
+                        //programadores.get(turnoAtual).recuar(nrDado);
                         mensagem = "Teste 6";
                     }else if (abismo.getTitulo().equals("Efeitos secundários")){
-                        programadores.get(turnoAtual).saberPosicao2Jogadas();
+                        //programadores.get(turnoAtual).saberPosicao2Jogadas();
                         mensagem = "Teste 7";
                     }else if (abismo.getTitulo().equals("Blue Screen of Death")){
-                        programadores.get(turnoAtual).perdeu();
+                       // programadores.get(turnoAtual).perdeu();
                         mensagem = "Teste 8";
                     }else if (abismo.getTitulo().equals("Ciclo infinito")){
-                        HashSet<Programmer> programadoresPosicao = new HashSet<>();
+                       /* HashSet<Programmer> programadoresPosicao = new HashSet<>();
                         for (Programmer programador : programadores){
                             if (programador.getPosicao() == abismo.getPosicao()){
                                 programadoresPosicao.add(programador);
@@ -278,10 +278,10 @@ public class GameManager {
                                     programador.alteraValorPreso(true);
                                 }
                             }
-                        }
+                        }*/
                         mensagem = "Teste 9";
                     }else if (abismo.getTitulo().equals("Segmentation Fault")){
-                        ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
+                        /*ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
                         for (Programmer programador : programadores) {
                             if(programador.getPosicao() == abismo.getPosicao()) {
                                 jogadoresEmPosicao.add(programador);
@@ -291,7 +291,7 @@ public class GameManager {
                             for (Programmer programador : jogadoresEmPosicao) {
                                 programador.recuar(3);
                             }
-                        }
+                        }*/
                         mensagem = "Teste 10";
                     }
                     break;
