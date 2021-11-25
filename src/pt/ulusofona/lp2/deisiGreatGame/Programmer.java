@@ -29,11 +29,9 @@ public class Programmer {
     public void posicaoInicial(){
         posicao = 1;
     }
-
     public void perdeu(){
         estado = "Derrotado";
     }
-
     public int getId() {
         return iD;
     }
@@ -41,7 +39,6 @@ public class Programmer {
     public String getName() {
         return name;
     }
-
     public String getEstado() {
         return estado;
     }
@@ -63,12 +60,12 @@ public class Programmer {
         }else{
             posicao -= posicoes;
         }
+
     }
 
     public void avancarRecuar(int posicoes, int nrCasas) {
         posicao = nrCasas + (nrCasas - posicao - posicoes);
     }
-
     public void addFerramenta(String ferramenta){
         ferramentas.add(ferramenta);
     }
@@ -146,5 +143,6 @@ public class Programmer {
         }else{
             return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + listaLinguas + " | " + estado;
         }
+
     }
 }
