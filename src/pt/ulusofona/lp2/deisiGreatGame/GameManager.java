@@ -65,6 +65,8 @@ public class GameManager {
                 }else{
                     return false;
                 }
+            }else{
+                return false;
             }
         }
         abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));
