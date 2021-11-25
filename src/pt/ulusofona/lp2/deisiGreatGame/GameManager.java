@@ -53,9 +53,14 @@ public class GameManager {
         }
         for (int i = 0; i < abyssesAndTools.length; i++){
             if (abyssesAndTools[i][0].equals("0")){
-                abismos.add(criarAbismo(abyssesAndTools[i]));
+                if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 0 || Integer.parseInt(abyssesAndTools[i][2]) < 0 || Integer.parseInt(abyssesAndTools[i][2]) > worldSize){
+                    abismos.add(criarAbismo(abyssesAndTools[i]));
+                }
+
             }else if(abyssesAndTools[i][0].equals("1")){
-                ferramentas.add(criarFerramentas(abyssesAndTools[i]));
+                if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 0 || Integer.parseInt(abyssesAndTools[i][2]) < 0 || Integer.parseInt(abyssesAndTools[i][2]) > worldSize) {
+                    ferramentas.add(criarFerramentas(abyssesAndTools[i]));
+                }
             }
         }
         abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));

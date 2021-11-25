@@ -39,7 +39,11 @@ public class Programmer {
         historicoPosicoes.add(posicao);
     }
     public void saberPosicaoJogadas(int quantidade){
-        posicao = historicoPosicoes.get(historicoPosicoes.size() - quantidade - 1);
+        if (quantidade - 1 >= 0){
+            posicao = historicoPosicoes.get(historicoPosicoes.size() - quantidade);
+        }else{
+            posicao = 1;
+        }
     }
 
     public void posicaoInicial(){
