@@ -82,7 +82,7 @@ public class GameManager {
             case "4":
                 return new Ferramenta("IDE", 4, Integer.valueOf(info[2]));
             case "5":
-                return new Ferramenta("Ajuda do Professor", 5, Integer.valueOf(info[2]));
+                return new Ferramenta("Ajuda Do Professor", 5, Integer.valueOf(info[2]));
 
             default:
                 return null;
