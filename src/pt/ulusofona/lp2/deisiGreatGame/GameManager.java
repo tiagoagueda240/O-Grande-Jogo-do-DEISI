@@ -43,54 +43,6 @@ public class GameManager {
         }
     }
 
-    Abismo criarAbismo(String[] info){
-        switch (info[1]){
-            case "0":
-                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[2]));
-            case "1":
-                return new Abismo("Erro de lógica", 1, Integer.valueOf(info[2]));
-            case "2":
-                return new Abismo("Exception", 2, Integer.valueOf(info[2]));
-            case "3":
-                return new Abismo("File Not Found Exception", 3, Integer.valueOf(info[2]));
-            case "4":
-                return new Abismo("Crash (aka Rebentanço)", 4, Integer.valueOf(info[2]));
-            case "5":
-                return new Abismo("Duplicated Code", 5, Integer.valueOf(info[2]));
-            case "6":
-                return new Abismo("Efeitos secundários", 6, Integer.valueOf(info[2]));
-            case "7":
-                return new Abismo("Blue Screen of Death", 7, Integer.valueOf(info[2]));
-            case "8":
-                return new Abismo("Ciclo infinito", 8, Integer.valueOf(info[2]));
-            case "9":
-                return new Abismo("Segmentation Fault", 9, Integer.valueOf(info[2]));
-
-            default:
-                return null;
-        }
-    }
-
-    Ferramenta criarFerramentas(String[] info){
-        switch (info[1]){
-            case "0":
-                return new Ferramenta("Herança", 0, Integer.valueOf(info[2]));
-            case "1":
-                return new Ferramenta("Programação Funcional", 1, Integer.valueOf(info[2]));
-            case "2":
-                return new Ferramenta("Testes unitários", 2, Integer.valueOf(info[2]));
-            case "3":
-                return new Ferramenta("Tratamento de Excepções", 3, Integer.valueOf(info[2]));
-            case "4":
-                return new Ferramenta("IDE", 4, Integer.valueOf(info[2]));
-            case "5":
-                return new Ferramenta("Ajuda Do Professor", 5, Integer.valueOf(info[2]));
-
-            default:
-                return null;
-        }
-    }
-
     public GameManager() {
     }
 
@@ -252,19 +204,23 @@ public class GameManager {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }
-        nrDado = nrPositions;
-        for (Programmer programador: programadores) {
-            if (programador.getId() == getCurrentPlayerID()){
-                if (programador.getPosicao() + nrPositions <= nrCasas) { // Verifica se o jogador pode andar sem ultrapassar a meta
-                    programador.mover(nrPositions);
+        if (!programadores.get(turnoAtual).getValorPreso()){
+            programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
+            nrDado = nrPositions;
+            for (Programmer programador: programadores) {
+                if (programador.getId() == getCurrentPlayerID()){
+                    if (programador.getPosicao() + nrPositions <= nrCasas) { // Verifica se o jogador pode andar sem ultrapassar a meta
+                        programador.mover(nrPositions);
 
-                }else{
-                    programador.avancarRecuar(nrPositions, nrCasas);
+                    }else{
+                        programador.avancarRecuar(nrPositions, nrCasas);
+                    }
                 }
             }
+            return true;
         }
 
-        return true;
+        return false;
     }
 
 
@@ -300,11 +256,29 @@ public class GameManager {
                         programadores.get(turnoAtual).recuar(nrDado);
                         mensagem = "Teste 6";
                     }else if (abismo.getTitulo().equals("Efeitos secundários")){
+                        programadores.get(turnoAtual).saberPosicao2Jogadas();
                         mensagem = "Teste 7";
                     }else if (abismo.getTitulo().equals("Blue Screen of Death")){
                         programadores.get(turnoAtual).perdeu();
                         mensagem = "Teste 8";
                     }else if (abismo.getTitulo().equals("Ciclo infinito")){
+                        HashSet<Programmer> programadoresPosicao = new HashSet<>();
+                        for (Programmer programador : programadores){
+                            if (programador.getPosicao() == abismo.getPosicao()){
+                                programadoresPosicao.add(programador);
+                            }
+                        }
+                        if (programadoresPosicao.size() == 1){
+                            programadores.get(turnoAtual).alteraValorPreso(true);
+                        }else{
+                            for (Programmer programador : programadoresPosicao){
+                                if (programador.getValorPreso()){
+                                    programador.alteraValorPreso(false);
+                                }else{
+                                    programador.alteraValorPreso(true);
+                                }
+                            }
+                        }
                         mensagem = "Teste 9";
                     }else if (abismo.getTitulo().equals("Segmentation Fault")){
                         ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
@@ -435,5 +409,52 @@ public class GameManager {
         return listaFerramentas;
     }
 
+    Abismo criarAbismo(String[] info){
+        switch (info[1]){
+            case "0":
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[2]));
+            case "1":
+                return new Abismo("Erro de lógica", 1, Integer.valueOf(info[2]));
+            case "2":
+                return new Abismo("Exception", 2, Integer.valueOf(info[2]));
+            case "3":
+                return new Abismo("File Not Found Exception", 3, Integer.valueOf(info[2]));
+            case "4":
+                return new Abismo("Crash (aka Rebentanço)", 4, Integer.valueOf(info[2]));
+            case "5":
+                return new Abismo("Duplicated Code", 5, Integer.valueOf(info[2]));
+            case "6":
+                return new Abismo("Efeitos secundários", 6, Integer.valueOf(info[2]));
+            case "7":
+                return new Abismo("Blue Screen of Death", 7, Integer.valueOf(info[2]));
+            case "8":
+                return new Abismo("Ciclo infinito", 8, Integer.valueOf(info[2]));
+            case "9":
+                return new Abismo("Segmentation Fault", 9, Integer.valueOf(info[2]));
+
+            default:
+                return null;
+        }
+    }
+
+    Ferramenta criarFerramentas(String[] info){
+        switch (info[1]){
+            case "0":
+                return new Ferramenta("Herança", 0, Integer.valueOf(info[2]));
+            case "1":
+                return new Ferramenta("Programação Funcional", 1, Integer.valueOf(info[2]));
+            case "2":
+                return new Ferramenta("Testes unitários", 2, Integer.valueOf(info[2]));
+            case "3":
+                return new Ferramenta("Tratamento de Excepções", 3, Integer.valueOf(info[2]));
+            case "4":
+                return new Ferramenta("IDE", 4, Integer.valueOf(info[2]));
+            case "5":
+                return new Ferramenta("Ajuda Do Professor", 5, Integer.valueOf(info[2]));
+
+            default:
+                return null;
+        }
+    }
 }
 

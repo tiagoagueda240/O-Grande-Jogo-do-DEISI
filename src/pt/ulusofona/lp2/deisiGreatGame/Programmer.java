@@ -13,6 +13,8 @@ public class Programmer {
     int posicao = 1; // primeira posição do tabuleiro
     String estado = "Em Jogo"; // se o jogador está em jogo ou não
     ArrayList<String> ferramentas = new ArrayList();
+    boolean preso = false;
+    ArrayList<Integer> historicoPosicoes = new ArrayList<>();
 
     public Programmer(String name, ArrayList<String> languages, int iD, ProgrammerColor colorAvatar, int posicao, String estado) {
         this.name = name;
@@ -24,6 +26,20 @@ public class Programmer {
     }
 
     public Programmer() {
+    }
+
+    public void alteraValorPreso(boolean valor){
+        preso = valor;
+    }
+    public boolean getValorPreso(){
+        return preso;
+    }
+
+    public void adicionaPosicao(int posicao){
+        historicoPosicoes.add(posicao);
+    }
+    public void saberPosicao2Jogadas(){
+        posicao = historicoPosicoes.get(historicoPosicoes.size() - 3);
     }
 
     public void posicaoInicial(){
@@ -98,36 +114,7 @@ public class Programmer {
             return listaFerramentas.toString();
         }
     }
-    /*
-        public void ativaAbismo(int id){
-            HashSet<String> listaFerramentas = new HashSet();
-            for (String ferramenta: ferramentas){
-                listaFerramentas.add(ferramenta);
-            }
-            switch (id){
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    break;
-            }
-        }
-    */
+
     @Override
     public String toString() {
         StringBuilder listaLinguas = new StringBuilder();
