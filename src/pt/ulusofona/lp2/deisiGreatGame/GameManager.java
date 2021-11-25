@@ -280,7 +280,7 @@ public class GameManager {
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()){
                 HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getTitulo());
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)){
-                    //efeitos dos abismos
+                    // efeitos dos abismos
                     if (abismo.getTitulo().equals("Erro de sintaxe")){
                         programadores.get(turnoAtual).recuar(1);
                         mensagem = "Teste 1";
@@ -308,14 +308,14 @@ public class GameManager {
                         mensagem = "Teste 9";
                     }else if (abismo.getTitulo().equals("Segmentation Fault")){
                         ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
-                        for (Programmer programador : programadores){
-                            if(programador.getPosicao() == abismo.getPosicao()){
+                        for (Programmer programador : programadores) {
+                            if(programador.getPosicao() == abismo.getPosicao()) {
                                 jogadoresEmPosicao.add(programador);
                             }
                         }
-                        if (jogadoresEmPosicao.size() >= 2){
-                            for (Programmer programador : jogadoresEmPosicao){
-                                programador .recuar(3);
+                        if (jogadoresEmPosicao.size() >= 2) {
+                            for (Programmer programador : jogadoresEmPosicao) {
+                                programador.recuar(3);
                             }
                         }
                         mensagem = "Teste 10";
@@ -357,6 +357,7 @@ public class GameManager {
         resultados.add(String.valueOf(nrTurnos));
         resultados.add("");
         resultados.add("VENCEDOR");
+        programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getName()));
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
         resultados.add(programadores.get(0).getName());
         resultados.add("");
