@@ -38,8 +38,8 @@ public class Programmer {
     public void adicionaPosicao(int posicao){
         historicoPosicoes.add(posicao);
     }
-    public void saberPosicao2Jogadas(){
-        posicao = historicoPosicoes.get(historicoPosicoes.size() - 3);
+    public void saberPosicaoJogadas(int quantidade){
+        posicao = historicoPosicoes.get(historicoPosicoes.size() - quantidade - 1);
     }
 
     public void posicaoInicial(){
