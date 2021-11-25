@@ -76,7 +76,7 @@ public class GameManager {
             case "0":
                 return new Ferramenta("Herança", 0, Integer.valueOf(info[2]));
             case "1":
-                return new Ferramenta("Programação funcional", 1, Integer.valueOf(info[2]));
+                return new Ferramenta("Programação Funcional", 1, Integer.valueOf(info[2]));
             case "2":
                 return new Ferramenta("Testes unitários", 2, Integer.valueOf(info[2]));
             case "3":
@@ -398,24 +398,27 @@ public class GameManager {
         switch (nome){
             case "Erro de sintaxe":
                 listaFerramentas.add("Ajuda do Professor");
+                listaFerramentas.add("IDE");
                 break;
             case "Erro de lógica":
                 listaFerramentas.add("Ajuda do Professor");
                 break;
             case "Exception":
                 listaFerramentas.add("Ajuda do Professor");
+                listaFerramentas.add("Tratamento de Excepções");
                 break;
             case "File Not Found Exception":
                 listaFerramentas.add("Ajuda do Professor");
+                listaFerramentas.add("Tratamento de Excepções");
                 break;
             case "Crash (aka Rebentanço)":
-                listaFerramentas.add("teste5");
+                listaFerramentas.add("Programação Funcional");
                 break;
             case "Duplicated Code":
-                listaFerramentas.add("teste6");
+                listaFerramentas.add("Herança");
                 break;
             case "Efeitos secundários":
-                listaFerramentas.add("teste7");
+                listaFerramentas.add("Testes unitários");
                 break;
             case "Blue Screen of Death":
                 listaFerramentas.add("teste8");
