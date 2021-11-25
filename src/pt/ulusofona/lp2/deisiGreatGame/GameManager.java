@@ -386,11 +386,11 @@ public class GameManager {
                 break;
             case "Exception":
                 listaFerramentas.add("Ajuda Do Professor");
-                listaFerramentas.add("Tratamento de excepções");
+                listaFerramentas.add("Tratamento de Excepções");
                 break;
             case "File Not Found Exception":
                 listaFerramentas.add("Ajuda Do Professor");
-                listaFerramentas.add("Tratamento de excepções");
+                listaFerramentas.add("Tratamento de Excepções");
                 break;
             case "Crash (aka Rebentanço)":
                 listaFerramentas.add("Programação funcional");
