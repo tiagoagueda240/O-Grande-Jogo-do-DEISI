@@ -273,7 +273,7 @@ public class GameManager {
                     if (abismo.getTitulo().equals("Erro de sintaxe")){
                         programadores.get(turnoAtual).recuar(1);
                         mensagem = "Teve um erro de sintaxe, recua 2 casas!";
-                    }else if (abismo.getTitulo().equals()equals("Erro de lógica")){
+                    }else if (abismo.getTitulo().equals("Erro de lógica")){
                         programadores.get(turnoAtual).recuar(nrDado/2);
                         mensagem = "Teve um erro de lógica, recua" + nrDado/2 + "casas!";
                     }else if (abismo.getTitulo().equals("Exception")){
