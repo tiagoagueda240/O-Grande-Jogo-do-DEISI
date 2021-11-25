@@ -222,7 +222,6 @@ public class GameManager {
                 programadoresNaPosicao.add(programmer);
             }
         }
-
         return programadoresNaPosicao;
     }
 
@@ -268,35 +267,35 @@ public class GameManager {
         }
         for (Abismo abismo : abismos){
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()){
-                HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getId());
+                HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getTitulo());
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)){
                     //efeitos dos abismos
-                    if (abismo.getId() == 0){
+                    if (abismo.equals("Erro de sintaxe")){
                         programadores.get(turnoAtual).recuar(1);
                         mensagem = "Teve um erro de sintaxe, recua 2 casas!";
-                    }else if (abismo.getId() == 1){
+                    }else if (abismo.equals("Erro de lógica")){
                         programadores.get(turnoAtual).recuar(nrDado/2);
                         mensagem = "Teve um erro de lógica, recua" + nrDado/2 + "casas!";
-                    }else if (abismo.getId() == 2){
+                    }else if (abismo.equals("Exception")){
                         programadores.get(turnoAtual).recuar(2);
                         mensagem = "Exception! Recua 2 casas.";
-                    }else if (abismo.getId() == 3){
+                    }else if (abismo.equals("File Not Found Exception")){
                         programadores.get(turnoAtual).recuar(3);
                         mensagem = "File Not Found Exception! Recua 3 casas.";
-                    }else if (abismo.getId() == 4){
+                    }else if (abismo.equals("Crash (aka Rebentanço)")){
                         programadores.get(turnoAtual).posicaoInicial();
                         mensagem = "Crashou o programa! Volta a casa de partida.";
-                    }else if (abismo.getId() == 5){
+                    }else if (abismo.equals("Duplicated Code")){
                         programadores.get(turnoAtual).recuar(nrDado);
                         mensagem = "Duplicated Code! Volte para a casa onde estava antes desta jogada.";
-                    }else if (abismo.getId() == 6){
+                    }else if (abismo.equals("Efeitos secundários")){
                         mensagem = "Teve um efeito secundário, recua no tempo 2 jogadas.";
-                    }else if (abismo.getId() == 7){
+                    }else if (abismo.equals("Blue Screen of Death")){
                         programadores.get(turnoAtual).perdeu();
                         mensagem = "Blue Screen of Death! Perdeu o jogo.";
-                    }else if (abismo.getId() == 8){
+                    }else if (abismo.equals("Ciclo infinito")){
                         mensagem = "Ciclo infinito! Aguarde por ajuda.";
-                    }else if (abismo.getId() == 9){
+                    }else if (abismo.equals("Segmentation Fault")){
                         ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
                         for (Programmer programador : programadores){
                             if(programador.getPosicao() == abismo.getPosicao()){
@@ -375,40 +374,40 @@ public class GameManager {
         return credits;
     }
 
-    public HashSet<String> ferramentasUteis(int id){
+    public HashSet<String> ferramentasUteis(String nome){
         HashSet<String> listaFerramentas = new HashSet<>();
-        switch (id){
-            case 0:
-                listaFerramentas.add("Ajuda do Professor");
+        switch (nome){
+            case "Erro de sintaxe":
+                listaFerramentas.add("Ajuda Do Professor");
                 listaFerramentas.add("IDE");
                 break;
-            case 1:
-                listaFerramentas.add("Ajuda do Professor");
+            case "Erro de lógica":
+                listaFerramentas.add("Ajuda Do Professor");
                 break;
-            case 2:
-                listaFerramentas.add("Ajuda do Professor");
+            case "Exception":
+                listaFerramentas.add("Ajuda Do Professor");
                 listaFerramentas.add("Tratamento de excepções");
                 break;
-            case 3:
-                listaFerramentas.add("Ajuda do Professor");
+            case "File Not Found Exception":
+                listaFerramentas.add("Ajuda Do Professor");
                 listaFerramentas.add("Tratamento de excepções");
                 break;
-            case 4:
-                listaFerramentas.add("Testes unitários");
+            case "Crash (aka Rebentanço)":
+                listaFerramentas.add("Programação funcional");
                 break;
-            case 5:
+            case "Duplicated Code":
                 listaFerramentas.add("Herança");
                 break;
-            case 6:
-                listaFerramentas.add("teste7");
+            case "Efeitos secundários":
+                listaFerramentas.add("Testes unitários");
                 break;
-            case 7:
+            case "Blue Screen of Death":
                 listaFerramentas.add("teste8");
                 break;
-            case 8:
+            case "Ciclo infinito":
                 listaFerramentas.add("teste9");
                 break;
-            case 9:
+            case "Segmentation Fault":
                 listaFerramentas.add("teste10");
                 break;
             default:
