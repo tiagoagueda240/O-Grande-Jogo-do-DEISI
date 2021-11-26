@@ -239,7 +239,7 @@ public class GameManager {
         for (Ferramenta ferramenta: ferramentas){
             if (ferramenta.getPosicao() == programadores.get(turnoAtual).getPosicao()){
                 programadores.get(turnoAtual).addFerramenta(ferramenta.getTitulo());
-                return "ferramenta";
+                mensagem = "ferramenta";
             }
         }
         for (Abismo abismo : abismos){
