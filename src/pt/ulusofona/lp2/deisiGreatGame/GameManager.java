@@ -311,6 +311,9 @@ public class GameManager {
         programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
         turnoAtual++;
         nrTurnos++;
+        if(programadores.get(turnoAtual).getValorPreso() || programadores.get(turnoAtual).getEstado().equals("Derrotado")){
+            turnoAtual++;
+        }
         if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
         }
