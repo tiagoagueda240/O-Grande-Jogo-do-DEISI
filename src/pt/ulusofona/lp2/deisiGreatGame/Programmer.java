@@ -87,7 +87,15 @@ public class Programmer {
         posicao = nrCasas + (nrCasas - posicao - posicoes);
     }
     public void addFerramenta(String ferramenta){
-        ferramentas.add(ferramenta);
+        boolean verificaExistencia = true;
+        for (String ferramentaProgramador : ferramentas){
+            if (ferramentaProgramador.equals(ferramenta) ){
+                verificaExistencia = false;
+            }
+        }
+        if (verificaExistencia){
+            ferramentas.add(ferramenta);
+        }
     }
 
     public boolean contemFerramentaUtil(HashSet<String> lista){

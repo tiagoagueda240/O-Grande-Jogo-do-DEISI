@@ -240,6 +240,7 @@ public class GameManager {
             if (ferramenta.getPosicao() == programadores.get(turnoAtual).getPosicao()){
                 programadores.get(turnoAtual).addFerramenta(ferramenta.getTitulo());
                 mensagem = "ferramenta";
+                break;
             }
         }
         for (Abismo abismo : abismos){
