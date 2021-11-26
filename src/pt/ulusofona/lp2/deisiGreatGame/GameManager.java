@@ -53,14 +53,14 @@ public class GameManager {
         }
         for (int i = 0; i < abyssesAndTools.length; i++){
             if (abyssesAndTools[i][0].equals("0")){
-                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 || Integer.parseInt(abyssesAndTools[i][1]) <= 9 || Integer.parseInt(abyssesAndTools[i][2]) > 0 || Integer.parseInt(abyssesAndTools[i][2]) <= worldSize){
+                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 || Integer.parseInt(abyssesAndTools[i][1]) <= 9 || Integer.parseInt(abyssesAndTools[i][2]) <= worldSize){
                     abismos.add(criarAbismo(abyssesAndTools[i]));
                 }else{
                     return false;
                 }
 
             }else if(abyssesAndTools[i][0].equals("1")){
-                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 || Integer.parseInt(abyssesAndTools[i][1]) <= 5 || Integer.parseInt(abyssesAndTools[i][2]) > 0 || Integer.parseInt(abyssesAndTools[i][2]) <= worldSize) {
+                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 || Integer.parseInt(abyssesAndTools[i][1]) <= 5 || Integer.parseInt(abyssesAndTools[i][2]) <= worldSize) {
                     ferramentas.add(criarFerramentas(abyssesAndTools[i]));
                 }else{
                     return false;
@@ -240,14 +240,12 @@ public class GameManager {
             if (ferramenta.getPosicao() == programadores.get(turnoAtual).getPosicao()){
                 programadores.get(turnoAtual).addFerramenta(ferramenta.getTitulo());
                 mensagem = "ferramenta";
-                break;
             }
         }
         for (Abismo abismo : abismos){
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()){
                 HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getTitulo());
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)){
-                    // efeitos dos abismos
                     if (abismo.getTitulo().equals("Erro de sintaxe")){
                         programadores.get(turnoAtual).recuar(1);
                         mensagem = "Teste 1";
@@ -263,7 +261,7 @@ public class GameManager {
                     }else if (abismo.getTitulo().equals("Crash (aka Rebentanço)")){
                         programadores.get(turnoAtual).posicaoInicial();
                         mensagem = "Teste 5";
-                    }else if (abismo.getTitulo().equals("Duplicated Code")){//
+                    }else if (abismo.getTitulo().equals("Duplicated Code")){
                         programadores.get(turnoAtual).saberPosicaoJogadas(1);
                         mensagem = "Teste 6";
                     }else if (abismo.getTitulo().equals("Efeitos secundários")){
@@ -305,7 +303,6 @@ public class GameManager {
                         }
                         mensagem = "Teste 10";
                     }
-                    break;
                 }
             }
         }
