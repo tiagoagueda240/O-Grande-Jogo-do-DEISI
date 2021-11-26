@@ -334,6 +334,8 @@ public class GameManager {
             if (programador.getEstado().equals("Em Jogo")){
                 jogadoresEmJogo++;
             }
+        }
+        for (Programmer programador: programadores){
             if (programador.getPosicao() == nrCasas || jogadoresEmJogo < 2){
                 return true;
             }
