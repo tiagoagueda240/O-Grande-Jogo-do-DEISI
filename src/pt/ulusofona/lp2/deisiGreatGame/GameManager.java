@@ -268,7 +268,7 @@ public class GameManager {
                         programadores.get(turnoAtual).saberPosicaoJogadas(2);
                         mensagem = "Teste 7";
                     }else if (abismo.getTitulo().equals("Blue Screen of Death")){
-                       programadores.get(turnoAtual).perdeu();
+                        programadores.get(turnoAtual).perdeu();
                         mensagem = "Teste 8";
                     }else if (abismo.getTitulo().equals("Ciclo infinito")){
                         HashSet<Programmer> programadoresPosicao = new HashSet<>();
@@ -334,7 +334,7 @@ public class GameManager {
             if (programador.getEstado().equals("Em Jogo")){
                 jogadoresEmJogo++;
             }
-            if (programador.getPosicao() == nrCasas || jogadoresEmJogo >= 2){
+            if (programador.getPosicao() == nrCasas || jogadoresEmJogo < 2){
                 return true;
             }
         }
