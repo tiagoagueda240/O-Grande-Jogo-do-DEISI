@@ -304,6 +304,7 @@ public class GameManager {
                         mensagem = "Teste 10";
                     }
                 }
+                mensagem = "Utilizou uma ferramenta";
             }
         }
         programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
@@ -324,17 +325,20 @@ public class GameManager {
         }else{
             return mensagem;
         }
-
-
     }
 
     public boolean gameIsOver() {
         //Verifica se algum jogador chegou ao fim
+        int jogadoresEmJogo = 0;
         for (Programmer programador: programadores){
-            if (programador.getPosicao() == nrCasas){
+            if (programador.getEstado().equals("Em Jogo")){
+                jogadoresEmJogo++;
+            }
+            if (programador.getPosicao() == nrCasas || jogadoresEmJogo >= 2){
                 return true;
             }
         }
+
         return false;
     }
 
