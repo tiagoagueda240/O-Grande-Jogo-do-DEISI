@@ -318,12 +318,19 @@ public class GameManager {
         if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
         }
-        if(programadores.get(turnoAtual).getValorPreso() || programadores.get(turnoAtual).getEstado().equals("Derrotado")){
-            turnoAtual++;
+        for (int i = turnoAtual; i <= programadores.size() + 1; i++){
+            if(i >= programadores.size()) { // Verifica se é o ultimo jogador
+                turnoAtual = 0;
+                i= 0;
+            }
+            if(programadores.get(i).getValorPreso() || programadores.get(i).getEstado().equals("Derrotado")){
+                turnoAtual++;
+            }else{
+                break;
+            }
         }
-        if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
-            turnoAtual = 0;
-        }
+
+
 
         if (mensagem.equals("")){
             return null;
