@@ -53,18 +53,18 @@ public class GameManager {
         }
         for (int i = 0; i < abyssesAndTools.length; i++){
             if (abyssesAndTools[i][0].equals("0")){
-                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 || Integer.parseInt(abyssesAndTools[i][1]) <= 9 || Integer.parseInt(abyssesAndTools[i][2]) <= worldSize){
+                //if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 || Integer.parseInt(abyssesAndTools[i][1]) <= 9 || Integer.parseInt(abyssesAndTools[i][2]) <= worldSize){
                     abismos.add(criarAbismo(abyssesAndTools[i]));
-                }else{
+                /*}else{
                     return false;
-                }
+                }*/
 
             }else if(abyssesAndTools[i][0].equals("1")){
-                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 || Integer.parseInt(abyssesAndTools[i][1]) <= 5 || Integer.parseInt(abyssesAndTools[i][2]) <= worldSize) {
+                //if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 || Integer.parseInt(abyssesAndTools[i][1]) <= 5 || Integer.parseInt(abyssesAndTools[i][2]) <= worldSize) {
                     ferramentas.add(criarFerramentas(abyssesAndTools[i]));
-                }else{
+               /* }else{
                     return false;
-                }
+                }*/
             }else{
                 return false;
             }
