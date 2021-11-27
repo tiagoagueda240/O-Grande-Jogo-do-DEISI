@@ -69,8 +69,13 @@ public class GameManager {
                 return false;
             }
         }
-        abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));
-        ferramentas.sort(Comparator.comparing((Ferramenta ferramenta1) -> ferramenta1.getPosicao()));
+        if (abismos != null){
+            abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));
+        }
+        if (abismos != null){
+            ferramentas.sort(Comparator.comparing((Ferramenta ferramenta1) -> ferramenta1.getPosicao()));
+        }
+
         return true;
     }
 
