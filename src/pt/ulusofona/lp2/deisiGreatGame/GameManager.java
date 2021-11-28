@@ -53,29 +53,13 @@ public class GameManager {
         }
         for (int i = 0; i < abyssesAndTools.length; i++){
             if (abyssesAndTools[i][0].equals("0")){
-                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 || Integer.parseInt(abyssesAndTools[i][1]) <= 9 || Integer.parseInt(abyssesAndTools[i][2]) <= worldSize){
-                    abismos.add(criarAbismo(abyssesAndTools[i]));
-                }else{
-                    return false;
-                }
-
+                abismos.add(criarAbismo(abyssesAndTools[i]));
             }else if(abyssesAndTools[i][0].equals("1")){
-                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 || Integer.parseInt(abyssesAndTools[i][1]) <= 5 || Integer.parseInt(abyssesAndTools[i][2]) <= worldSize) {
-                    ferramentas.add(criarFerramentas(abyssesAndTools[i]));
-                }else{
-                    return false;
-                }
-            }else{
-                return false;
+                ferramentas.add(criarFerramentas(abyssesAndTools[i]));
             }
         }
-        if (abismos != null){
-            abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));
-        }
-        if (abismos != null){
-            ferramentas.sort(Comparator.comparing((Ferramenta ferramenta1) -> ferramenta1.getPosicao()));
-        }
-
+        abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));
+        ferramentas.sort(Comparator.comparing((Ferramenta ferramenta1) -> ferramenta1.getPosicao()));
         return true;
     }
 
@@ -318,7 +302,7 @@ public class GameManager {
         if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
         }
-        for (int i = turnoAtual; i <= programadores.size() + 1; i++){
+        for (int i = turnoAtual; i <= programadores.size(); i++){
             if(i >= programadores.size()) { // Verifica se é o ultimo jogador
                 turnoAtual = 0;
                 i= 0;
@@ -326,12 +310,13 @@ public class GameManager {
             if(programadores.get(i).getValorPreso() || programadores.get(i).getEstado().equals("Derrotado")){
                 turnoAtual++;
             }else{
-                break;
+                return validaMensagem(mensagem);
             }
         }
 
-
-
+        return validaMensagem(mensagem);
+    }
+    String validaMensagem(String mensagem){
         if (mensagem.equals("")){
             return null;
         }else{
@@ -428,13 +413,11 @@ public class GameManager {
                 listaFerramentas.add("Testes unitários");
                 break;
             case "Blue Screen of Death":
-                listaFerramentas.add("teste8");
                 break;
             case "Ciclo infinito":
-                listaFerramentas.add("teste9");
                 break;
             case "Segmentation Fault":
-                listaFerramentas.add("teste10");
+                listaFerramentas.add("Programação Funcional");
                 break;
             default:
                 return null;
