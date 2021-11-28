@@ -239,28 +239,28 @@ public class GameManager {
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)){
                     if (abismo.getTitulo().equals("Erro de sintaxe")){
                         programadores.get(turnoAtual).recuar(1);
-                        mensagem = "Teste 1";
+                        mensagem = "Teve um erro de sintaxe, recua 2 casas!";
                     }else if (abismo.getTitulo().equals("Erro de lógica")){
                         programadores.get(turnoAtual).recuar(nrDado/2);
-                        mensagem = "Teste 2";
+                        mensagem = "Teve um erro de lógica, recue" + nrDado/2 + "casa(s)!";
                     }else if (abismo.getTitulo().equals("Exception")){
                         programadores.get(turnoAtual).recuar(2);
-                        mensagem = "Teste 3";
+                        mensagem = "Exception! Recue 2 casas.";
                     }else if (abismo.getTitulo().equals("File Not Found Exception")){
                         programadores.get(turnoAtual).recuar(3);
-                        mensagem = "Teste 4";
+                        mensagem = "File Not Found Exception! Recue 3 casas.";
                     }else if (abismo.getTitulo().equals("Crash (aka Rebentanço)")){
                         programadores.get(turnoAtual).posicaoInicial();
-                        mensagem = "Teste 5";
+                        mensagem = "Crashou o programa! Volte a casa de partida.";
                     }else if (abismo.getTitulo().equals("Duplicated Code")){
                         programadores.get(turnoAtual).saberPosicaoJogadas(1);
-                        mensagem = "Teste 6";
+                        mensagem = "Duplicated Code! Volte para a casa onde estava antes desta jogada.";
                     }else if (abismo.getTitulo().equals("Efeitos secundários")){
                         programadores.get(turnoAtual).saberPosicaoJogadas(2);
-                        mensagem = "Teste 7";
+                        mensagem = "Teve um efeito secundário, recue no tempo 2 jogadas.";
                     }else if (abismo.getTitulo().equals("Blue Screen of Death")){
                         programadores.get(turnoAtual).perdeu();
-                        mensagem = "Teste 8";
+                        mensagem = "Blue Screen of Death! Perdeu o jogo.";
                     }else if (abismo.getTitulo().equals("Ciclo infinito")){
                         HashSet<Programmer> programadoresPosicao = new HashSet<>();
                         for (Programmer programador : programadores){
@@ -279,7 +279,7 @@ public class GameManager {
                                 }
                             }
                         }
-                        mensagem = "Teste 9";
+                        mensagem = "Ciclo infinito! Aguarde por ajuda.";
                     }else if (abismo.getTitulo().equals("Segmentation Fault")){
                         ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
                         for (Programmer programador : programadores) {
@@ -292,7 +292,7 @@ public class GameManager {
                                 programador.recuar(3);
                             }
                         }
-                        mensagem = "Teste 10";
+                        mensagem = "Segmentation Fault! Se tiver companhia recue 3 casas.";
                     }
                 }
                 mensagem = "Utilizou uma ferramenta";
