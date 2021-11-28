@@ -53,9 +53,9 @@ public class GameManager {
         }
         for (int i = 0; i < abyssesAndTools.length; i++){
             if (abyssesAndTools[i][0].equals("0")){
-                abismos.add(criarAbismo(abyssesAndTools[i]));
+                abismos.add(criarAbismo(abyssesAndTools[i][1], abyssesAndTools[i][2]));
             }else if(abyssesAndTools[i][0].equals("1")){
-                ferramentas.add(criarFerramentas(abyssesAndTools[i]));
+                ferramentas.add(criarFerramentas(abyssesAndTools[i][1], abyssesAndTools[i][2]));
             }else{
                 return false;
             }
@@ -436,47 +436,47 @@ public class GameManager {
         return listaFerramentas;
     }
 
-    Abismo criarAbismo(String[] info){
-        switch (info[1]){
+    Abismo criarAbismo(String info, String posicao){
+        switch (info){
             case "0":
-                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(info[2]));
+                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(posicao));
             case "1":
-                return new Abismo("Erro de lógica", 1, Integer.valueOf(info[2]));
+                return new Abismo("Erro de lógica", 1, Integer.valueOf(posicao));
             case "2":
-                return new Abismo("Exception", 2, Integer.valueOf(info[2]));
+                return new Abismo("Exception", 2, Integer.valueOf(posicao));
             case "3":
-                return new Abismo("File Not Found Exception", 3, Integer.valueOf(info[2]));
+                return new Abismo("File Not Found Exception", 3, Integer.valueOf(posicao));
             case "4":
-                return new Abismo("Crash (aka Rebentanço)", 4, Integer.valueOf(info[2]));
+                return new Abismo("Crash (aka Rebentanço)", 4, Integer.valueOf(posicao));
             case "5":
-                return new Abismo("Duplicated Code", 5, Integer.valueOf(info[2]));
+                return new Abismo("Duplicated Code", 5, Integer.valueOf(posicao));
             case "6":
-                return new Abismo("Efeitos secundários", 6, Integer.valueOf(info[2]));
+                return new Abismo("Efeitos secundários", 6, Integer.valueOf(posicao));
             case "7":
-                return new Abismo("Blue Screen of Death", 7, Integer.valueOf(info[2]));
+                return new Abismo("Blue Screen of Death", 7, Integer.valueOf(posicao));
             case "8":
-                return new Abismo("Ciclo infinito", 8, Integer.valueOf(info[2]));
+                return new Abismo("Ciclo infinito", 8, Integer.valueOf(posicao));
             case "9":
-                return new Abismo("Segmentation Fault", 9, Integer.valueOf(info[2]));
+                return new Abismo("Segmentation Fault", 9, Integer.valueOf(posicao));
             default:
                 return null;
         }
     }
 
-    Ferramenta criarFerramentas(String[] info){
-        switch (info[1]){
+    Ferramenta criarFerramentas(String info, String posicao){
+        switch (info){
             case "0":
-                return new Ferramenta("Herança", 0, Integer.valueOf(info[2]));
+                return new Ferramenta("Herança", 0, Integer.valueOf(posicao));
             case "1":
-                return new Ferramenta("Programação Funcional", 1, Integer.valueOf(info[2]));
+                return new Ferramenta("Programação Funcional", 1, Integer.valueOf(posicao));
             case "2":
-                return new Ferramenta("Testes unitários", 2, Integer.valueOf(info[2]));
+                return new Ferramenta("Testes unitários", 2, Integer.valueOf(posicao));
             case "3":
-                return new Ferramenta("Tratamento de Excepções", 3, Integer.valueOf(info[2]));
+                return new Ferramenta("Tratamento de Excepções", 3, Integer.valueOf(posicao));
             case "4":
-                return new Ferramenta("IDE", 4, Integer.valueOf(info[2]));
+                return new Ferramenta("IDE", 4, Integer.valueOf(posicao));
             case "5":
-                return new Ferramenta("Ajuda Do Professor", 5, Integer.valueOf(info[2]));
+                return new Ferramenta("Ajuda Do Professor", 5, Integer.valueOf(posicao));
 
             default:
                 return null;
