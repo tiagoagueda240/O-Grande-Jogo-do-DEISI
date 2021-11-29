@@ -306,7 +306,7 @@ public class GameManager {
         nrTurnos++;
         if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
-        }
+        }/*
         if(programadores.get(turnoAtual).getValorPreso() || programadores.get(turnoAtual).getEstado().equals("Derrotado")){
             turnoAtual++;
         }else{
@@ -314,7 +314,7 @@ public class GameManager {
         }
         if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
-        }
+        }*/
         /*
         for (int i = turnoAtual; i <= programadores.size(); i++){
             if(i >= programadores.size()) { // Verifica se é o ultimo jogador
@@ -407,6 +407,7 @@ public class GameManager {
                 listaFerramentas.add("IDE");
                 break;
             case "Erro de lógica":
+                listaFerramentas.add("Testes unitários");
                 listaFerramentas.add("Ajuda do Professor");
                 break;
             case "Exception":
@@ -418,20 +419,20 @@ public class GameManager {
                 listaFerramentas.add("Tratamento de Excepções");
                 break;
             case "Crash (aka Rebentanço)":
-                listaFerramentas.add("Programação Funcional");
+                listaFerramentas.add("Programação Funcional"); //ver se é para retirar
                 break;
             case "Duplicated Code":
                 listaFerramentas.add("Herança");
                 break;
             case "Efeitos secundários":
-                listaFerramentas.add("Testes unitários");
+                listaFerramentas.add("Programação Funcional");
                 break;
             case "Blue Screen of Death":
                 break;
             case "Ciclo infinito":
                 break;
             case "Segmentation Fault":
-                listaFerramentas.add("Programação Funcional");
+                listaFerramentas.add("Programação Funcional");//ver se é para retirar
                 break;
             default:
                 return null;
