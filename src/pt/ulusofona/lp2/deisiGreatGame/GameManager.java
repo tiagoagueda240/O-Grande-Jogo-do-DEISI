@@ -407,6 +407,7 @@ public class GameManager {
                 listaFerramentas.add("IDE");
                 break;
             case "Erro de lógica":
+                listaFerramentas.add("Testes unitários");
                 listaFerramentas.add("Ajuda do Professor");
                 break;
             case "Exception":
@@ -424,7 +425,7 @@ public class GameManager {
                 listaFerramentas.add("Herança");
                 break;
             case "Efeitos secundários":
-                listaFerramentas.add("Testes unitários");
+
                 break;
             case "Blue Screen of Death":
                 break;
