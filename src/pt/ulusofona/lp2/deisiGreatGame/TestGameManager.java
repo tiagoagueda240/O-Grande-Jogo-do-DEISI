@@ -48,4 +48,6 @@ public class TestGameManager {
         movimento = gameManagerTestes.moveCurrentPlayer(4);
         assertEquals(1, gameManagerTestes.programadores.get(2).getPosicao());
     }
+
+
 }
