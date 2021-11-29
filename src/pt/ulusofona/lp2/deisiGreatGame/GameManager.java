@@ -47,6 +47,9 @@ public class GameManager {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
+        // reset
+        abismos.clear();
+        ferramentas.clear();
         boolean verifica = createInitialBoard(playerInfo, worldSize);
         if (!verifica){
             return false;
