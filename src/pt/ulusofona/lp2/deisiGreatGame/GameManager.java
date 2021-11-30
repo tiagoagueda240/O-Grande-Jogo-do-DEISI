@@ -13,13 +13,7 @@ public class GameManager {
     int nrTurnos = 1; // nr de turnos jogados
     int turnoAtual = 0; // turno atual, pode ser: 0, 1, 2 ou 3
     int nrDado;
-    static HashMap<String, ArrayList<String>> listaTools = new HashMap<>();
 
-    static void crialistaTools() {
-        ArrayList<String> ferramentasPossiveis = new ArrayList<>();
-        //ferramentasPossiveis.add();
-        listaTools.put("", ferramentasPossiveis);
-    }
 
     /*
      * Função que retorna o enum
@@ -251,7 +245,7 @@ public class GameManager {
         }
         for (Abismo abismo : abismos) {
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
-                HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getTitulo());
+                HashSet<String> listaFerramentasUteis = abismo.listaFerramentas;
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)) {
                     if (abismo.getTitulo().equals("Erro de sintaxe")) {
                         programadores.get(turnoAtual).recuar(1);
@@ -310,8 +304,10 @@ public class GameManager {
                         }
                         mensagem = "Segmentation Fault! Se tiver companhia recue 3 casas.";
                     }
+                }else{
+                    mensagem = "Utilizou uma ferramenta";
                 }
-                mensagem = "Utilizou uma ferramenta";
+
             }
         }
         programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
@@ -409,70 +405,30 @@ public class GameManager {
         return credits;
     }
 
-    public HashSet<String> ferramentasUteis(String nome) {
-        HashSet<String> listaFerramentas = new HashSet<>();
-        switch (nome) {
-            case "Erro de sintaxe":
-                listaFerramentas.add("Ajuda do Professor");
-                listaFerramentas.add("IDE");
-                break;
-            case "Erro de lógica":
-                listaFerramentas.add("Testes unitários");
-                listaFerramentas.add("Ajuda do Professor");
-                break;
-            case "Exception":
-                listaFerramentas.add("Ajuda do Professor");
-                listaFerramentas.add("Tratamento de Excepções");
-                break;
-            case "File Not Found Exception":
-                listaFerramentas.add("Ajuda do Professor");
-                listaFerramentas.add("Tratamento de Excepções");
-                break;
-            case "Crash (aka Rebentanço)":
 
-                break;
-            case "Duplicated Code":
-                listaFerramentas.add("Herança");
-                break;
-            case "Efeitos secundários":
-                listaFerramentas.add("Programação Funcional");
-                break;
-            case "Blue Screen of Death":
-                break;
-            case "Ciclo infinito":
-                listaFerramentas.add("Programação Funcional");
-                break;
-            case "Segmentation Fault":
-
-                break;
-            default:
-                return null;
-        }
-        return listaFerramentas;
-    }
 
     Abismo criarAbismo(String info, String posicao) {
         switch (info) {
             case "0":
-                return new Abismo("Erro de sintaxe", 0, Integer.valueOf(posicao));
+                return new ErroDeSintaxe("Erro de sintaxe", 0, Integer.valueOf(posicao));
             case "1":
-                return new Abismo("Erro de lógica", 1, Integer.valueOf(posicao));
+                return new ErroDeLogica("Erro de lógica", 1, Integer.valueOf(posicao));
             case "2":
-                return new Abismo("Exception", 2, Integer.valueOf(posicao));
+                return new Exception("Exception", 2, Integer.valueOf(posicao));
             case "3":
-                return new Abismo("File Not Found Exception", 3, Integer.valueOf(posicao));
+                return new FileNotFoundException("File Not Found Exception", 3, Integer.valueOf(posicao));
             case "4":
-                return new Abismo("Crash (aka Rebentanço)", 4, Integer.valueOf(posicao));
+                return new Crash("Crash (aka Rebentanço)", 4, Integer.valueOf(posicao));
             case "5":
-                return new Abismo("Duplicated Code", 5, Integer.valueOf(posicao));
+                return new DuplicatedCode("Duplicated Code", 5, Integer.valueOf(posicao));
             case "6":
-                return new Abismo("Efeitos secundários", 6, Integer.valueOf(posicao));
+                return new EfeitosSecundarios("Efeitos secundários", 6, Integer.valueOf(posicao));
             case "7":
-                return new Abismo("Blue Screen of Death", 7, Integer.valueOf(posicao));
+                return new BlueScreenOfDeath("Blue Screen of Death", 7, Integer.valueOf(posicao));
             case "8":
-                return new Abismo("Ciclo infinito", 8, Integer.valueOf(posicao));
+                return new CicloInfinito("Ciclo infinito", 8, Integer.valueOf(posicao));
             case "9":
-                return new Abismo("Segmentation Fault", 9, Integer.valueOf(posicao));
+                return new SegmentationFault("Segmentation Fault", 9, Integer.valueOf(posicao));
             default:
                 return null;
         }
