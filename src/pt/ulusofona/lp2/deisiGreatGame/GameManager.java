@@ -15,7 +15,7 @@ public class GameManager {
     int nrDado;
     static HashMap<String, ArrayList<String>> listaTools = new HashMap<>();
 
-    static void crialistaTools(){
+    static void crialistaTools() {
         ArrayList<String> ferramentasPossiveis = new ArrayList<>();
         //ferramentasPossiveis.add();
         listaTools.put("", ferramentasPossiveis);
@@ -24,8 +24,8 @@ public class GameManager {
     /*
      * Função que retorna o enum
      */
-    ProgrammerColor encontrarCor(String cor){
-        switch (cor){
+    ProgrammerColor encontrarCor(String cor) {
+        switch (cor) {
             case "PURPLE":
                 return ProgrammerColor.PURPLE;
 
@@ -46,29 +46,29 @@ public class GameManager {
     public GameManager() {
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
+    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
         // reset
         abismos.clear();
         ferramentas.clear();
         boolean verifica = createInitialBoard(playerInfo, worldSize);
-        if (!verifica){
+        if (!verifica) {
             return false;
         }
-        for (int i = 0; i < abyssesAndTools.length; i++){
-            if (abyssesAndTools[i][0].equals("0")){
-                if(Integer.parseInt(abyssesAndTools[i][1]) >= 0 && Integer.parseInt(abyssesAndTools[i][1]) <= 9 && Integer.parseInt(abyssesAndTools[i][2]) >= 0 && Integer.parseInt(abyssesAndTools[i][2]) < worldSize){
+        for (int i = 0; i < abyssesAndTools.length; i++) {
+            if (abyssesAndTools[i][0].equals("0")) {
+                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 && Integer.parseInt(abyssesAndTools[i][1]) <= 9 && Integer.parseInt(abyssesAndTools[i][2]) >= 0 && Integer.parseInt(abyssesAndTools[i][2]) < worldSize) {
                     abismos.add(criarAbismo(abyssesAndTools[i][1], abyssesAndTools[i][2]));
-                }else{
+                } else {
                     return false;
                 }
 
-            }else if(abyssesAndTools[i][0].equals("1")){
-                if(Integer.parseInt(abyssesAndTools[i][1]) >= 0 && Integer.parseInt(abyssesAndTools[i][1]) <= 5 && Integer.parseInt(abyssesAndTools[i][2]) >= 0 && Integer.parseInt(abyssesAndTools[i][2]) < worldSize) {
+            } else if (abyssesAndTools[i][0].equals("1")) {
+                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 && Integer.parseInt(abyssesAndTools[i][1]) <= 5 && Integer.parseInt(abyssesAndTools[i][2]) >= 0 && Integer.parseInt(abyssesAndTools[i][2]) < worldSize) {
                     ferramentas.add(criarFerramentas(abyssesAndTools[i][1], abyssesAndTools[i][2]));
-                }else{
+                } else {
                     return false;
                 }
-            }else{
+            } else {
                 return false;
             }
         }
@@ -98,7 +98,7 @@ public class GameManager {
         }
 
         //Valida tamanho do tabuleiro
-        if (programadores.size() > 4 || programadores.size() < 2 || nrCasas < programadores.size() * 2 ){
+        if (programadores.size() > 4 || programadores.size() < 2 || nrCasas < programadores.size() * 2) {
             return false;
         }
 
@@ -130,19 +130,19 @@ public class GameManager {
             return "glory.png";
         }
 
-        for (Programmer programmer: programadores) {
+        for (Programmer programmer : programadores) {
             if (programmer.getPosicao() == position) {
                 return "player" + programmer.getColor().toString() + ".png";
             }
         }
 
-        for (Abismo abismo: abismos) {
+        for (Abismo abismo : abismos) {
             if (abismo.getPosicao() == position) {
                 return "abismo" + abismo.getId() + ".png";
             }
         }
 
-        for (Ferramenta ferramenta: ferramentas) {
+        for (Ferramenta ferramenta : ferramentas) {
             if (ferramenta.getPosicao() == position) {
                 return "ferramenta" + ferramenta.getId() + ".png";
             }
@@ -150,17 +150,17 @@ public class GameManager {
         return null;
     }
 
-    public String getTitle(int position){
-        if (position < 1 || position > nrCasas){
+    public String getTitle(int position) {
+        if (position < 1 || position > nrCasas) {
             return null;
         }
-        for (Ferramenta ferramenta: ferramentas){
-            if (ferramenta.getPosicao() == position){
+        for (Ferramenta ferramenta : ferramentas) {
+            if (ferramenta.getPosicao() == position) {
                 return ferramenta.getTitulo();
             }
         }
-        for (Abismo abismo: abismos){
-            if (abismo.getPosicao() == position){
+        for (Abismo abismo : abismos) {
+            if (abismo.getPosicao() == position) {
                 return abismo.getTitulo();
             }
         }
@@ -169,11 +169,11 @@ public class GameManager {
 
     public List<Programmer> getProgrammers(boolean includeDefeated) {
         List<Programmer> listaProgramadores = new ArrayList<>();
-        if (includeDefeated){
+        if (includeDefeated) {
             listaProgramadores = programadores;
-        }else{
-            for (Programmer programador: programadores){
-                if (programador.getEstado().equals("Em Jogo")){
+        } else {
+            for (Programmer programador : programadores) {
+                if (programador.getEstado().equals("Em Jogo")) {
                     listaProgramadores.add(programador);
                 }
             }
@@ -184,11 +184,11 @@ public class GameManager {
 
     public List<Programmer> getProgrammers(int position) {
         // Verifica se a posição passada nos parametros está dentro do tabuleiro
-        if (position < 1 || position > nrCasas){
+        if (position < 1 || position > nrCasas) {
             return null;
         }
         List<Programmer> programadoresNaPosicao = new ArrayList<>();
-        for (Programmer programmer: programadores) {
+        for (Programmer programmer : programadores) {
             if (programmer.getPosicao() == position) { //Verifica se há jogadores na posição
                 programadoresNaPosicao.add(programmer);
             }
@@ -201,10 +201,10 @@ public class GameManager {
         return programadores.get(turnoAtual).getId();
     }
 
-    public String getProgrammersInfo(){
+    public String getProgrammersInfo() {
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
         StringBuilder listaJogadores = new StringBuilder();
-        for (Programmer programador: programadores){
+        for (Programmer programador : programadores) {
             listaJogadores.append(programador.getName() + " : " + programador.criaListaFerramentas());
             if (programador != programadores.get(programadores.size() - 1)) {
                 listaJogadores.append(" | ");
@@ -221,17 +221,15 @@ public class GameManager {
         }
         //if (!programadores.get(turnoAtual).getValorPreso()){
         nrDado = nrPositions;
-        for (Programmer programador: programadores) {
-            if (programador.getId() == getCurrentPlayerID() && !programadores.get(turnoAtual).getValorPreso()){
+        for (Programmer programador : programadores) {
+            if (programador.getId() == getCurrentPlayerID() && !programadores.get(turnoAtual).getValorPreso()) {
                 if (programador.getPosicao() + nrPositions <= nrCasas) { // Verifica se o jogador pode andar sem ultrapassar a meta
                     programador.mover(nrPositions);
-
-                }else{
+                } else {
                     programador.avancarRecuar(nrPositions, nrCasas);
                 }
                 return true;
             }
-
         }
 
         //}
@@ -240,65 +238,65 @@ public class GameManager {
     }
 
 
-    public String reactToAbyssOrTool(){
+    public String reactToAbyssOrTool() {
         String mensagem = "";
-        for (Ferramenta ferramenta: ferramentas){
-            if (ferramenta.getPosicao() == programadores.get(turnoAtual).getPosicao()){
+        for (Ferramenta ferramenta : ferramentas) {
+            if (ferramenta.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
                 programadores.get(turnoAtual).addFerramenta(ferramenta.getTitulo());
                 mensagem = "ferramenta";
             }
         }
-        for (Abismo abismo : abismos){
-            if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()){
+        for (Abismo abismo : abismos) {
+            if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
                 HashSet<String> listaFerramentasUteis = ferramentasUteis(abismo.getTitulo());
-                if (!programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)){
-                    if (abismo.getTitulo().equals("Erro de sintaxe")){
+                if (!programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)) {
+                    if (abismo.getTitulo().equals("Erro de sintaxe")) {
                         programadores.get(turnoAtual).recuar(1);
                         mensagem = "Teve um erro de sintaxe, recua 2 casas!";
-                    }else if (abismo.getTitulo().equals("Erro de lógica")){
-                        programadores.get(turnoAtual).recuar(nrDado/2);
-                        mensagem = "Teve um erro de lógica, recue" + nrDado/2 + "casa(s)!";
-                    }else if (abismo.getTitulo().equals("Exception")){
+                    } else if (abismo.getTitulo().equals("Erro de lógica")) {
+                        programadores.get(turnoAtual).recuar(nrDado / 2);
+                        mensagem = "Teve um erro de lógica, recue" + nrDado / 2 + "casa(s)!";
+                    } else if (abismo.getTitulo().equals("Exception")) {
                         programadores.get(turnoAtual).recuar(2);
                         mensagem = "Exception! Recue 2 casas.";
-                    }else if (abismo.getTitulo().equals("File Not Found Exception")){
+                    } else if (abismo.getTitulo().equals("File Not Found Exception")) {
                         programadores.get(turnoAtual).recuar(3);
                         mensagem = "File Not Found Exception! Recue 3 casas.";
-                    }else if (abismo.getTitulo().equals("Crash (aka Rebentanço)")){
+                    } else if (abismo.getTitulo().equals("Crash (aka Rebentanço)")) {
                         programadores.get(turnoAtual).posicaoInicial();
                         mensagem = "Crashou o programa! Volte a casa de partida.";
-                    }else if (abismo.getTitulo().equals("Duplicated Code")){
+                    } else if (abismo.getTitulo().equals("Duplicated Code")) {
                         programadores.get(turnoAtual).saberPosicaoJogadas(1);
                         mensagem = "Duplicated Code! Volte para a casa onde estava antes desta jogada.";
-                    }else if (abismo.getTitulo().equals("Efeitos secundários")){
+                    } else if (abismo.getTitulo().equals("Efeitos secundários")) {
                         programadores.get(turnoAtual).saberPosicaoJogadas(2);
                         mensagem = "Teve um efeito secundário, recue no tempo 2 jogadas.";
-                    }else if (abismo.getTitulo().equals("Blue Screen of Death")){
+                    } else if (abismo.getTitulo().equals("Blue Screen of Death")) {
                         programadores.get(turnoAtual).perdeu();
                         mensagem = "Blue Screen of Death! Perdeu o jogo.";
-                    }else if (abismo.getTitulo().equals("Ciclo infinito")){
+                    } else if (abismo.getTitulo().equals("Ciclo infinito")) {
                         HashSet<Programmer> programadoresPosicao = new HashSet<>();
-                        for (Programmer programador : programadores){
-                            if (programador.getPosicao() == abismo.getPosicao()){
+                        for (Programmer programador : programadores) {
+                            if (programador.getPosicao() == abismo.getPosicao()) {
                                 programadoresPosicao.add(programador);
                             }
                         }
-                        if (programadoresPosicao.size() == 1){
+                        if (programadoresPosicao.size() == 1) {
                             programadores.get(turnoAtual).alteraValorPreso(true);
-                        }else{
-                            for (Programmer programador : programadoresPosicao){
-                                if (programador.getValorPreso()){
+                        } else {
+                            for (Programmer programador : programadoresPosicao) {
+                                if (programador.getValorPreso()) {
                                     programador.alteraValorPreso(false);
-                                }else{
+                                } else {
                                     programador.alteraValorPreso(true);
                                 }
                             }
                         }
                         mensagem = "Ciclo infinito! Aguarde por ajuda.";
-                    }else if (abismo.getTitulo().equals("Segmentation Fault")){
+                    } else if (abismo.getTitulo().equals("Segmentation Fault")) {
                         ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
                         for (Programmer programador : programadores) {
-                            if(programador.getPosicao() == abismo.getPosicao()) {
+                            if (programador.getPosicao() == abismo.getPosicao()) {
                                 jogadoresEmPosicao.add(programador);
                             }
                         }
@@ -316,7 +314,7 @@ public class GameManager {
         programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
         turnoAtual++;
         nrTurnos++;
-        if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
+        if (turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
         }/*
         if(programadores.get(turnoAtual).getValorPreso() || programadores.get(turnoAtual).getEstado().equals("Derrotado")){
@@ -342,10 +340,11 @@ public class GameManager {
 
         return validaMensagem(mensagem);
     }
-    String validaMensagem(String mensagem){
-        if (mensagem.equals("")){
+
+    String validaMensagem(String mensagem) {
+        if (mensagem.equals("")) {
             return null;
-        }else{
+        } else {
             return mensagem;
         }
     }
@@ -353,13 +352,13 @@ public class GameManager {
     public boolean gameIsOver() {
         //Verifica se algum jogador chegou ao fim
         int jogadoresEmJogo = 0;
-        for (Programmer programador: programadores){
-            if (programador.getEstado().equals("Em Jogo")){
+        for (Programmer programador : programadores) {
+            if (programador.getEstado().equals("Em Jogo")) {
                 jogadoresEmJogo++;
             }
         }
-        for (Programmer programador: programadores){
-            if (programador.getPosicao() == nrCasas || jogadoresEmJogo < 2){
+        for (Programmer programador : programadores) {
+            if (programador.getPosicao() == nrCasas || jogadoresEmJogo < 2) {
                 return true;
             }
         }
@@ -380,8 +379,8 @@ public class GameManager {
         resultados.add(programadores.get(0).getName());
         resultados.add("");
         resultados.add("RESTANTES");
-        for (Programmer programador: programadores){
-            if (programadores.get(0).getId() == programador.getId()){ // percorre os jogadores
+        for (Programmer programador : programadores) {
+            if (programadores.get(0).getId() == programador.getId()) { // percorre os jogadores
                 continue;
             }
             resultados.add(programador.getName() + " " + programador.getPosicao()); // adiciona o nome e o valor da posição
@@ -407,13 +406,9 @@ public class GameManager {
         return credits;
     }
 
-
-
-
-
-    public HashSet<String> ferramentasUteis(String nome){
+    public HashSet<String> ferramentasUteis(String nome) {
         HashSet<String> listaFerramentas = new HashSet<>();
-        switch (nome){
+        switch (nome) {
             case "Erro de sintaxe":
                 listaFerramentas.add("Ajuda do Professor");
                 listaFerramentas.add("IDE");
@@ -437,7 +432,8 @@ public class GameManager {
                 listaFerramentas.add("Herança");
                 break;
             case "Efeitos secundários":
-
+                listaFerramentas.add("Programação Funcional");
+                listaFerramentas.add("Testes unitários");
                 break;
             case "Blue Screen of Death":
                 break;
@@ -453,8 +449,8 @@ public class GameManager {
         return listaFerramentas;
     }
 
-    Abismo criarAbismo(String info, String posicao){
-        switch (info){
+    Abismo criarAbismo(String info, String posicao) {
+        switch (info) {
             case "0":
                 return new Abismo("Erro de sintaxe", 0, Integer.valueOf(posicao));
             case "1":
@@ -480,8 +476,8 @@ public class GameManager {
         }
     }
 
-    Ferramenta criarFerramentas(String info, String posicao){
-        switch (info){
+    Ferramenta criarFerramentas(String info, String posicao) {
+        switch (info) {
             case "0":
                 return new Ferramenta("Herança", 0, Integer.valueOf(posicao));
             case "1":
