@@ -212,10 +212,9 @@ public class GameManager {
         //if (!programadores.get(turnoAtual).getValorPreso()){
             nrDado = nrPositions;
             for (Programmer programador: programadores) {
-                if (programador.getId() == getCurrentPlayerID() && !programadores.get(turnoAtual).getValorPreso()){
-                    if (programador.getPosicao() + nrPositions <= nrCasas) { // Verifica se o jogador pode andar sem ultrapassar a meta
+                if (programador.getId() == getCurrentPlayerID()){
+                    if (programador.getPosicao() + nrPositions <= nrCasas || !programadores.get(turnoAtual).getValorPreso()) { // Verifica se o jogador pode andar sem ultrapassar a meta
                         programador.mover(nrPositions);
-
                     }else{
                         programador.avancarRecuar(nrPositions, nrCasas);
                     }
