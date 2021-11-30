@@ -426,14 +426,13 @@ public class GameManager {
                 listaFerramentas.add("Tratamento de Excepções");
                 break;
             case "Crash (aka Rebentanço)":
-                listaFerramentas.add("Programação Funcional"); //ver se é para retirar
+
                 break;
             case "Duplicated Code":
                 listaFerramentas.add("Herança");
                 break;
             case "Efeitos secundários":
                 listaFerramentas.add("Programação Funcional");
-                listaFerramentas.add("Testes unitários");
                 break;
             case "Blue Screen of Death":
                 break;
@@ -441,7 +440,7 @@ public class GameManager {
                 listaFerramentas.add("Programação Funcional");
                 break;
             case "Segmentation Fault":
-                listaFerramentas.add("Programação Funcional");//ver se é para retirar
+
                 break;
             default:
                 return null;
