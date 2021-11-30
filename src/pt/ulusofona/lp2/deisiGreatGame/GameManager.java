@@ -205,10 +205,13 @@ public class GameManager {
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
         StringBuilder listaJogadores = new StringBuilder();
         for (Programmer programador : programadores) {
-            listaJogadores.append(programador.getName() + " : " + programador.criaListaFerramentas());
-            if (programador != programadores.get(programadores.size() - 1)) {
-                listaJogadores.append(" | ");
+            if(programador.getEstado().equals("Em Jogo")){
+                listaJogadores.append(programador.getName() + " : " + programador.criaListaFerramentas());
+                if (programador != programadores.get(programadores.size() - 1)) {
+                    listaJogadores.append(" | ");
+                }
             }
+
 
         }
         return listaJogadores.toString();
@@ -426,7 +429,6 @@ public class GameManager {
                 listaFerramentas.add("Tratamento de Excepções");
                 break;
             case "Crash (aka Rebentanço)":
-
                 break;
             case "Duplicated Code":
                 listaFerramentas.add("Herança");
@@ -440,7 +442,6 @@ public class GameManager {
                 listaFerramentas.add("Programação Funcional");
                 break;
             case "Segmentation Fault":
-
                 break;
             default:
                 return null;
