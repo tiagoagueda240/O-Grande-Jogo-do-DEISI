@@ -437,7 +437,7 @@ public class GameManager {
                 listaFerramentas.add("Herança");
                 break;
             case "Efeitos secundários":
-                listaFerramentas.add("Programação Funcional");
+
                 break;
             case "Blue Screen of Death":
                 break;
