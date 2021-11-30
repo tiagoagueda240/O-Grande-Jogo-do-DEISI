@@ -14,15 +14,15 @@ public class Abismo {
         this.posicao = posicao;
     }
 
-    public int getPosicao(){
+    public int getPosicao() {
         return posicao;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public String getTitulo(){
+    public String getTitulo() {
         return titulo;
     }
 
@@ -32,73 +32,73 @@ public class Abismo {
     }
 }
 
-class ErroDeSintaxe extends Abismo{
+class ErroDeSintaxe extends Abismo {
     ErroDeSintaxe(String titulo, int id, int posicao) {
         super(titulo, id, posicao);
-        listaFerramentas.add("Ajuda do Professor");
+        listaFerramentas.add("Ajuda Do Professor");
         listaFerramentas.add("IDE");
     }
 }
 
-class ErroDeLogica extends Abismo{
+class ErroDeLogica extends Abismo {
     ErroDeLogica(String titulo, int id, int posicao) {
         super(titulo, id, posicao);
         listaFerramentas.add("Testes unitários");
-        listaFerramentas.add("Ajuda do Professor");
+        listaFerramentas.add("Ajuda Do Professor");
     }
 }
 
-class Exception extends Abismo{
+class Exception extends Abismo {
     Exception(String titulo, int id, int posicao) {
         super(titulo, id, posicao);
-        listaFerramentas.add("Ajuda do Professor");
+        listaFerramentas.add("Ajuda Do Professor");
         listaFerramentas.add("Tratamento de Excepções");
     }
 }
 
-class FileNotFoundException extends Abismo{
+class FileNotFoundException extends Abismo {
     FileNotFoundException(String titulo, int id, int posicao) {
         super(titulo, id, posicao);
-        listaFerramentas.add("Ajuda do Professor");
+        listaFerramentas.add("Ajuda Do Professor");
         listaFerramentas.add("Tratamento de Excepções");
     }
 }
 
-class Crash extends Abismo{
+class Crash extends Abismo {
     Crash(String titulo, int id, int posicao) {
         super(titulo, id, posicao);
     }
 }
 
-class DuplicatedCode extends Abismo{
+class DuplicatedCode extends Abismo {
     DuplicatedCode(String titulo, int id, int posicao) {
         super(titulo, id, posicao);
         listaFerramentas.add("Herança");
     }
 }
 
-class EfeitosSecundarios extends Abismo{
+class EfeitosSecundarios extends Abismo {
     EfeitosSecundarios(String titulo, int id, int posicao) {
         super(titulo, id, posicao);
         listaFerramentas.add("Programação Funcional");
     }
 }
 
-class BlueScreenOfDeath extends Abismo{
+class BlueScreenOfDeath extends Abismo {
     BlueScreenOfDeath(String titulo, int id, int posicao) {
         super(titulo, id, posicao);
 
     }
 }
 
-class CicloInfinito extends Abismo{
+class CicloInfinito extends Abismo {
     CicloInfinito(String titulo, int id, int posicao) {
         super(titulo, id, posicao);
         listaFerramentas.add("Programação Funcional");
     }
 }
 
-class SegmentationFault extends Abismo{
+class SegmentationFault extends Abismo {
     SegmentationFault(String titulo, int id, int posicao) {
         super(titulo, id, posicao);
     }
