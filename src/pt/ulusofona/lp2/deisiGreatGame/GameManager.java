@@ -442,6 +442,7 @@ public class GameManager {
             case "Blue Screen of Death":
                 break;
             case "Ciclo infinito":
+                listaFerramentas.add("Programação Funcional");
                 break;
             case "Segmentation Fault":
                 listaFerramentas.add("Programação Funcional");//ver se é para retirar
