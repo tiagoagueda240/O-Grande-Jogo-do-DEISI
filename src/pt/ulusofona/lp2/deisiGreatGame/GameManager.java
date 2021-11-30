@@ -209,20 +209,22 @@ public class GameManager {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }
-        if (!programadores.get(turnoAtual).getValorPreso()){
+        //if (!programadores.get(turnoAtual).getValorPreso()){
             nrDado = nrPositions;
             for (Programmer programador: programadores) {
-                if (programador.getId() == getCurrentPlayerID()){
+                if (programador.getId() == getCurrentPlayerID() && !programadores.get(turnoAtual).getValorPreso()){
                     if (programador.getPosicao() + nrPositions <= nrCasas) { // Verifica se o jogador pode andar sem ultrapassar a meta
                         programador.mover(nrPositions);
 
                     }else{
                         programador.avancarRecuar(nrPositions, nrCasas);
                     }
+                    return true;
                 }
+
             }
-            return true;
-        }
+
+        //}
 
         return false;
     }
