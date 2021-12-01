@@ -105,7 +105,7 @@ public class GameManager {
             colorDuplicado.add(programmer.getColor());
 
         }
-        //Ordena os jogadores por ordem dos ids
+        // Ordena os jogadores por ordem dos ids
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
         getImagePng(1);
         getImagePng(boardSize);
@@ -178,7 +178,7 @@ public class GameManager {
         }
         List<Programmer> programadoresNaPosicao = new ArrayList<>();
         for (Programmer programmer : programadores) {
-            if (programmer.getPosicao() == position) { //Verifica se há jogadores na posição
+            if (programmer.getPosicao() == position) { // Verifica se há jogadores na posição
                 programadoresNaPosicao.add(programmer);
             }
         }
@@ -298,7 +298,6 @@ public class GameManager {
                 } else {
                     mensagem = "Utilizou uma ferramenta";
                 }
-
             }
         }
         programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
