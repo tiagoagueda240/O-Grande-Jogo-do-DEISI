@@ -117,6 +117,7 @@ public class GameManager {
             }
         }
 
+
         for (Ferramenta ferramenta : ferramentas) {
             if (ferramenta.getPosicao() == position) {
                 return "ferramentas/ferramenta" + ferramenta.getId() + ".png";
