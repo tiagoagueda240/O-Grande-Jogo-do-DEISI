@@ -314,18 +314,14 @@ public class GameManager {
         if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
         }
-        /*
-        for (int i = turnoAtual; i <= programadores.size(); i++){
-            if(i >= programadores.size()) { // Verifica se é o ultimo jogador
-                turnoAtual = 0;
-                i= 0;
-            }
-            if(programadores.get(i).getValorPreso() || programadores.get(i).getEstado().equals("Derrotado")){
-                turnoAtual++;
-            }else{
-                return validaMensagem(mensagem);
-            }
-        }*/
+        if(programadores.get(turnoAtual).getEstado().equals("Derrotado")){
+            turnoAtual++;
+        }else{
+            return validaMensagem(mensagem);
+        }
+        if(turnoAtual >= programadores.size()) { // Verifica se é por estar mais que um jogador bloqueados
+            turnoAtual = 0;
+        }
 
         return validaMensagem(mensagem);
     }
@@ -398,25 +394,25 @@ public class GameManager {
     Abismo criarAbismo(String info, String posicao) {
         switch (info) {
             case "0":
-                return new ErroDeSintaxe("Erro de sintaxe", 0, Integer.valueOf(posicao));
+                return new ErroDeSintaxe(0, Integer.valueOf(posicao));
             case "1":
-                return new ErroDeLogica("Erro de lógica", 1, Integer.valueOf(posicao));
+                return new ErroDeLogica(1, Integer.valueOf(posicao));
             case "2":
-                return new Exception("Exception", 2, Integer.valueOf(posicao));
+                return new Exception(2, Integer.valueOf(posicao));
             case "3":
-                return new FileNotFoundException("File Not Found Exception", 3, Integer.valueOf(posicao));
+                return new FileNotFoundException(3, Integer.valueOf(posicao));
             case "4":
-                return new Crash("Crash (aka Rebentanço)", 4, Integer.valueOf(posicao));
+                return new Crash(4, Integer.valueOf(posicao));
             case "5":
-                return new DuplicatedCode("Duplicated Code", 5, Integer.valueOf(posicao));
+                return new DuplicatedCode(5, Integer.valueOf(posicao));
             case "6":
-                return new EfeitosSecundarios("Efeitos secundários", 6, Integer.valueOf(posicao));
+                return new EfeitosSecundarios(6, Integer.valueOf(posicao));
             case "7":
-                return new BlueScreenOfDeath("Blue Screen of Death", 7, Integer.valueOf(posicao));
+                return new BlueScreenOfDeath(7, Integer.valueOf(posicao));
             case "8":
-                return new CicloInfinito("Ciclo infinito", 8, Integer.valueOf(posicao));
+                return new CicloInfinito(8, Integer.valueOf(posicao));
             case "9":
-                return new SegmentationFault("Segmentation Fault", 9, Integer.valueOf(posicao));
+                return new SegmentationFault(9, Integer.valueOf(posicao));
             default:
                 return null;
         }
