@@ -9,7 +9,6 @@ public class Abismo {
     HashSet<String> listaFerramentas = new HashSet<>();
 
     Abismo(int id, int posicao) {
-        this.titulo = titulo;
         this.id = id;
         this.posicao = posicao;
     }
@@ -24,6 +23,10 @@ public class Abismo {
 
     public String getTitulo() {
         return titulo;
+    }
+
+    public HashSet<String> getFerramentas(){
+        return listaFerramentas;
     }
 
     @Override

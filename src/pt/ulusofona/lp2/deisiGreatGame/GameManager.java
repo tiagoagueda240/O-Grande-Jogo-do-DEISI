@@ -15,22 +15,13 @@ public class GameManager {
     int nrDado;
 
     ProgrammerColor encontrarCor(String cor) { //Função que retorna o enum
-        switch (cor) {
-            case "PURPLE":
-                return ProgrammerColor.PURPLE;
-
-            case "BLUE":
-                return ProgrammerColor.BLUE;
-
-            case "GREEN":
-                return ProgrammerColor.GREEN;
-
-            case "BROWN":
-                return ProgrammerColor.BROWN;
-
-            default:
-                return null;
-        }
+        return switch (cor) {
+            case "PURPLE" -> ProgrammerColor.PURPLE;
+            case "BLUE" -> ProgrammerColor.BLUE;
+            case "GREEN" -> ProgrammerColor.GREEN;
+            case "BROWN" -> ProgrammerColor.BROWN;
+            default -> null;
+        };
     }
 
     public GameManager() {
@@ -44,17 +35,17 @@ public class GameManager {
         if (!verifica) {
             return false;
         }
-        for (int i = 0; i < abyssesAndTools.length; i++) {
-            if (abyssesAndTools[i][0].equals("0")) {
-                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 && Integer.parseInt(abyssesAndTools[i][1]) <= 9 && Integer.parseInt(abyssesAndTools[i][2]) >= 0 && Integer.parseInt(abyssesAndTools[i][2]) < worldSize) {
-                    abismos.add(criarAbismo(abyssesAndTools[i][1], abyssesAndTools[i][2]));
+        for (String[] abyssesAndTool : abyssesAndTools) {
+            if (abyssesAndTool[0].equals("0")) {
+                if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 9 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
+                    abismos.add(criarAbismo(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
                 } else {
                     return false;
                 }
 
-            } else if (abyssesAndTools[i][0].equals("1")) {
-                if (Integer.parseInt(abyssesAndTools[i][1]) >= 0 && Integer.parseInt(abyssesAndTools[i][1]) <= 5 && Integer.parseInt(abyssesAndTools[i][2]) >= 0 && Integer.parseInt(abyssesAndTools[i][2]) < worldSize) {
-                    ferramentas.add(criarFerramentas(abyssesAndTools[i][1], abyssesAndTools[i][2]));
+            } else if (abyssesAndTool[0].equals("1")) {
+                if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 5 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
+                    ferramentas.add(criarFerramentas(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
                 } else {
                     return false;
                 }
@@ -81,9 +72,9 @@ public class GameManager {
 
         nrCasas = boardSize;
         // Adiciona todos os jogadores à lista de jogadores
-        for (int i = 0; i < playerInfo.length; i++) {
-            ArrayList<String> languages = new ArrayList(Arrays.asList(playerInfo[i][2].split(";")));
-            Programmer player = new Programmer(playerInfo[i][1], languages, Integer.parseInt(playerInfo[i][0]), encontrarCor(playerInfo[i][3].toUpperCase()), 1, "Em Jogo");
+        for (String[] strings : playerInfo) {
+            ArrayList<String> languages = new ArrayList(Arrays.asList(strings[2].split(";")));
+            Programmer player = new Programmer(strings[1], languages, Integer.parseInt(strings[0]), encontrarCor(strings[3].toUpperCase()), 1, "Em Jogo");
             programadores.add(player);
         }
 
@@ -120,21 +111,15 @@ public class GameManager {
             return "glory.png";
         }
 
-        for (Programmer programmer : programadores) {
-            if (programmer.getPosicao() == position) {
-                return "player" + programmer.getColor().toString() + ".png";
-            }
-        }
-
         for (Abismo abismo : abismos) {
             if (abismo.getPosicao() == position) {
-                return "abismo" + abismo.getId() + ".png";
+                return "abismos/abismo" + abismo.getId() + ".png";
             }
         }
 
         for (Ferramenta ferramenta : ferramentas) {
             if (ferramenta.getPosicao() == position) {
-                return "ferramenta" + ferramenta.getId() + ".png";
+                return "ferramentas/ferramenta" + ferramenta.getId() + ".png";
             }
         }
         return null;
@@ -236,64 +221,70 @@ public class GameManager {
         }
         for (Abismo abismo : abismos) {
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
-                HashSet<String> listaFerramentasUteis = abismo.listaFerramentas;
-                if (!programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)) {
-                    if (abismo.getTitulo().equals("Erro de sintaxe")) {
-                        programadores.get(turnoAtual).recuar(1);
-                        mensagem = "Teve um erro de sintaxe, recua 1 casas!";
-                    } else if (abismo.getTitulo().equals("Erro de lógica")) {
-                        programadores.get(turnoAtual).recuar(nrDado / 2);
-                        mensagem = "Teve um erro de lógica, recue " + nrDado / 2 + " casa(s)!";
-                    } else if (abismo.getTitulo().equals("Exception")) {
-                        programadores.get(turnoAtual).recuar(2);
-                        mensagem = "Exception! Recue 2 casas.";
-                    } else if (abismo.getTitulo().equals("File Not Found Exception")) {
-                        programadores.get(turnoAtual).recuar(3);
-                        mensagem = "File Not Found Exception! Recue 3 casas.";
-                    } else if (abismo.getTitulo().equals("Crash (aka Rebentanço)")) {
-                        programadores.get(turnoAtual).posicaoInicial();
-                        mensagem = "Crashou o programa! Volte a casa de partida.";
-                    } else if (abismo.getTitulo().equals("Duplicated Code")) {
-                        programadores.get(turnoAtual).saberPosicaoJogadas(1);
-                        mensagem = "Duplicated Code! Volte para a casa onde estava antes desta jogada.";
-                    } else if (abismo.getTitulo().equals("Efeitos secundários")) {
-                        programadores.get(turnoAtual).saberPosicaoJogadas(2);
-                        mensagem = "Teve um efeito secundário, recue no tempo 2 jogadas.";
-                    } else if (abismo.getTitulo().equals("Blue Screen of Death")) {
-                        programadores.get(turnoAtual).perdeu();
-                        mensagem = "Blue Screen of Death! Perdeu o jogo.";
-                    } else if (abismo.getTitulo().equals("Ciclo infinito")) {
-                        HashSet<Programmer> programadoresPosicao = new HashSet<>();
-                        for (Programmer programador : programadores) {
-                            if (programador.getPosicao() == abismo.getPosicao()) {
-                                programadoresPosicao.add(programador);
-                            }
+                if (!programadores.get(turnoAtual).contemFerramentaUtil(abismo.getFerramentas())) {
+                    switch (abismo.getTitulo()) {
+                        case "Erro de sintaxe" -> {
+                            programadores.get(turnoAtual).recuar(1);
+                            mensagem = "Teve um erro de sintaxe, recua 2 casas!";
                         }
-                        if (programadoresPosicao.size() == 1) {
-                            programadores.get(turnoAtual).alteraValorPreso(true);
-                        } else {
-                            for (Programmer programador : programadoresPosicao) {
-                                if (programador.getValorPreso()) {
-                                    programador.alteraValorPreso(false);
-                                } else {
-                                    programador.alteraValorPreso(true);
+                        case "Erro de lógica" -> {
+                            programadores.get(turnoAtual).recuar(nrDado / 2);
+                            mensagem = "Teve um erro de lógica, recue" + nrDado / 2 + "casa(s)!";
+                        }
+                        case "Exception" -> {
+                            programadores.get(turnoAtual).recuar(2);
+                            mensagem = "Exception! Recue 2 casas.";
+                        }
+                        case "File Not Found Exception" -> {
+                            programadores.get(turnoAtual).recuar(3);
+                            mensagem = "File Not Found Exception! Recue 3 casas.";
+                        }
+                        case "Crash (aka Rebentanço)" -> {
+                            programadores.get(turnoAtual).posicaoInicial();
+                            mensagem = "Crashou o programa! Volte a casa de partida.";
+                        }
+                        case "Duplicated Code" -> {
+                            programadores.get(turnoAtual).saberPosicaoJogadas(1);
+                            mensagem = "Duplicated Code! Volte para a casa onde estava antes desta jogada.";
+                        }
+                        case "Efeitos secundários" -> {
+                            programadores.get(turnoAtual).saberPosicaoJogadas(2);
+                            mensagem = "Teve um efeito secundário, recue no tempo 2 jogadas.";
+                        }
+                        case "Blue Screen of Death" -> {
+                            programadores.get(turnoAtual).perdeu();
+                            mensagem = "Blue Screen of Death! Perdeu o jogo.";
+                        }
+                        case "Ciclo infinito" -> {
+                            HashSet<Programmer> programadoresPosicao = new HashSet<>();
+                            for (Programmer programador : programadores) {
+                                if (programador.getPosicao() == abismo.getPosicao()) {
+                                    programadoresPosicao.add(programador);
                                 }
                             }
-                        }
-                        mensagem = "Ciclo infinito! Aguarde por ajuda.";
-                    } else if (abismo.getTitulo().equals("Segmentation Fault")) {
-                        ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
-                        for (Programmer programador : programadores) {
-                            if (programador.getPosicao() == abismo.getPosicao()) {
-                                jogadoresEmPosicao.add(programador);
+                            if (programadoresPosicao.size() == 1) {
+                                programadores.get(turnoAtual).alteraValorPreso(true);
+                            } else {
+                                for (Programmer programador : programadoresPosicao) {
+                                    programador.alteraValorPreso(!programador.getValorPreso());
+                                }
                             }
+                            mensagem = "Ciclo infinito! Aguarde por ajuda.";
                         }
-                        if (jogadoresEmPosicao.size() >= 2) {
-                            for (Programmer programador : jogadoresEmPosicao) {
-                                programador.recuar(3);
+                        case "Segmentation Fault" -> {
+                            ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
+                            for (Programmer programador : programadores) {
+                                if (programador.getPosicao() == abismo.getPosicao()) {
+                                    jogadoresEmPosicao.add(programador);
+                                }
                             }
+                            if (jogadoresEmPosicao.size() >= 2) {
+                                for (Programmer programador : jogadoresEmPosicao) {
+                                    programador.recuar(3);
+                                }
+                            }
+                            mensagem = "Segmentation Fault! Se tiver companhia recue 3 casas.";
                         }
-                        mensagem = "Segmentation Fault! Se tiver companhia recue 3 casas.";
                     }
                 } else {
                     mensagem = "Utilizou uma ferramenta";
@@ -306,20 +297,20 @@ public class GameManager {
         if (turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
         }
-        if (programadores.get(turnoAtual).getEstado().equals("Derrotado")) {
+        if(programadores.get(turnoAtual).getEstado().equals("Derrotado")){
             turnoAtual++;
-        } else {
+        }else{
             return validaMensagem(mensagem);
         }
-        if (turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
+        if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
         }
-        if (programadores.get(turnoAtual).getEstado().equals("Derrotado")) {
+        if(programadores.get(turnoAtual).getEstado().equals("Derrotado")){
             turnoAtual++;
-        } else {
+        }else{
             return validaMensagem(mensagem);
         }
-        if (turnoAtual >= programadores.size()) { // Verifica se é por estar mais que um jogador bloqueados
+        if(turnoAtual >= programadores.size()) { // Verifica se é por estar mais que um jogador bloqueados
             turnoAtual = 0;
         }
 
@@ -391,50 +382,31 @@ public class GameManager {
         return credits;
     }
 
-    Abismo criarAbismo(String info, String posicao) {
-        switch (info) {
-            case "0":
-                return new ErroDeSintaxe(0, Integer.valueOf(posicao));
-            case "1":
-                return new ErroDeLogica(1, Integer.valueOf(posicao));
-            case "2":
-                return new Exception(2, Integer.valueOf(posicao));
-            case "3":
-                return new FileNotFoundException(3, Integer.valueOf(posicao));
-            case "4":
-                return new Crash(4, Integer.valueOf(posicao));
-            case "5":
-                return new DuplicatedCode(5, Integer.valueOf(posicao));
-            case "6":
-                return new EfeitosSecundarios(6, Integer.valueOf(posicao));
-            case "7":
-                return new BlueScreenOfDeath(7, Integer.valueOf(posicao));
-            case "8":
-                return new CicloInfinito(8, Integer.valueOf(posicao));
-            case "9":
-                return new SegmentationFault(9, Integer.valueOf(posicao));
-            default:
-                return null;
-        }
+    Abismo criarAbismo(String info, int posicao) {
+        return switch (info) {
+            case "0" -> new ErroDeSintaxe(0, posicao);
+            case "1" -> new ErroDeLogica(1, posicao);
+            case "2" -> new Exception(2, posicao);
+            case "3" -> new FileNotFoundException(3, posicao);
+            case "4" -> new Crash(4, posicao);
+            case "5" -> new DuplicatedCode(5, posicao);
+            case "6" -> new EfeitosSecundarios(6, posicao);
+            case "7" -> new BlueScreenOfDeath(7, posicao);
+            case "8" -> new CicloInfinito(8, posicao);
+            case "9" -> new SegmentationFault(9, posicao);
+            default -> null;
+        };
     }
 
-    Ferramenta criarFerramentas(String info, String posicao) {
-        switch (info) {
-            case "0":
-                return new Ferramenta("Herança", 0, Integer.valueOf(posicao));
-            case "1":
-                return new Ferramenta("Programação Funcional", 1, Integer.valueOf(posicao));
-            case "2":
-                return new Ferramenta("Testes unitários", 2, Integer.valueOf(posicao));
-            case "3":
-                return new Ferramenta("Tratamento de Excepções", 3, Integer.valueOf(posicao));
-            case "4":
-                return new Ferramenta("IDE", 4, Integer.valueOf(posicao));
-            case "5":
-                return new Ferramenta("Ajuda Do Professor", 5, Integer.valueOf(posicao));
-
-            default:
-                return null;
-        }
+    Ferramenta criarFerramentas(String info, int posicao) {
+        return switch (info) {
+            case "0" -> new Heranca(0, posicao);
+            case "1" -> new ProgramacaoFuncional(1, posicao);
+            case "2" -> new TestesUnitarios(2, posicao);
+            case "3" -> new TratamentoDeExcepcoes(3, posicao);
+            case "4" -> new IDE(4, posicao);
+            case "5" -> new AjudaDoProfessor(5, posicao);
+            default -> null;
+        };
     }
 }
