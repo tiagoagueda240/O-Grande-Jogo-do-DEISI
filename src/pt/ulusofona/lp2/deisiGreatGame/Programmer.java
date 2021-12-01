@@ -28,31 +28,31 @@ public class Programmer {
     public Programmer() {
     }
 
-    public void alteraValorPreso(boolean valor){
+    public void alteraValorPreso(boolean valor) {
         preso = valor;
     }
 
-    public boolean getValorPreso(){
+    public boolean getValorPreso() {
         return preso;
     }
 
-    public void adicionaPosicao(int posicao){
+    public void adicionaPosicao(int posicao) {
         historicoPosicoes.add(posicao);
     }
 
-    public void saberPosicaoJogadas(int quantidade){
-        if (historicoPosicoes.size() - quantidade >= 0){
+    public void saberPosicaoJogadas(int quantidade) {
+        if (historicoPosicoes.size() - quantidade >= 0) {
             posicao = historicoPosicoes.get(historicoPosicoes.size() - quantidade);
-        }else{
+        } else {
             posicao = 1;
         }
     }
 
-    public void posicaoInicial(){
+    public void posicaoInicial() {
         posicao = 1;
     }
 
-    public void perdeu(){
+    public void perdeu() {
         estado = "Derrotado";
     }
 
@@ -81,35 +81,34 @@ public class Programmer {
     }
 
     public void recuar(int posicoes) {
-        if (posicao - posicoes < 0){
+        if (posicao - posicoes < 0) {
             posicao = 0;
-        }else{
+        } else {
             posicao -= posicoes;
         }
-
     }
 
     public void avancarRecuar(int posicoes, int nrCasas) {
         posicao = nrCasas + (nrCasas - posicao - posicoes);
     }
 
-    public void addFerramenta(String ferramenta){
+    public void addFerramenta(String ferramenta) {
         boolean verificaExistencia = true;
-        for (String ferramentaProgramador : ferramentas){
-            if (ferramentaProgramador.equals(ferramenta) ){
+        for (String ferramentaProgramador : ferramentas) {
+            if (ferramentaProgramador.equals(ferramenta)) {
                 verificaExistencia = false;
             }
         }
-        if (verificaExistencia){
+        if (verificaExistencia) {
             ferramentas.add(ferramenta);
         }
     }
 
-    public boolean contemFerramentaUtil(HashSet<String> lista){
-        for (String ferramenta : lista){
+    public boolean contemFerramentaUtil(HashSet<String> lista) {
+        for (String ferramenta : lista) {
             int posicao = 0;
-            for (String ferramentaPlayer : ferramentas){
-                if(ferramenta.equals(ferramentaPlayer)){
+            for (String ferramentaPlayer : ferramentas) {
+                if (ferramenta.equals(ferramentaPlayer)) {
                     ferramentas.remove(posicao); // remove a ferramenta
                     return true;
                 }
@@ -119,12 +118,12 @@ public class Programmer {
         return false;
     }
 
-    public String criaListaFerramentas(){
+    public String criaListaFerramentas() {
         StringBuilder listaFerramentas = new StringBuilder();
-        if (ferramentas.size() == 0){
+        if (ferramentas.size() == 0) {
             return "No tools";
-        }else{
-            for (String ferramenta : ferramentas){
+        } else {
+            for (String ferramenta : ferramentas) {
                 listaFerramentas.append(ferramenta);
                 if (ferramenta != ferramentas.get(ferramentas.size() - 1)) {
                     listaFerramentas.append(";");
@@ -144,11 +143,10 @@ public class Programmer {
                 listaLinguas.append("; ");
             }
         }
-        if (ferramentas.size() == 0){
+        if (ferramentas.size() == 0) {
             return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + listaLinguas + " | " + estado;
-        }else{
+        } else {
             return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + listaLinguas + " | " + estado;
         }
-
     }
 }

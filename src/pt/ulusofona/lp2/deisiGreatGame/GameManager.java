@@ -240,10 +240,10 @@ public class GameManager {
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(listaFerramentasUteis)) {
                     if (abismo.getTitulo().equals("Erro de sintaxe")) {
                         programadores.get(turnoAtual).recuar(1);
-                        mensagem = "Teve um erro de sintaxe, recua 2 casas!";
+                        mensagem = "Teve um erro de sintaxe, recua 1 casas!";
                     } else if (abismo.getTitulo().equals("Erro de lógica")) {
                         programadores.get(turnoAtual).recuar(nrDado / 2);
-                        mensagem = "Teve um erro de lógica, recue" + nrDado / 2 + "casa(s)!";
+                        mensagem = "Teve um erro de lógica, recue " + nrDado / 2 + " casa(s)!";
                     } else if (abismo.getTitulo().equals("Exception")) {
                         programadores.get(turnoAtual).recuar(2);
                         mensagem = "Exception! Recue 2 casas.";
@@ -306,20 +306,20 @@ public class GameManager {
         if (turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
         }
-        if(programadores.get(turnoAtual).getEstado().equals("Derrotado")){
+        if (programadores.get(turnoAtual).getEstado().equals("Derrotado")) {
             turnoAtual++;
-        }else{
+        } else {
             return validaMensagem(mensagem);
         }
-        if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
+        if (turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
             turnoAtual = 0;
         }
-        if(programadores.get(turnoAtual).getEstado().equals("Derrotado")){
+        if (programadores.get(turnoAtual).getEstado().equals("Derrotado")) {
             turnoAtual++;
-        }else{
+        } else {
             return validaMensagem(mensagem);
         }
-        if(turnoAtual >= programadores.size()) { // Verifica se é por estar mais que um jogador bloqueados
+        if (turnoAtual >= programadores.size()) { // Verifica se é por estar mais que um jogador bloqueados
             turnoAtual = 0;
         }
 

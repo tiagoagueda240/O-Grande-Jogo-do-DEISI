@@ -11,15 +11,15 @@ public class Ferramenta {
         this.posicao = posicao;
     }
 
-    public int getPosicao(){
+    public int getPosicao() {
         return posicao;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public String getTitulo(){
+    public String getTitulo() {
         return titulo;
     }
 
