@@ -49,5 +49,4 @@ public class TestGameManager {
         assertEquals(1, gameManagerTestes.programadores.get(2).getPosicao());
     }
 
-
 }

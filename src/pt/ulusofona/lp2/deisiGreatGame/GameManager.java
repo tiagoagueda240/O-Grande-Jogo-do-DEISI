@@ -14,11 +14,7 @@ public class GameManager {
     int turnoAtual = 0; // turno atual, pode ser: 0, 1, 2 ou 3
     int nrDado;
 
-
-    /*
-     * Função que retorna o enum
-     */
-    ProgrammerColor encontrarCor(String cor) {
+    ProgrammerColor encontrarCor(String cor) { //Função que retorna o enum
         switch (cor) {
             case "PURPLE":
                 return ProgrammerColor.PURPLE;
@@ -91,7 +87,7 @@ public class GameManager {
             programadores.add(player);
         }
 
-        //Valida tamanho do tabuleiro
+        // Valida tamanho do tabuleiro
         if (programadores.size() > 4 || programadores.size() < 2 || nrCasas < programadores.size() * 2) {
             return false;
         }
@@ -99,7 +95,7 @@ public class GameManager {
         HashSet<ProgrammerColor> colorDuplicado = new HashSet<>(); // não pode haver cores repetidas
         HashSet<Integer> idDuplicated = new HashSet<>(); // não pode haver iDs repetidos
 
-        //Percorrer todos os jogadores para fazer todas as verificações enunciadas no enunciado
+        // Percorrer todos os jogadores para fazer todas as verificações enunciadas no enunciado
         for (Programmer programmer : programadores) {
             if (programmer.getId() == 0 || colorDuplicado.contains(programmer.getColor()) || idDuplicated.contains(programmer.getId()) ||
                     programmer.getColor() == null || programmer.getName().equals("")) {
@@ -175,7 +171,6 @@ public class GameManager {
         return listaProgramadores;
     }
 
-
     public List<Programmer> getProgrammers(int position) {
         // Verifica se a posição passada nos parametros está dentro do tabuleiro
         if (position < 1 || position > nrCasas) {
@@ -199,7 +194,7 @@ public class GameManager {
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
         StringBuilder listaJogadores = new StringBuilder();
         for (Programmer programador : programadores) {
-            if (programador.getEstado().equals("Em Jogo")){
+            if (programador.getEstado().equals("Em Jogo")) {
                 listaJogadores.append(programador.getName() + " : " + programador.criaListaFerramentas());
                 if (programador != programadores.get(programadores.size() - 1)) {
                     listaJogadores.append(" | ");
@@ -210,7 +205,6 @@ public class GameManager {
         }
         return listaJogadores.toString();
     }
-
 
     public boolean moveCurrentPlayer(int nrPositions) {
         if (nrPositions < 1 || nrPositions > 6) {
@@ -228,19 +222,16 @@ public class GameManager {
                 return true;
             }
         }
-
         //}
-
         return false;
     }
-
 
     public String reactToAbyssOrTool() {
         String mensagem = "";
         for (Ferramenta ferramenta : ferramentas) {
             if (ferramenta.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
                 programadores.get(turnoAtual).addFerramenta(ferramenta.getTitulo());
-                mensagem = "ferramenta";
+                mensagem = "Adquiriu a ferramenta " + ferramenta.getTitulo();
             }
         }
         for (Abismo abismo : abismos) {
@@ -304,7 +295,7 @@ public class GameManager {
                         }
                         mensagem = "Segmentation Fault! Se tiver companhia recue 3 casas.";
                     }
-                }else{
+                } else {
                     mensagem = "Utilizou uma ferramenta";
                 }
 
@@ -404,8 +395,6 @@ public class GameManager {
 
         return credits;
     }
-
-
 
     Abismo criarAbismo(String info, String posicao) {
         switch (info) {

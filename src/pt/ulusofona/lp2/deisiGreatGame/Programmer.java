@@ -31,6 +31,7 @@ public class Programmer {
     public void alteraValorPreso(boolean valor){
         preso = valor;
     }
+
     public boolean getValorPreso(){
         return preso;
     }
@@ -38,6 +39,7 @@ public class Programmer {
     public void adicionaPosicao(int posicao){
         historicoPosicoes.add(posicao);
     }
+
     public void saberPosicaoJogadas(int quantidade){
         if (historicoPosicoes.size() - quantidade >= 0){
             posicao = historicoPosicoes.get(historicoPosicoes.size() - quantidade);
@@ -49,9 +51,11 @@ public class Programmer {
     public void posicaoInicial(){
         posicao = 1;
     }
+
     public void perdeu(){
         estado = "Derrotado";
     }
+
     public int getId() {
         return iD;
     }
@@ -59,6 +63,7 @@ public class Programmer {
     public String getName() {
         return name;
     }
+
     public String getEstado() {
         return estado;
     }
@@ -74,6 +79,7 @@ public class Programmer {
     public void mover(int posicoes) {
         posicao += posicoes;
     }
+
     public void recuar(int posicoes) {
         if (posicao - posicoes < 0){
             posicao = 0;
@@ -86,6 +92,7 @@ public class Programmer {
     public void avancarRecuar(int posicoes, int nrCasas) {
         posicao = nrCasas + (nrCasas - posicao - posicoes);
     }
+
     public void addFerramenta(String ferramenta){
         boolean verificaExistencia = true;
         for (String ferramentaProgramador : ferramentas){
@@ -103,7 +110,7 @@ public class Programmer {
             int posicao = 0;
             for (String ferramentaPlayer : ferramentas){
                 if(ferramenta.equals(ferramentaPlayer)){
-                    ferramentas.remove(posicao);
+                    ferramentas.remove(posicao); // remove a ferramenta
                     return true;
                 }
                 posicao++;
