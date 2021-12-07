@@ -98,7 +98,6 @@ class BlueScreenOfDeath extends Abismo {
     BlueScreenOfDeath(int id, int posicao) {
         super(id, posicao);
         titulo = "Blue Screen of Death";
-
     }
 }
 

@@ -76,6 +76,10 @@ public class Programmer {
         return posicao;
     }
 
+    public  ArrayList<String> getFerramentas() {
+        return ferramentas;
+    }
+
     public void mover(int posicoes) {
         posicao += posicoes;
     }

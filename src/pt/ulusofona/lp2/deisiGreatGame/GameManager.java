@@ -226,11 +226,11 @@ public class GameManager {
                     switch (abismo.getTitulo()) {
                         case "Erro de sintaxe" -> {
                             programadores.get(turnoAtual).recuar(1);
-                            mensagem = "Teve um erro de sintaxe, recua 2 casas!";
+                            mensagem = "Teve um erro de sintaxe, recue 2 casas!";
                         }
                         case "Erro de lógica" -> {
                             programadores.get(turnoAtual).recuar(nrDado / 2);
-                            mensagem = "Teve um erro de lógica, recue" + nrDado / 2 + "casa(s)!";
+                            mensagem = "Teve um erro de lógica, recue " + nrDado / 2 + " casa(s)!";
                         }
                         case "Exception" -> {
                             programadores.get(turnoAtual).recuar(2);
