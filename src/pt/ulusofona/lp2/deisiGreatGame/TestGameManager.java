@@ -58,28 +58,57 @@ public class TestGameManager {
     @Test
     public void test02_limiteJogador() {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 20);
+        String[][] ferramentasEAbismo = {{"1", "1", "2"}, {"1", "5", "4"}, {"1", "3", "6"}, {"5", "4", "9"}, {"0", "6", "10"}, {"0", "2", "13"}};
+        boolean iniciar = gameManagerTestes.createInitialBoard(info, 20, ferramentasEAbismo);
         assertEquals(false, iniciar);
     }
 
     @Test
     public void test02_informacaoJogadores() {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Yellow"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        String[][] ferramentasEAbismo = {{"0", "7", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
+        String[][] ferramentasEAbismo = {{"0", "7", "2"}, {"0", "3", "10"}, {"0", "5", "13"}};
         boolean iniciar = gameManagerTestes.createInitialBoard(info, 20);
         boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
         String mensagem = gameManagerTestes.reactToAbyssOrTool();
-        List<Programmer> infoJogadores = gameManagerTestes.getProgrammers(true);
+        List<Programmer> infoJogadores = gameManagerTestes.getProgrammers(false); //verificar
+        assertEquals("22001757 | Tiago Águeda | 2 | No tools | Java, C, Kotlin | Em Jogo", infoJogadores.get(0).toString());
+        infoJogadores = gameManagerTestes.getProgrammers(true);
         assertEquals("22001757 | Tiago Águeda | 2 | No tools | Java, C, Kotlin | Em Jogo", infoJogadores.get(0).toString());
     }
 
     @Test
-    public void test02_posicaoForaTabuleiro() {
+    public void test02_jogadoresEmPosicao() {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Yellow"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        String[][] ferramentasEAbismo = {{"0", "7", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
+        String[][] ferramentasEAbismo = {{"0", "5", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
         boolean iniciar = gameManagerTestes.createInitialBoard(info, 20);
-
+        boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
+        String mensagem = gameManagerTestes.reactToAbyssOrTool();
+        assertEquals("22001757 | Tiago Águeda | 2 | No tools | Java, C, Kotlin | Em Jogo", gameManagerTestes.getProgrammers(2).get(0).toString());
         assertEquals(null, gameManagerTestes.getProgrammers(30));
+    }
+
+    @Test
+    public void test02_imagemFerramentaAbismo() {
+        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
+        String[][] ferramentasEAbismo = {{"1", "4", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
+
+        boolean iniciar = gameManagerTestes.createInitialBoard(info, 25, ferramentasEAbismo);
+
+        assertEquals("abismos/abismo2.png", gameManagerTestes.getImagePng(13));
+        assertEquals("ferramentas/ferramenta4.png", gameManagerTestes.getImagePng(2));
+        assertEquals(null, gameManagerTestes.getImagePng(26));
+    }
+
+    @Test
+    public void test02_getTitulo() {
+        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
+        String[][] ferramentasEAbismo = {{"1", "4", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
+
+        boolean iniciar = gameManagerTestes.createInitialBoard(info, 25, ferramentasEAbismo);
+
+        assertEquals("Exception", gameManagerTestes.getTitle(13));
+        assertEquals("IDE", gameManagerTestes.getTitle(2));
+        assertEquals(null, gameManagerTestes.getTitle(26));
     }
 
 
