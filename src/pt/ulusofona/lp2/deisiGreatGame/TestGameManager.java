@@ -142,6 +142,7 @@ public class TestGameManager {
         movimento = gameManagerTestes.moveCurrentPlayer(7);
         mensagem = gameManagerTestes.reactToAbyssOrTool();
         assertEquals(6, gameManagerTestes.programadores.get(2).getPosicao());
+        assertEquals("Tiago Águeda", gameManagerTestes. getGameResults().get(6));
     }
 
     @Test
