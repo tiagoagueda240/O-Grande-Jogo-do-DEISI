@@ -1,10 +1,6 @@
 package pt.ulusofona.lp2.deisiGreatGame;
-
 import static org.junit.Assert.assertEquals;
-
-import org.junit.Assert;
 import org.junit.Test;
-
 import java.util.List;
 
 public class TestGameManager {
@@ -88,6 +84,17 @@ public class TestGameManager {
     }
 
     @Test
+    public void test02_moverIdIvalido() {
+        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Yellow"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
+        String[][] ferramentasEAbismo = {{"0", "5", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
+        boolean iniciar = gameManagerTestes.createInitialBoard(info, 20);
+        boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
+        String mensagem = gameManagerTestes.reactToAbyssOrTool();
+        assertEquals("22001757 | Tiago Águeda | 2 | No tools | Java, C, Kotlin | Em Jogo", gameManagerTestes.getProgrammers(2).get(0).toString());
+        assertEquals(null, gameManagerTestes.getProgrammers(30));
+    }
+
+    @Test
     public void test02_imagemFerramentaAbismo() {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
         String[][] ferramentasEAbismo = {{"1", "4", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
@@ -109,6 +116,7 @@ public class TestGameManager {
         assertEquals("Exception", gameManagerTestes.getTitle(13));
         assertEquals("IDE", gameManagerTestes.getTitle(2));
         assertEquals(null, gameManagerTestes.getTitle(26));
+        assertEquals(null, gameManagerTestes.getTitle(3));
     }
 
 
@@ -213,4 +221,53 @@ public class TestGameManager {
         assertEquals("Tiago Águeda : Herança | João Antas : IDE", gameManagerTestes.getProgrammersInfo()); // ve se as informações do jogador estão corretas
     }
 
+    @Test
+    public void test04_jogoCompleto() {
+        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Purple"}};
+        String[][] ferramentasEAbismo = {{"1", "5", "3"}, {"1", "3", "6"},{"1", "1", "11"}, {"1", "2", "12"},{"1", "0", "18"}, {"1", "4", "23"},
+                {"0", "3", "8"}, {"0", "5", "15"},{"0", "0", "17"}, {"0", "7", "28"},{"0", "8", "26"}, {"0", "1", "25"}};
+
+        boolean iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        boolean movimento = gameManagerTestes.moveCurrentPlayer(2); //0 -> 3
+        String mensagem = gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(5); //1 -> 6
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(6); //0 -> 9
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(3); //1 -> 9
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(6); //0 -> 9
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(4); //1 -> 13
+        gameManagerTestes.reactToAbyssOrTool();
+        assertEquals(false, gameManagerTestes.gameIsOver());
+        gameManagerTestes.moveCurrentPlayer(2); //0 -> 11
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(3); //1 -> 16
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(3); //0 -> 14
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(1); //1 -> 16
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(6); //0 -> 20
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(6); //1 -> 22
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(5); //0 -> 25
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(5); //1 -> 27
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(2); //0 -> 27
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(6); //1 -> 27
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(1); //0 -> 28
+        gameManagerTestes.reactToAbyssOrTool();
+        assertEquals(true, gameManagerTestes.gameIsOver());
+        assertEquals("Tiago Águeda", gameManagerTestes.getGameResults().get(6));
+
+        assertEquals(300,gameManagerTestes.getAuthorsPanel().getHeight());
+        assertEquals(300,gameManagerTestes.getAuthorsPanel().getWidth());
+
+    }
 }
