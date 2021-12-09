@@ -12,19 +12,19 @@ public class Abismo {
         this.posicao = posicao;
     }
 
-    protected int getPosicao() {
+    public int getPosicao() {
         return posicao;
     }
 
-    protected int getId() {
+    public int getId() {
         return id;
     }
 
-    protected String getTitulo() {
+    public String getTitulo() {
         return titulo;
     }
 
-    protected HashSet<String> getFerramentas(){
+    public HashSet<String> getFerramentas(){
         return listaFerramentas;
     }
 

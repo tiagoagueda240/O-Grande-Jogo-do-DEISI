@@ -11,7 +11,7 @@ public class TestProgrammer {
     GameManager gameManagerTestes = new GameManager();
 
     @Test
-    private void test01_criarJogador() {
+    public void test01_criarJogador() {
         Programmer programador = new Programmer();
         ArrayList<String> languages = new ArrayList(Arrays.asList( "Java; C; Kotlin".split(";")));
         Programmer programador2 = new Programmer("Tiago Águeda", languages, Integer.parseInt("22001757"), ProgrammerColor.PURPLE, 1, "Em Jogo");

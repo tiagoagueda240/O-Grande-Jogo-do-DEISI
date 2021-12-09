@@ -26,7 +26,7 @@ public class GameManager {
     public GameManager() {
     }
 
-    protected boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
+    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
         // reset
         abismos.clear();
         ferramentas.clear();
@@ -57,7 +57,7 @@ public class GameManager {
         return true;
     }
 
-    protected boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+    public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
         /*
          *  Fazer reset
          */
@@ -102,7 +102,7 @@ public class GameManager {
         return true;
     }
 
-    protected String getImagePng(int position) {
+    public String getImagePng(int position) {
         if (position > nrCasas) { // verificação do jogador saiu do tabuleiro
             return null;
         }
@@ -126,7 +126,7 @@ public class GameManager {
         return null;
     }
 
-    protected String getTitle(int position) {
+    public String getTitle(int position) {
         if (position < 1 || position > nrCasas) {
             return null;
         }
@@ -143,7 +143,7 @@ public class GameManager {
         return null;
     }
 
-    protected List<Programmer> getProgrammers(boolean includeDefeated) {
+    public List<Programmer> getProgrammers(boolean includeDefeated) {
         List<Programmer> listaProgramadores = new ArrayList<>();
         if (includeDefeated) {
             listaProgramadores = programadores;
@@ -157,7 +157,7 @@ public class GameManager {
         return listaProgramadores;
     }
 
-    protected List<Programmer> getProgrammers(int position) {
+    public List<Programmer> getProgrammers(int position) {
         // Verifica se a posição passada nos parametros está dentro do tabuleiro
         if (position < 1 || position > nrCasas) {
             return null;
@@ -172,11 +172,11 @@ public class GameManager {
         return programadoresNaPosicao;
     }
 
-    protected int getCurrentPlayerID() {
+    public int getCurrentPlayerID() {
         return programadores.get(turnoAtual).getId();
     }
 
-    protected String getProgrammersInfo() {
+    public String getProgrammersInfo() {
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
         StringBuilder listaJogadores = new StringBuilder();
         for (Programmer programador : programadores) {
@@ -192,7 +192,7 @@ public class GameManager {
         return listaJogadores.toString();
     }
 
-    protected boolean moveCurrentPlayer(int nrPositions) {
+    public boolean moveCurrentPlayer(int nrPositions) {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }
@@ -211,7 +211,7 @@ public class GameManager {
         return false;
     }
 
-    protected String reactToAbyssOrTool() {
+    public String reactToAbyssOrTool() {
         String mensagem = "";
         for (Ferramenta ferramenta : ferramentas) {
             if (ferramenta.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
@@ -310,7 +310,7 @@ public class GameManager {
         return validaMensagem(mensagem);
     }
 
-    private String validaMensagem(String mensagem) {
+    public String validaMensagem(String mensagem) {
         if (mensagem.equals("")) {
             return null;
         } else {
@@ -318,7 +318,7 @@ public class GameManager {
         }
     }
 
-    protected boolean gameIsOver() {
+    public boolean gameIsOver() {
         //Verifica se algum jogador chegou ao fim
         int jogadoresEmJogo = 0;
         for (Programmer programador : programadores) {
@@ -335,7 +335,7 @@ public class GameManager {
         return false;
     }
 
-    protected List<String> getGameResults() {
+    public List<String> getGameResults() {
         List<String> resultados = new ArrayList<>();
         resultados.add("O GRANDE JOGO DO DEISI");
         resultados.add("");
@@ -363,7 +363,7 @@ public class GameManager {
         return resultados;
     }
 
-    protected JPanel getAuthorsPanel() {
+    public JPanel getAuthorsPanel() {
         JPanel credits = new JPanel();
         credits.setSize(new Dimension(300, 300));
         JLabel linha1 = new JLabel();
