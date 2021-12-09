@@ -204,11 +204,11 @@ public class GameManager {
                 } else {
                     programador.avancarRecuar(nrPositions, nrCasas);
                 }
-                break;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     public String reactToAbyssOrTool() {

@@ -64,6 +64,7 @@ public class TestGameManager {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Yellow"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
         String[][] ferramentasEAbismo = {{"0", "7", "2"}, {"0", "3", "10"}, {"0", "5", "13"}};
         boolean iniciar = gameManagerTestes.createInitialBoard(info, 20);
+        assertEquals("Blue", gameManagerTestes.programadores.get(0).getColor().toString());
         boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
         String mensagem = gameManagerTestes.reactToAbyssOrTool();
         List<Programmer> infoJogadores = gameManagerTestes.getProgrammers(false); //verificar
@@ -213,6 +214,9 @@ public class TestGameManager {
         movimento = gameManagerTestes.moveCurrentPlayer(3); //15
         mensagem = gameManagerTestes.reactToAbyssOrTool();
         movimento = gameManagerTestes.moveCurrentPlayer(4); //19
+        gameManagerTestes.programadores.get(gameManagerTestes.turnoAtual).preso = true;
+        movimento = gameManagerTestes.moveCurrentPlayer(4); //19
+        assertEquals(false, movimento);
         mensagem = gameManagerTestes.reactToAbyssOrTool();
         assertEquals(true, gameManagerTestes.programadores.get(0).getValorPreso());
         movimento = gameManagerTestes.moveCurrentPlayer(4); //19
