@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+
 public class Ferramenta {
     int id;
     String titulo;

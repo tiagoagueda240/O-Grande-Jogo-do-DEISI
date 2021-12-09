@@ -1,11 +1,9 @@
 package pt.ulusofona.lp2.deisiGreatGame;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
 public class Programmer {
-
     String name;
     ArrayList<String> languages = new ArrayList();
     int iD;

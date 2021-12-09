@@ -26,6 +26,7 @@ public class TestProgrammer {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
         boolean iniciar = gameManagerTestes.createInitialBoard(info, 0);
         assertEquals(false, iniciar);
+
     }
 
 }

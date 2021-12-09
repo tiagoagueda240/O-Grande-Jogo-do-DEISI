@@ -1,5 +1,4 @@
 package pt.ulusofona.lp2.deisiGreatGame;
-
 import java.util.HashSet;
 
 public class Abismo {

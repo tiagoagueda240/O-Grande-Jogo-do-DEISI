@@ -1,5 +1,4 @@
 package pt.ulusofona.lp2.deisiGreatGame;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
