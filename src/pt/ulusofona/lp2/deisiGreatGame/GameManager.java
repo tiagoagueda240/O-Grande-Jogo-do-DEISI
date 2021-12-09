@@ -122,6 +122,7 @@ public class GameManager {
             if (ferramenta.getPosicao() == position) {
                 return "ferramentas/ferramenta" + ferramenta.getId() + ".png";
             }
+            continue;
         }
         return null;
     }
