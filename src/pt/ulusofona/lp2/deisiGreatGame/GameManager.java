@@ -295,24 +295,16 @@ public class GameManager {
         programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
         turnoAtual++;
         nrTurnos++;
-        if (turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
-            turnoAtual = 0;
-        }
-        if(programadores.get(turnoAtual).getEstado().equals("Derrotado")){
-            turnoAtual++;
-        }else{
-            return validaMensagem(mensagem);
-        }
-        if(turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
-            turnoAtual = 0;
-        }
-        if(programadores.get(turnoAtual).getEstado().equals("Derrotado")){
-            turnoAtual++;
-        }else{
-            return validaMensagem(mensagem);
-        }
-        if(turnoAtual >= programadores.size()) { // Verifica se é por estar mais que um jogador bloqueados
-            turnoAtual = 0;
+        for (int i = turnoAtual; i <= programadores.size(); i++){
+            if (turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
+                turnoAtual = 0;
+                break;
+            }
+            if(programadores.get(turnoAtual).getEstado().equals("Derrotado")){
+                turnoAtual++;
+            }else{
+                return validaMensagem(mensagem);
+            }
         }
 
         return validaMensagem(mensagem);
@@ -394,8 +386,7 @@ public class GameManager {
             case "6" -> new EfeitosSecundarios(6, posicao);
             case "7" -> new BlueScreenOfDeath(7, posicao);
             case "8" -> new CicloInfinito(8, posicao);
-            case "9" -> new SegmentationFault(9, posicao);
-            default -> null;
+            default -> new SegmentationFault(9, posicao);
         };
     }
 
@@ -406,8 +397,7 @@ public class GameManager {
             case "2" -> new TestesUnitarios(2, posicao);
             case "3" -> new TratamentoDeExcepcoes(3, posicao);
             case "4" -> new IDE(4, posicao);
-            case "5" -> new AjudaDoProfessor(5, posicao);
-            default -> null;
+            default -> new AjudaDoProfessor(5, posicao);
         };
     }
 }

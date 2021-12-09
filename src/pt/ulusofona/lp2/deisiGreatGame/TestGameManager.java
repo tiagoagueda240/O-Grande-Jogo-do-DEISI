@@ -1,6 +1,10 @@
 package pt.ulusofona.lp2.deisiGreatGame;
+
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Assert;
 import org.junit.Test;
+
 import java.util.List;
 
 public class TestGameManager {
@@ -207,48 +211,6 @@ public class TestGameManager {
         assertEquals(true, gameManagerTestes.programadores.get(1).getValorPreso());
         assertEquals(22001757, gameManagerTestes.getCurrentPlayerID()); // testa para ver se esta a ir buscar bem o jogador
         assertEquals("Tiago Águeda : Herança | João Antas : IDE", gameManagerTestes.getProgrammersInfo()); // ve se as informações do jogador estão corretas
-    }
-
-    @Test
-    public void test04_jogoCompleto() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Purple"}};
-        String[][] ferramentasEAbismo = {{"1", "5", "3"}, {"1", "3", "6"},{"1", "1", "11"}, {"1", "2", "12"},{"1", "0", "18"}, {"1", "4", "23"},
-                {"0", "3", "8"}, {"0", "5", "15"},{"0", "6", "17"}, {"0", "7", "25"},{"0", "8", "26"}, {"0", "1", "28"}};
-
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
-        boolean movimento = gameManagerTestes.moveCurrentPlayer(2); //0 -> 3
-        String mensagem = gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(5); //
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(6); //0 -> 9
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(3); //3
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(6); //0 -> 9
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(4); //3
-        gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(false, gameManagerTestes.gameIsOver());
-        gameManagerTestes.moveCurrentPlayer(2); //0 -> 11
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(3); //3
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(3); //0 -> 14
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(1); //3
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(6); //0 -> 20
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(1); //3
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(5); //0 -> 25
-        gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(true, gameManagerTestes.gameIsOver());
-        assertEquals("Tiago Águeda", gameManagerTestes.getGameResults().get(6));
-
-        assertEquals(300,gameManagerTestes.getAuthorsPanel().getHeight());
-        assertEquals(300,gameManagerTestes.getAuthorsPanel().getWidth());
-
     }
 
 }
