@@ -196,7 +196,6 @@ public class GameManager {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }
-        //if (!programadores.get(turnoAtual).getValorPreso()){
         nrDado = nrPositions;
         for (Programmer programador : programadores) {
             if (programador.getId() == getCurrentPlayerID() && !programadores.get(turnoAtual).getValorPreso()) {
@@ -205,11 +204,11 @@ public class GameManager {
                 } else {
                     programador.avancarRecuar(nrPositions, nrCasas);
                 }
-                return true;
+                break;
             }
         }
-        //}
-        return false;
+
+        return true;
     }
 
     public String reactToAbyssOrTool() {
