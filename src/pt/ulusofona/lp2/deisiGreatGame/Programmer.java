@@ -14,7 +14,7 @@ public class Programmer {
     boolean preso = false;
     ArrayList<Integer> historicoPosicoes = new ArrayList<>();
 
-    public Programmer(String name, ArrayList<String> languages, int iD, ProgrammerColor colorAvatar, int posicao, String estado) {
+    protected Programmer(String name, ArrayList<String> languages, int iD, ProgrammerColor colorAvatar, int posicao, String estado) {
         this.name = name;
         this.languages = languages;
         this.iD = iD;
@@ -23,22 +23,22 @@ public class Programmer {
         this.estado = estado;
     }
 
-    public Programmer() {
+    protected Programmer() {
     }
 
-    public void alteraValorPreso(boolean valor){
+    protected void alteraValorPreso(boolean valor){
         preso = valor;
     }
 
-    public boolean getValorPreso(){
+    protected boolean getValorPreso(){
         return preso;
     }
 
-    public void adicionaPosicao(int posicao){
+    protected void adicionaPosicao(int posicao){
         historicoPosicoes.add(posicao);
     }
 
-    public void saberPosicaoJogadas(int quantidade){
+    protected void saberPosicaoJogadas(int quantidade){
         if (historicoPosicoes.size() - quantidade >= 0){
             posicao = historicoPosicoes.get(historicoPosicoes.size() - quantidade);
         }else{
@@ -46,43 +46,43 @@ public class Programmer {
         }
     }
 
-    public void posicaoInicial(){
+    protected void posicaoInicial(){
         posicao = 1;
     }
 
-    public void perdeu(){
+    protected void perdeu(){
         estado = "Derrotado";
     }
 
-    public int getId() {
+    protected int getId() {
         return iD;
     }
 
-    public String getName() {
+    protected String getName() {
         return name;
     }
 
-    public String getEstado() {
+    protected String getEstado() {
         return estado;
     }
 
-    public ProgrammerColor getColor() {
+    protected ProgrammerColor getColor() {
         return colorAvatar;
     }
 
-    public int getPosicao() {
+    protected int getPosicao() {
         return posicao;
     }
 
-    public  ArrayList<String> getFerramentas() {
+    protected  ArrayList<String> getFerramentas() {
         return ferramentas;
     }
 
-    public void mover(int posicoes) {
+    protected void mover(int posicoes) {
         posicao += posicoes;
     }
 
-    public void recuar(int posicoes) {
+    protected void recuar(int posicoes) {
         if (posicao - posicoes < 0){
             posicao = 0;
         }else{
@@ -91,11 +91,11 @@ public class Programmer {
 
     }
 
-    public void avancarRecuar(int posicoes, int nrCasas) {
+    protected void avancarRecuar(int posicoes, int nrCasas) {
         posicao = nrCasas + (nrCasas - posicao - posicoes);
     }
 
-    public void addFerramenta(String ferramenta){
+    protected void addFerramenta(String ferramenta){
         boolean verificaExistencia = true;
         for (String ferramentaProgramador : ferramentas){
             if (ferramentaProgramador.equals(ferramenta)) {
@@ -108,7 +108,7 @@ public class Programmer {
         }
     }
 
-    public boolean contemFerramentaUtil(HashSet<String> lista){
+    protected boolean contemFerramentaUtil(HashSet<String> lista){
         for (String ferramenta : lista){
             int posicao = 0;
             for (String ferramentaPlayer : ferramentas){
@@ -122,7 +122,7 @@ public class Programmer {
         return false;
     }
 
-    public String criaListaFerramentas(){
+    protected String criaListaFerramentas(){
         StringBuilder listaFerramentas = new StringBuilder();
         if (ferramentas.size() == 0){
             return "No tools";

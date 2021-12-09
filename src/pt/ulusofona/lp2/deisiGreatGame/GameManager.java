@@ -13,7 +13,7 @@ public class GameManager {
     int turnoAtual = 0; // turno atual, pode ser: 0, 1, 2 ou 3
     int nrDado;
 
-    ProgrammerColor encontrarCor(String cor) { //Função que retorna o enum
+    protected ProgrammerColor encontrarCor(String cor) { //Função que retorna o enum
         return switch (cor) {
             case "PURPLE" -> ProgrammerColor.PURPLE;
             case "BLUE" -> ProgrammerColor.BLUE;
@@ -26,7 +26,7 @@ public class GameManager {
     public GameManager() {
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
+    protected boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
         // reset
         abismos.clear();
         ferramentas.clear();
@@ -57,7 +57,7 @@ public class GameManager {
         return true;
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+    protected boolean createInitialBoard(String[][] playerInfo, int boardSize) {
         /*
          *  Fazer reset
          */
@@ -102,7 +102,7 @@ public class GameManager {
         return true;
     }
 
-    public String getImagePng(int position) {
+    protected String getImagePng(int position) {
         if (position > nrCasas) { // verificação do jogador saiu do tabuleiro
             return null;
         }
@@ -126,7 +126,7 @@ public class GameManager {
         return null;
     }
 
-    public String getTitle(int position) {
+    protected String getTitle(int position) {
         if (position < 1 || position > nrCasas) {
             return null;
         }
@@ -143,7 +143,7 @@ public class GameManager {
         return null;
     }
 
-    public List<Programmer> getProgrammers(boolean includeDefeated) {
+    protected List<Programmer> getProgrammers(boolean includeDefeated) {
         List<Programmer> listaProgramadores = new ArrayList<>();
         if (includeDefeated) {
             listaProgramadores = programadores;
@@ -157,7 +157,7 @@ public class GameManager {
         return listaProgramadores;
     }
 
-    public List<Programmer> getProgrammers(int position) {
+    protected List<Programmer> getProgrammers(int position) {
         // Verifica se a posição passada nos parametros está dentro do tabuleiro
         if (position < 1 || position > nrCasas) {
             return null;
@@ -172,11 +172,11 @@ public class GameManager {
         return programadoresNaPosicao;
     }
 
-    public int getCurrentPlayerID() {
+    protected int getCurrentPlayerID() {
         return programadores.get(turnoAtual).getId();
     }
 
-    public String getProgrammersInfo() {
+    protected String getProgrammersInfo() {
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
         StringBuilder listaJogadores = new StringBuilder();
         for (Programmer programador : programadores) {
@@ -192,7 +192,7 @@ public class GameManager {
         return listaJogadores.toString();
     }
 
-    public boolean moveCurrentPlayer(int nrPositions) {
+    protected boolean moveCurrentPlayer(int nrPositions) {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }
@@ -211,7 +211,7 @@ public class GameManager {
         return false;
     }
 
-    public String reactToAbyssOrTool() {
+    protected String reactToAbyssOrTool() {
         String mensagem = "";
         for (Ferramenta ferramenta : ferramentas) {
             if (ferramenta.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
@@ -310,7 +310,7 @@ public class GameManager {
         return validaMensagem(mensagem);
     }
 
-    String validaMensagem(String mensagem) {
+    private String validaMensagem(String mensagem) {
         if (mensagem.equals("")) {
             return null;
         } else {
@@ -318,7 +318,7 @@ public class GameManager {
         }
     }
 
-    public boolean gameIsOver() {
+    protected boolean gameIsOver() {
         //Verifica se algum jogador chegou ao fim
         int jogadoresEmJogo = 0;
         for (Programmer programador : programadores) {
@@ -335,7 +335,7 @@ public class GameManager {
         return false;
     }
 
-    public List<String> getGameResults() {
+    protected List<String> getGameResults() {
         List<String> resultados = new ArrayList<>();
         resultados.add("O GRANDE JOGO DO DEISI");
         resultados.add("");
@@ -363,7 +363,7 @@ public class GameManager {
         return resultados;
     }
 
-    public JPanel getAuthorsPanel() {
+    protected JPanel getAuthorsPanel() {
         JPanel credits = new JPanel();
         credits.setSize(new Dimension(300, 300));
         JLabel linha1 = new JLabel();
@@ -381,7 +381,7 @@ public class GameManager {
         return credits;
     }
 
-    Abismo criarAbismo(String info, int posicao) {
+    private Abismo criarAbismo(String info, int posicao) {
         return switch (info) {
             case "0" -> new ErroDeSintaxe(0, posicao);
             case "1" -> new ErroDeLogica(1, posicao);
@@ -396,7 +396,7 @@ public class GameManager {
         };
     }
 
-    Ferramenta criarFerramentas(String info, int posicao) {
+    private Ferramenta criarFerramentas(String info, int posicao) {
         return switch (info) {
             case "0" -> new Heranca(0, posicao);
             case "1" -> new ProgramacaoFuncional(1, posicao);
