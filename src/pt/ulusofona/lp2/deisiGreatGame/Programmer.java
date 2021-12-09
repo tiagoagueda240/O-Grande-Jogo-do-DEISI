@@ -131,7 +131,7 @@ public class Programmer {
         }else{
             for (String ferramenta : ferramentas){
                 listaFerramentas.append(ferramenta);
-                if (ferramenta != ferramentas.get(ferramentas.size() - 1)) {
+                if (!ferramenta.equals(ferramentas.get(ferramentas.size() - 1))) {
                     listaFerramentas.append(";");
                 }
             }
@@ -145,7 +145,7 @@ public class Programmer {
         Collections.sort(languages);
         for (String lingua : languages) {
             listaLinguas.append(lingua);
-            if (lingua != languages.get(languages.size() - 1)) {
+            if (!lingua.equals(languages.get(languages.size() - 1))) {
                 listaLinguas.append("; ");
             }
         }

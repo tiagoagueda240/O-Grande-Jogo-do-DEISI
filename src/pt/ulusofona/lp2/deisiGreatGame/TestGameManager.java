@@ -323,15 +323,16 @@ public class TestGameManager {
 
         boolean iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
         boolean movimento = gameManagerTestes.moveCurrentPlayer(2); //0 -> 3
-        iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        gameManagerTestes.reactToAbyssOrTool();
         movimento = gameManagerTestes.moveCurrentPlayer(4); //1 -> 5
-        iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        gameManagerTestes.reactToAbyssOrTool();
         movimento = gameManagerTestes.moveCurrentPlayer(6); //0 -> 9
-        iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        gameManagerTestes.reactToAbyssOrTool();
         movimento = gameManagerTestes.moveCurrentPlayer(5); //1 -> 10
-        iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        gameManagerTestes.reactToAbyssOrTool();
         movimento = gameManagerTestes.moveCurrentPlayer(3); //0 -> 12
-        assertEquals(4, gameManagerTestes.programadores.get(0).getPosicao());
+        gameManagerTestes.reactToAbyssOrTool();
+        assertEquals(3, gameManagerTestes.programadores.get(0).getPosicao());
 
     }
 }
