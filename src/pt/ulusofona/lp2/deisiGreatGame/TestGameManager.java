@@ -175,7 +175,7 @@ public class TestGameManager {
     @Test
     public void test03_2Ferramentas() {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Purple"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Brown"}};
-        String[][] ferramentasEAbismo = {{"1", "0", "3"}, {"1", "0", "7"}, {"1", "4", "12"}};
+        String[][] ferramentasEAbismo = {{"1", "0", "3"}, {"1", "0", "7"}, {"1", "4", "12"}, {"0", "6", "15"}};
 
         boolean iniciar = gameManagerTestes.createInitialBoard(info, 20, ferramentasEAbismo);
         boolean movimento = gameManagerTestes.moveCurrentPlayer(2);
@@ -222,7 +222,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void test04_jogoCompleto() {
+    public void test04_jogoCompleto01() {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Purple"}};
         String[][] ferramentasEAbismo = {{"1", "5", "3"}, {"1", "3", "6"},{"1", "1", "11"}, {"1", "2", "12"},{"1", "0", "18"}, {"1", "4", "23"},
                 {"0", "3", "8"}, {"0", "5", "15"},{"0", "0", "17"}, {"0", "7", "28"},{"0", "8", "26"}, {"0", "1", "25"}};
@@ -268,6 +268,46 @@ public class TestGameManager {
 
         assertEquals(300,gameManagerTestes.getAuthorsPanel().getHeight());
         assertEquals(300,gameManagerTestes.getAuthorsPanel().getWidth());
+
+    }
+
+    @Test
+    public void test04_jogoCompleto02() {
+        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Purple"}};
+        String[][] ferramentasEAbismo = {{"1", "4", "3"}, {"1", "4", "6"},{"1", "4", "11"}, {"1", "2", "12"},{"1", "0", "18"}, {"1", "4", "23"},
+                {"0", "1", "8"}, {"0", "2", "10"},{"0", "3", "15"}, {"0", "9", "19"},{"0", "2", "26"}, {"0", "6", "20"}};
+
+        boolean iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        boolean movimento = gameManagerTestes.moveCurrentPlayer(2); //0 -> 3
+        String mensagem = gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(5); //1 -> 6
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(5); //0 -> 6
+        gameManagerTestes.reactToAbyssOrTool();
+        assertEquals(6, gameManagerTestes.programadores.get(0).getPosicao());
+        gameManagerTestes.moveCurrentPlayer(4); //1 -> 8
+        gameManagerTestes.reactToAbyssOrTool();
+        assertEquals(8, gameManagerTestes.programadores.get(1).getPosicao());
+        gameManagerTestes.moveCurrentPlayer(6); //0 -> 12
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(3); //1 -> 11
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(3); //0 -> 12
+        gameManagerTestes.reactToAbyssOrTool();
+        assertEquals(12, gameManagerTestes.programadores.get(0).getPosicao());
+        gameManagerTestes.moveCurrentPlayer(6); //1 -> 17
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(4); //0 -> 16
+        gameManagerTestes.reactToAbyssOrTool();
+        gameManagerTestes.moveCurrentPlayer(2); //1 -> 19
+        gameManagerTestes.reactToAbyssOrTool();
+        assertEquals(19, gameManagerTestes.programadores.get(1).getPosicao());
+        gameManagerTestes.moveCurrentPlayer(3); //0 -> 16
+        gameManagerTestes.reactToAbyssOrTool();
+        assertEquals(16, gameManagerTestes.programadores.get(0).getPosicao());
+        gameManagerTestes.moveCurrentPlayer(1); //1 -> 20
+        gameManagerTestes.reactToAbyssOrTool();
+        assertEquals(17, gameManagerTestes.programadores.get(1).getPosicao());
 
     }
 }
