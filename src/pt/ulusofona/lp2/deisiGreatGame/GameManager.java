@@ -13,7 +13,7 @@ public class GameManager {
     int turnoAtual = 0; // turno atual, pode ser: 0, 1, 2 ou 3
     int nrDado;
 
-    protected ProgrammerColor encontrarCor(String cor) { //Função que retorna o enum
+    private ProgrammerColor encontrarCor(String cor) { //Função que retorna o enum
         return switch (cor) {
             case "PURPLE" -> ProgrammerColor.PURPLE;
             case "BLUE" -> ProgrammerColor.BLUE;
@@ -310,7 +310,7 @@ public class GameManager {
         return validaMensagem(mensagem);
     }
 
-    public String validaMensagem(String mensagem) {
+    String validaMensagem(String mensagem) {
         if (mensagem.equals("")) {
             return null;
         } else {
