@@ -345,12 +345,18 @@ public class GameManager {
         resultados.add("VENCEDOR");
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getName()));
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
-        resultados.add(programadores.get(0).getName());
+        if (programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2){
+            resultados.add(programadores.get(1).getName());
+        }else{
+            resultados.add(programadores.get(0).getName());
+        }
         resultados.add("");
         resultados.add("RESTANTES");
         for (Programmer programador : programadores) {
-            if (programadores.get(0).getId() == programador.getId()) { // percorre os jogadores
+            if (programadores.get(0).getId() == programador.getId() && !(programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2)) { // percorre os jogadores
                 continue;
+            }else if(programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2){
+                resultados.add(programadores.get(0).getName());
             }
             resultados.add(programador.getName() + " " + programador.getPosicao()); // adiciona o nome e o valor da posição
         }
