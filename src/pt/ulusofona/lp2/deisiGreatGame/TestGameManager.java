@@ -1,313 +1,403 @@
 package pt.ulusofona.lp2.deisiGreatGame;
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
 
-public class TestGameManager {
-    GameManager gameManagerTestes = new GameManager();
+public class GameManager {
+    ArrayList<Programmer> programadores = new ArrayList<>();
+    ArrayList<Abismo> abismos = new ArrayList<>();
+    ArrayList<Ferramenta> ferramentas = new ArrayList<>();
+    int nrCasas;
+    int nrTurnos = 1; // nr de turnos jogados
+    int turnoAtual = 0; // turno atual, pode ser: 0, 1, 2 ou 3
+    int nrDado;
 
-    @Test
-    public void test02_tamanhoTabuleiro01() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 0);
-        assertEquals(false, iniciar);
+    ProgrammerColor encontrarCor(String cor) { //Função que retorna o enum
+        return switch (cor) {
+            case "PURPLE" -> ProgrammerColor.PURPLE;
+            case "BLUE" -> ProgrammerColor.BLUE;
+            case "GREEN" -> ProgrammerColor.GREEN;
+            case "BROWN" -> ProgrammerColor.BROWN;
+            default -> null;
+        };
     }
 
-    @Test
-    public void test02_tamanhoTabuleiro02() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 2);
-        assertEquals(false, iniciar);
+    public GameManager() {
     }
 
-    @Test
-    public void test02_ferramentaInvalida() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        String[][] ferramentasEAbismo = {{"1", "10", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 15, ferramentasEAbismo);
-        assertEquals(false, iniciar);
+    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
+        // reset
+        abismos.clear();
+        ferramentas.clear();
+        boolean verifica = createInitialBoard(playerInfo, worldSize);
+        if (!verifica) {
+            return false;
+        }
+        for (String[] abyssesAndTool : abyssesAndTools) {
+            if (abyssesAndTool[0].equals("0")) {
+                if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 9 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
+                    abismos.add(criarAbismo(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
+                } else {
+                    return false;
+                }
+
+            } else if (abyssesAndTool[0].equals("1")) {
+                if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 5 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
+                    ferramentas.add(criarFerramentas(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));
+        ferramentas.sort(Comparator.comparing((Ferramenta ferramenta1) -> ferramenta1.getPosicao()));
+        return true;
     }
 
-    @Test
-    public void test02_abismoInvalida() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        String[][] ferramentasEAbismo = {{"1", "4", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "10", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
-        assertEquals(false, iniciar);
+    public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+        /*
+         *  Fazer reset
+         */
+        programadores.clear();
+        nrTurnos = 1;
+        turnoAtual = 0;
+
+        if (boardSize <= 1) { // Verifica o tamanho do tabuleiro
+            return false;
+        }
+
+        nrCasas = boardSize;
+        // Adiciona todos os jogadores à lista de jogadores
+        for (String[] strings : playerInfo) {
+            ArrayList<String> languages = new ArrayList(Arrays.asList(strings[2].split(";")));
+            Programmer player = new Programmer(strings[1], languages, Integer.parseInt(strings[0]), encontrarCor(strings[3].toUpperCase()), 1, "Em Jogo");
+            programadores.add(player);
+        }
+
+        // Valida tamanho do tabuleiro
+        if (programadores.size() > 4 || programadores.size() < 2 || nrCasas < programadores.size() * 2) {
+            return false;
+        }
+
+        HashSet<ProgrammerColor> colorDuplicado = new HashSet<>(); // não pode haver cores repetidas
+        HashSet<Integer> idDuplicated = new HashSet<>(); // não pode haver iDs repetidos
+
+        // Percorrer todos os jogadores para fazer todas as verificações enunciadas no enunciado
+        for (Programmer programmer : programadores) {
+            if (programmer.getId() == 0 || colorDuplicado.contains(programmer.getColor()) || idDuplicated.contains(programmer.getId()) ||
+                    programmer.getColor() == null || programmer.getName().equals("")) {
+                return false;
+            }
+            idDuplicated.add(programmer.getId());
+            colorDuplicado.add(programmer.getColor());
+
+        }
+        // Ordena os jogadores por ordem dos ids
+        programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
+        getImagePng(1);
+        getImagePng(boardSize);
+        return true;
     }
 
-    @Test
-    public void test02_idAbismoOuFerramenta() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        String[][] ferramentasEAbismo = {{"1", "4", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"5", "4", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
-        assertEquals(false, iniciar);
+    public String getImagePng(int position) {
+        if (position > nrCasas) { // verificação do jogador saiu do tabuleiro
+            return null;
+        }
+        if (position == nrCasas) {// verifica se o jogador chegou a ultima casa
+            return "glory.png";
+        }
+
+        for (Abismo abismo : abismos) {
+            if (abismo.getPosicao() == position) {
+                return "abismos/abismo" + abismo.getId() + ".png";
+            }
+        }
+
+
+        for (Ferramenta ferramenta : ferramentas) {
+            if (ferramenta.getPosicao() == position) {
+                return "ferramentas/ferramenta" + ferramenta.getId() + ".png";
+            }
+        }
+        return null;
     }
 
-    @Test
-    public void test02_corInvalida() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Yellow"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 20);
-        assertEquals(false, iniciar);
+    public String getTitle(int position) {
+        if (position < 1 || position > nrCasas) {
+            return null;
+        }
+        for (Ferramenta ferramenta : ferramentas) {
+            if (ferramenta.getPosicao() == position) {
+                return ferramenta.getTitulo();
+            }
+        }
+        for (Abismo abismo : abismos) {
+            if (abismo.getPosicao() == position) {
+                return abismo.getTitulo();
+            }
+        }
+        return null;
     }
 
-    @Test
-    public void test02_limiteJogador() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}};
-        String[][] ferramentasEAbismo = {{"1", "1", "2"}, {"1", "5", "4"}, {"1", "3", "6"}, {"5", "4", "9"}, {"0", "6", "10"}, {"0", "2", "13"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 20, ferramentasEAbismo);
-        assertEquals(false, iniciar);
+    public List<Programmer> getProgrammers(boolean includeDefeated) {
+        List<Programmer> listaProgramadores = new ArrayList<>();
+        if (includeDefeated) {
+            listaProgramadores = programadores;
+        } else {
+            for (Programmer programador : programadores) {
+                if (programador.getEstado().equals("Em Jogo")) {
+                    listaProgramadores.add(programador);
+                }
+            }
+        }
+        return listaProgramadores;
     }
 
-    @Test
-    public void test02_informacaoJogadores() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Yellow"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        String[][] ferramentasEAbismo = {{"0", "7", "2"}, {"0", "3", "10"}, {"0", "5", "13"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 20);
-        boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
-        String mensagem = gameManagerTestes.reactToAbyssOrTool();
-        List<Programmer> infoJogadores = gameManagerTestes.getProgrammers(false); //verificar
-        assertEquals("22001757 | Tiago Águeda | 2 | No tools | Java, C, Kotlin | Em Jogo", infoJogadores.get(0).toString());
-        infoJogadores = gameManagerTestes.getProgrammers(true);
-        assertEquals("22001757 | Tiago Águeda | 2 | No tools | Java, C, Kotlin | Em Jogo", infoJogadores.get(0).toString());
+    public List<Programmer> getProgrammers(int position) {
+        // Verifica se a posição passada nos parametros está dentro do tabuleiro
+        if (position < 1 || position > nrCasas) {
+            return null;
+        }
+        List<Programmer> programadoresNaPosicao = new ArrayList<>();
+        for (Programmer programmer : programadores) {
+            if (programmer.getPosicao() == position) { // Verifica se há jogadores na posição
+                programadoresNaPosicao.add(programmer);
+            }
+        }
+
+        return programadoresNaPosicao;
     }
 
-    @Test
-    public void test02_jogadoresEmPosicao() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Yellow"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        String[][] ferramentasEAbismo = {{"0", "5", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 20);
-        boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
-        String mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals("22001757 | Tiago Águeda | 2 | No tools | Java, C, Kotlin | Em Jogo", gameManagerTestes.getProgrammers(2).get(0).toString());
-        assertEquals(null, gameManagerTestes.getProgrammers(30));
+    public int getCurrentPlayerID() {
+        return programadores.get(turnoAtual).getId();
     }
 
-    @Test
-    public void test02_moverIdIvalido() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Yellow"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        String[][] ferramentasEAbismo = {{"0", "5", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 20);
-        boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
-        String mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals("22001757 | Tiago Águeda | 2 | No tools | Java, C, Kotlin | Em Jogo", gameManagerTestes.getProgrammers(2).get(0).toString());
-        assertEquals(null, gameManagerTestes.getProgrammers(30));
+    public String getProgrammersInfo() {
+        programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
+        StringBuilder listaJogadores = new StringBuilder();
+        for (Programmer programador : programadores) {
+            if (programador.getEstado().equals("Em Jogo")) {
+                listaJogadores.append(programador.getName() + " : " + programador.criaListaFerramentas());
+                if (programador != programadores.get(programadores.size() - 1)) {
+                    listaJogadores.append(" | ");
+                }
+            }
+
+
+        }
+        return listaJogadores.toString();
     }
 
-    @Test
-    public void test02_imagemFerramentaAbismo() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
-        String[][] ferramentasEAbismo = {{"1", "4", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
+    public boolean moveCurrentPlayer(int nrPositions) {
+        if (nrPositions < 1 || nrPositions > 6) {
+            return false;
+        }
+        nrDado = nrPositions;
+        for (Programmer programador : programadores) {
+            if (programador.getId() == getCurrentPlayerID() && !programadores.get(turnoAtual).getValorPreso()) {
+                if (programador.getPosicao() + nrPositions <= nrCasas) { // Verifica se o jogador pode andar sem ultrapassar a meta
+                    programador.mover(nrPositions);
+                } else {
+                    programador.avancarRecuar(nrPositions, nrCasas);
+                }
+                break;
+            }
+        }
 
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 25, ferramentasEAbismo);
-
-        assertEquals("abismos/abismo2.png", gameManagerTestes.getImagePng(13));
-        assertEquals("ferramentas/ferramenta4.png", gameManagerTestes.getImagePng(2));
-        assertEquals(null, gameManagerTestes.getImagePng(26));
+        return true;
     }
 
-    @Test
-    public void test02_getTitulo() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
-        String[][] ferramentasEAbismo = {{"1", "4", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
+    public String reactToAbyssOrTool() {
+        String mensagem = "";
+        for (Ferramenta ferramenta : ferramentas) {
+            if (ferramenta.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
+                programadores.get(turnoAtual).addFerramenta(ferramenta.getTitulo());
+                mensagem = "Adquiriu a ferramenta " + ferramenta.getTitulo();
+            }
+        }
+        for (Abismo abismo : abismos) {
+            if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
+                if (!programadores.get(turnoAtual).contemFerramentaUtil(abismo.getFerramentas())) {
+                    switch (abismo.getTitulo()) {
+                        case "Erro de sintaxe" -> {
+                            programadores.get(turnoAtual).recuar(1);
+                            mensagem = "Teve um erro de sintaxe, recue 2 casas!";
+                        }
+                        case "Erro de lógica" -> {
+                            programadores.get(turnoAtual).recuar(nrDado / 2);
+                            mensagem = "Teve um erro de lógica, recue " + nrDado / 2 + " casa(s)!";
+                        }
+                        case "Exception" -> {
+                            programadores.get(turnoAtual).recuar(2);
+                            mensagem = "Exception! Recue 2 casas.";
+                        }
+                        case "File Not Found Exception" -> {
+                            programadores.get(turnoAtual).recuar(3);
+                            mensagem = "File Not Found Exception! Recue 3 casas.";
+                        }
+                        case "Crash (aka Rebentanço)" -> {
+                            programadores.get(turnoAtual).posicaoInicial();
+                            mensagem = "Crashou o programa! Volte a casa de partida.";
+                        }
+                        case "Duplicated Code" -> {
+                            programadores.get(turnoAtual).saberPosicaoJogadas(1);
+                            mensagem = "Duplicated Code! Volte para a casa onde estava antes desta jogada.";
+                        }
+                        case "Efeitos secundários" -> {
+                            programadores.get(turnoAtual).saberPosicaoJogadas(2);
+                            mensagem = "Teve um efeito secundário, recue no tempo 2 jogadas.";
+                        }
+                        case "Blue Screen of Death" -> {
+                            programadores.get(turnoAtual).perdeu();
+                            mensagem = "Blue Screen of Death! Perdeu o jogo.";
+                        }
+                        case "Ciclo infinito" -> {
+                            HashSet<Programmer> programadoresPosicao = new HashSet<>();
+                            for (Programmer programador : programadores) {
+                                if (programador.getPosicao() == abismo.getPosicao()) {
+                                    programadoresPosicao.add(programador);
+                                }
+                            }
+                            if (programadoresPosicao.size() == 1) {
+                                programadores.get(turnoAtual).alteraValorPreso(true);
+                            } else {
+                                for (Programmer programador : programadoresPosicao) {
+                                    programador.alteraValorPreso(!programador.getValorPreso());
+                                }
+                            }
+                            mensagem = "Ciclo infinito! Aguarde por ajuda.";
+                        }
+                        case "Segmentation Fault" -> {
+                            ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
+                            for (Programmer programador : programadores) {
+                                if (programador.getPosicao() == abismo.getPosicao()) {
+                                    jogadoresEmPosicao.add(programador);
+                                }
+                            }
+                            if (jogadoresEmPosicao.size() >= 2) {
+                                for (Programmer programador : jogadoresEmPosicao) {
+                                    programador.recuar(3);
+                                }
+                            }
+                            mensagem = "Segmentation Fault! Se tiver companhia recue 3 casas.";
+                        }
+                    }
+                } else {
+                    mensagem = "Utilizou uma ferramenta";
+                }
+            }
+        }
+        programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
+        turnoAtual++;
+        nrTurnos++;
 
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 25, ferramentasEAbismo);
+        for (int i = turnoAtual; i <= programadores.size(); i++){
+            if (turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
+                turnoAtual = 0;
+                i = 0;
+            }
+            if(programadores.get(turnoAtual).getEstado().equals("Derrotado")){
+                turnoAtual++;
+            }else{
+                break;
+            }
+        }
 
-        assertEquals("Exception", gameManagerTestes.getTitle(13));
-        assertEquals("IDE", gameManagerTestes.getTitle(2));
-        assertEquals(null, gameManagerTestes.getTitle(26));
-        assertEquals(null, gameManagerTestes.getTitle(3));
+        return validaMensagem(mensagem);
     }
 
-
-    @Test
-    public void test01_AtivaFerramentas() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        String[][] ferramentasEAbismo = {{"1", "4", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 20, ferramentasEAbismo);
-        boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
-        String mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(3);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(5);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(8);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(2, gameManagerTestes.programadores.get(0).getPosicao());
-        movimento = gameManagerTestes.moveCurrentPlayer(6);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(10, gameManagerTestes.programadores.get(1).getPosicao());
-        movimento = gameManagerTestes.moveCurrentPlayer(7);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(6, gameManagerTestes.programadores.get(2).getPosicao());
+    String validaMensagem(String mensagem) {
+        if (mensagem.equals("")) {
+            return null;
+        } else {
+            return mensagem;
+        }
     }
 
-    @Test
-    public void test02_SemAjuda() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
-        String[][] ferramentasEAbismo = {{"0", "4", "14"}, {"0", "9", "16"}, {"0", "7", "17"}, {"0", "8", "19"}};
+    public boolean gameIsOver() {
+        //Verifica se algum jogador chegou ao fim
+        int jogadoresEmJogo = 0;
+        for (Programmer programador : programadores) {
+            if (programador.getEstado().equals("Em Jogo")) {
+                jogadoresEmJogo++;
+            }
+        }
+        for (Programmer programador : programadores) {
+            if (programador.getPosicao() == nrCasas || jogadoresEmJogo < 2) {
+                return true;
+            }
+        }
 
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 25, ferramentasEAbismo);
-        boolean movimento = gameManagerTestes.moveCurrentPlayer(3);
-        String mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(4);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(4);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(4);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(5);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-
-        movimento = gameManagerTestes.moveCurrentPlayer(5);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(1, gameManagerTestes.programadores.get(1).getPosicao());
-        movimento = gameManagerTestes.moveCurrentPlayer(4);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(2);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(17, gameManagerTestes.programadores.get(0).getPosicao());
-        movimento = gameManagerTestes.moveCurrentPlayer(4);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals("Derrotado", gameManagerTestes.programadores.get(0).getEstado());
+        return false;
     }
 
-    @Test
-    public void test03_2Ferramentas() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Purple"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Brown"}};
-        String[][] ferramentasEAbismo = {{"1", "0", "3"}, {"1", "0", "7"}, {"1", "4", "12"}, {"0", "6", "15"}};
-
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 20, ferramentasEAbismo);
-        boolean movimento = gameManagerTestes.moveCurrentPlayer(2);
-        String mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(4);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(4);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(1, gameManagerTestes.programadores.get(0).getFerramentas().size());
-        movimento = gameManagerTestes.moveCurrentPlayer(6);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(5);
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(2, gameManagerTestes.programadores.get(0).getFerramentas().size());
+    public List<String> getGameResults() {
+        List<String> resultados = new ArrayList<>();
+        resultados.add("O GRANDE JOGO DO DEISI");
+        resultados.add("");
+        resultados.add("NR. DE TURNOS");
+        resultados.add(String.valueOf(nrTurnos));
+        resultados.add("");
+        resultados.add("VENCEDOR");
+        programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getName()));
+        programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
+        resultados.add(programadores.get(0).getName());
+        resultados.add("");
+        resultados.add("RESTANTES");
+        for (Programmer programador : programadores) {
+            if (programadores.get(0).getId() == programador.getId()) { // percorre os jogadores
+                continue;
+            }
+            resultados.add(programador.getName() + " " + programador.getPosicao()); // adiciona o nome e o valor da posição
+        }
+        return resultados;
     }
 
-    @Test
-    public void test04_CicloInfinito() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Purple"}};
-        String[][] ferramentasEAbismo = {{"1", "0", "3"}, {"1", "4", "12"}, {"0", "8", "19"}};
+    public JPanel getAuthorsPanel() {
+        JPanel credits = new JPanel();
+        credits.setSize(new Dimension(300, 300));
+        JLabel linha1 = new JLabel();
+        linha1.setText("Projeto Deisi Great Game");
+        credits.add(linha1);
 
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
-        boolean movimento = gameManagerTestes.moveCurrentPlayer(2); //3
-        String mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(5); //6
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(6); // 9
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(6); // 12
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(6); // 15
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(3); //15
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        movimento = gameManagerTestes.moveCurrentPlayer(4); //19
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(true, gameManagerTestes.programadores.get(0).getValorPreso());
-        movimento = gameManagerTestes.moveCurrentPlayer(4); //19
-        mensagem = gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(false, gameManagerTestes.programadores.get(0).getValorPreso());
-        assertEquals(true, gameManagerTestes.programadores.get(1).getValorPreso());
-        assertEquals(22001757, gameManagerTestes.getCurrentPlayerID()); // testa para ver se esta a ir buscar bem o jogador
-        assertEquals("Tiago Águeda : Herança | João Antas : IDE", gameManagerTestes.getProgrammersInfo()); // ve se as informações do jogador estão corretas
+        JLabel linha2 = new JLabel();
+        linha1.setText("Tiago Águeda a22001757");
+        credits.add(linha2);
+
+        JLabel linha3 = new JLabel();
+        linha1.setText("João Antas a22002629");
+        credits.add(linha3);
+
+        return credits;
     }
 
-    @Test
-    public void test04_jogoCompleto01() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Purple"}};
-        String[][] ferramentasEAbismo = {{"1", "5", "3"}, {"1", "3", "6"},{"1", "1", "11"}, {"1", "2", "12"},{"1", "0", "18"}, {"1", "4", "23"},
-                {"0", "3", "8"}, {"0", "5", "15"},{"0", "0", "17"}, {"0", "7", "28"},{"0", "8", "26"}, {"0", "1", "25"}};
-
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
-        boolean movimento = gameManagerTestes.moveCurrentPlayer(2); //0 -> 3
-        String mensagem = gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(5); //1 -> 6
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(6); //0 -> 9
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(3); //1 -> 9
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(6); //0 -> 9
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(4); //1 -> 13
-        gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(false, gameManagerTestes.gameIsOver());
-        gameManagerTestes.moveCurrentPlayer(2); //0 -> 11
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(3); //1 -> 16
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(3); //0 -> 14
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(1); //1 -> 16
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(6); //0 -> 20
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(6); //1 -> 22
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(5); //0 -> 25
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(5); //1 -> 27
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(2); //0 -> 27
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(6); //1 -> 27
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(1); //0 -> 28
-        gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(true, gameManagerTestes.gameIsOver());
-        assertEquals("Tiago Águeda", gameManagerTestes.getGameResults().get(6));
-
-        assertEquals(300,gameManagerTestes.getAuthorsPanel().getHeight());
-        assertEquals(300,gameManagerTestes.getAuthorsPanel().getWidth());
-
+    Abismo criarAbismo(String info, int posicao) {
+        return switch (info) {
+            case "0" -> new ErroDeSintaxe(0, posicao);
+            case "1" -> new ErroDeLogica(1, posicao);
+            case "2" -> new Exception(2, posicao);
+            case "3" -> new FileNotFoundException(3, posicao);
+            case "4" -> new Crash(4, posicao);
+            case "5" -> new DuplicatedCode(5, posicao);
+            case "6" -> new EfeitosSecundarios(6, posicao);
+            case "7" -> new BlueScreenOfDeath(7, posicao);
+            case "8" -> new CicloInfinito(8, posicao);
+            default -> new SegmentationFault(9, posicao);
+        };
     }
 
-    @Test
-    public void test04_jogoCompleto02() {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Purple"}};
-        String[][] ferramentasEAbismo = {{"1", "4", "3"}, {"1", "4", "6"},{"1", "4", "11"}, {"1", "2", "12"},{"1", "0", "18"}, {"1", "4", "23"},
-                {"0", "1", "8"}, {"0", "2", "10"},{"0", "3", "15"}, {"0", "9", "19"},{"0", "2", "26"}, {"0", "6", "20"}};
-
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
-        boolean movimento = gameManagerTestes.moveCurrentPlayer(2); //0 -> 3
-        String mensagem = gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(5); //1 -> 6
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(5); //0 -> 6
-        gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(6, gameManagerTestes.programadores.get(0).getPosicao());
-        gameManagerTestes.moveCurrentPlayer(4); //1 -> 8
-        gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(8, gameManagerTestes.programadores.get(1).getPosicao());
-        gameManagerTestes.moveCurrentPlayer(6); //0 -> 12
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(3); //1 -> 11
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(3); //0 -> 12
-        gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(12, gameManagerTestes.programadores.get(0).getPosicao());
-        gameManagerTestes.moveCurrentPlayer(6); //1 -> 17
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(4); //0 -> 16
-        gameManagerTestes.reactToAbyssOrTool();
-        gameManagerTestes.moveCurrentPlayer(2); //1 -> 19
-        gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(19, gameManagerTestes.programadores.get(1).getPosicao());
-        gameManagerTestes.moveCurrentPlayer(3); //0 -> 16
-        gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(16, gameManagerTestes.programadores.get(0).getPosicao());
-        gameManagerTestes.moveCurrentPlayer(1); //1 -> 20
-        gameManagerTestes.reactToAbyssOrTool();
-        assertEquals(17, gameManagerTestes.programadores.get(1).getPosicao());
-
+    Ferramenta criarFerramentas(String info, int posicao) {
+        return switch (info) {
+            case "0" -> new Heranca(0, posicao);
+            case "1" -> new ProgramacaoFuncional(1, posicao);
+            case "2" -> new TestesUnitarios(2, posicao);
+            case "3" -> new TratamentoDeExcepcoes(3, posicao);
+            case "4" -> new IDE(4, posicao);
+            default -> new AjudaDoProfessor(5, posicao);
+        };
     }
 }
