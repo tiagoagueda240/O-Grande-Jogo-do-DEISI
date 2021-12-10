@@ -346,18 +346,12 @@ public class GameManager {
         resultados.add("VENCEDOR");
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getName()));
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
-        if (programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2) {
-            resultados.add(programadores.get(1).getName());
-        } else {
-            resultados.add(programadores.get(0).getName());
-        }
+        resultados.add(programadores.get(0).getName());
         resultados.add("");
         resultados.add("RESTANTES");
         for (Programmer programador : programadores) {
-            if (programadores.get(0).getId() == programador.getId() && (programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2)) { // percorre os jogadores
+            if (programadores.get(0).getId() == programador.getId()) { // percorre os jogadores
                 continue;
-            } else if (programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2) {
-                resultados.add(programadores.get(0).getName());
             }
             resultados.add(programador.getName() + " " + programador.getPosicao()); // adiciona o nome e o valor da posição
         }
@@ -366,19 +360,18 @@ public class GameManager {
 
     public JPanel getAuthorsPanel() {
         JPanel credits = new JPanel();
-
+        credits.setSize(new Dimension(300, 300));
         JLabel linha1 = new JLabel();
         linha1.setText("Projeto Deisi Great Game");
         credits.add(linha1);
 
         JLabel linha2 = new JLabel();
-        linha2.setText("Tiago Águeda a22001757");
+        linha1.setText("Tiago Águeda a22001757");
         credits.add(linha2);
 
         JLabel linha3 = new JLabel();
-        linha3.setText("João Antas a22002629");
+        linha1.setText("João Antas a22002629");
         credits.add(linha3);
-        credits.setSize(new Dimension(300, 300));
 
         return credits;
     }
