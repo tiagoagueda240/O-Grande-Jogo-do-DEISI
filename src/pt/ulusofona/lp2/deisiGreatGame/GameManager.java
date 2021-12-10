@@ -1,4 +1,5 @@
 package pt.ulusofona.lp2.deisiGreatGame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -295,14 +296,14 @@ public class GameManager {
         turnoAtual++;
         nrTurnos++;
 
-        for (int i = turnoAtual; i <= programadores.size(); i++){
+        for (int i = turnoAtual; i <= programadores.size(); i++) {
             if (turnoAtual >= programadores.size()) { // Verifica se é o ultimo jogador
                 turnoAtual = 0;
                 i = 0;
             }
-            if(programadores.get(turnoAtual).getEstado().equals("Derrotado")){
+            if (programadores.get(turnoAtual).getEstado().equals("Derrotado")) {
                 turnoAtual++;
-            }else{
+            } else {
                 break;
             }
         }
@@ -345,9 +346,9 @@ public class GameManager {
         resultados.add("VENCEDOR");
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getName()));
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
-        if (programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2){
+        if (programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2) {
             resultados.add(programadores.get(1).getName());
-        }else{
+        } else {
             resultados.add(programadores.get(0).getName());
         }
         resultados.add("");
@@ -355,7 +356,7 @@ public class GameManager {
         for (Programmer programador : programadores) {
             if (programadores.get(0).getId() == programador.getId() && (programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2)) { // percorre os jogadores
                 continue;
-            }else if(programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2){
+            } else if (programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2) {
                 resultados.add(programadores.get(0).getName());
             }
             resultados.add(programador.getName() + " " + programador.getPosicao()); // adiciona o nome e o valor da posição

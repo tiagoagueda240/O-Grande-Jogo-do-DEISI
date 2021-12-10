@@ -1,4 +1,5 @@
 package pt.ulusofona.lp2.deisiGreatGame;
+
 import java.util.HashSet;
 
 public class Abismo {
@@ -24,7 +25,7 @@ public class Abismo {
         return titulo;
     }
 
-    public HashSet<String> getFerramentas(){
+    public HashSet<String> getFerramentas() {
         return listaFerramentas;
     }
 

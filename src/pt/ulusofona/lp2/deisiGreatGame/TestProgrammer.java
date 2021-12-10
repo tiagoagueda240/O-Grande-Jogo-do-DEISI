@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -10,9 +11,9 @@ public class TestProgrammer {
     GameManager gameManagerTestes = new GameManager();
 
     @Test
-    public void test02_criarJogador() {
+    public void test01_criarJogador() {
         Programmer programador = new Programmer();
-        ArrayList<String> languages = new ArrayList(Arrays.asList( "Java; C; Kotlin".split(";")));
+        ArrayList<String> languages = new ArrayList(Arrays.asList("Java; C; Kotlin".split(";")));
         Programmer programador2 = new Programmer("Tiago Águeda", languages, Integer.parseInt("22001757"), ProgrammerColor.PURPLE, 1, "Em Jogo");
         programador2.addFerramenta("Herança");
         programador2.addFerramenta("Programação Funcional");
