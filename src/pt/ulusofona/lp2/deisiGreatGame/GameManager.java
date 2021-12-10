@@ -368,6 +368,8 @@ public class GameManager {
         JPanel credits = new JPanel();
         credits.setSize(new Dimension(300, 300));
         JLabel linha1 = new JLabel();
+        credits.add(new JLabel(""));
+        credits.add(new JLabel(""));
         linha1.setText("Projeto Deisi Great Game");
         credits.add(linha1);
 
@@ -378,6 +380,7 @@ public class GameManager {
         JLabel linha3 = new JLabel();
         linha1.setText("João Antas a22002629");
         credits.add(linha3);
+
 
         return credits;
     }
