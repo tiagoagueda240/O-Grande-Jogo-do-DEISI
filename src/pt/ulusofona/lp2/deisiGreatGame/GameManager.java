@@ -13,7 +13,7 @@ public class GameManager {
     int turnoAtual = 0; // turno atual, pode ser: 0, 1, 2 ou 3
     int nrDado;
 
-    ProgrammerColor encontrarCor(String cor) { //Função que retorna o enum
+    private ProgrammerColor encontrarCor(String cor) { //Função que retorna o enum
         return switch (cor) {
             case "PURPLE" -> ProgrammerColor.PURPLE;
             case "BLUE" -> ProgrammerColor.BLUE;
@@ -345,12 +345,18 @@ public class GameManager {
         resultados.add("VENCEDOR");
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getName()));
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
-        resultados.add(programadores.get(0).getName());
+        if (programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2){
+            resultados.add(programadores.get(1).getName());
+        }else{
+            resultados.add(programadores.get(0).getName());
+        }
         resultados.add("");
         resultados.add("RESTANTES");
         for (Programmer programador : programadores) {
-            if (programadores.get(0).getId() == programador.getId()) { // percorre os jogadores
+            if (programadores.get(0).getId() == programador.getId() && (programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2)) { // percorre os jogadores
                 continue;
+            }else if(programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2){
+                resultados.add(programadores.get(0).getName());
             }
             resultados.add(programador.getName() + " " + programador.getPosicao()); // adiciona o nome e o valor da posição
         }
@@ -375,7 +381,7 @@ public class GameManager {
         return credits;
     }
 
-    Abismo criarAbismo(String info, int posicao) {
+    private Abismo criarAbismo(String info, int posicao) {
         return switch (info) {
             case "0" -> new ErroDeSintaxe(0, posicao);
             case "1" -> new ErroDeLogica(1, posicao);
@@ -390,7 +396,7 @@ public class GameManager {
         };
     }
 
-    Ferramenta criarFerramentas(String info, int posicao) {
+    private Ferramenta criarFerramentas(String info, int posicao) {
         return switch (info) {
             case "0" -> new Heranca(0, posicao);
             case "1" -> new ProgramacaoFuncional(1, posicao);

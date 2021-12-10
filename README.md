@@ -4,7 +4,14 @@
 <h2> :pencil: Diagrama UML</h2>
 
 ![](diagrama.png?raw=true "Diagrama")
-<h4 align="center">Diagrama que descreve a primeira parte do projeto.</h4>
+<h4 align="center">Diagrama que descreve a segunda parte do projeto.</h4>
+
+
+![---------------------------](separador.png?raw=true "Separador")
+
+<h2> :file_folder: Tabela com mapeamento entre abismos e ferramentas</h2>
+
+![](tabelaMapeamento.png?raw=true "Tabela Mapeamento")
 
 
 ![---------------------------](separador.png?raw=true "Separador")
