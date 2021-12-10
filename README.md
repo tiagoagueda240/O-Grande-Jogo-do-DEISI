@@ -9,8 +9,8 @@
 ![---------------------------](separador.png?raw=true "Separador")
 <h2> :movie_camera:Video com funcionamento do jogo no visualizador</h2>
 
-[![](ecra.png)](https://www.youtube.com/embed/jMYUaPJtGbE)
-https://www.youtube.com/embed/jMYUaPJtGbE
+[![](ecra.png)](https://youtu.be/HjwcHQMaDK0)
+https://youtu.be/HjwcHQMaDK0
 
 ![---------------------------](separador.png?raw=true "Separador")
 

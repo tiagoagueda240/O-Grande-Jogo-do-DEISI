@@ -366,11 +366,11 @@ public class GameManager {
         credits.add(linha1);
 
         JLabel linha2 = new JLabel();
-        linha1.setText("Tiago Águeda a22001757");
+        linha2.setText("Tiago Águeda a22001757");
         credits.add(linha2);
 
         JLabel linha3 = new JLabel();
-        linha1.setText("João Antas a22002629");
+        linha3.setText("João Antas a22002629");
         credits.add(linha3);
 
         return credits;
