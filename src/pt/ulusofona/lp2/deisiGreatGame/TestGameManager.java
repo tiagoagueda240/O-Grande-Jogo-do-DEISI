@@ -272,7 +272,7 @@ public class TestGameManager {
         gameManagerTestes.moveCurrentPlayer(1); //0 -> 28
         gameManagerTestes.reactToAbyssOrTool();
         assertEquals(true, gameManagerTestes.gameIsOver());
-        assertEquals("João Antas", gameManagerTestes.getGameResults().get(6));
+        assertEquals("Tiago Águeda", gameManagerTestes.getGameResults().get(6));
 
         assertEquals(300,gameManagerTestes.getAuthorsPanel().getHeight());
         assertEquals(300,gameManagerTestes.getAuthorsPanel().getWidth());

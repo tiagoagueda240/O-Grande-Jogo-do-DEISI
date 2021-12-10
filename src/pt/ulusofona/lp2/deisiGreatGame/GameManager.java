@@ -353,7 +353,7 @@ public class GameManager {
         resultados.add("");
         resultados.add("RESTANTES");
         for (Programmer programador : programadores) {
-            if (programadores.get(0).getId() == programador.getId() && (programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2)) { // percorre os jogadores
+            if (programadores.get(0).getId() == programador.getId() && !(programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2)) { // percorre os jogadores
                 continue;
             }else if(programadores.get(0).getEstado().equals("Derrotado") && programadores.size() == 2){
                 resultados.add(programadores.get(0).getName());
