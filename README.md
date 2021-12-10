@@ -9,7 +9,7 @@
 ![---------------------------](separador.png?raw=true "Separador")
 <h2> :movie_camera:Video com funcionamento do jogo no visualizador</h2>
 
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/jMYUaPJtGbE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![](ecra.png)](https://www.youtube.com/embed/jMYUaPJtGbE)
 https://www.youtube.com/embed/jMYUaPJtGbE
 
 ![---------------------------](separador.png?raw=true "Separador")

@@ -366,21 +366,19 @@ public class GameManager {
 
     public JPanel getAuthorsPanel() {
         JPanel credits = new JPanel();
-        credits.setSize(new Dimension(300, 300));
+
         JLabel linha1 = new JLabel();
-        credits.add(new JLabel(""));
-        credits.add(new JLabel(""));
         linha1.setText("Projeto Deisi Great Game");
         credits.add(linha1);
 
         JLabel linha2 = new JLabel();
-        linha1.setText("Tiago Águeda a22001757");
+        linha2.setText("Tiago Águeda a22001757");
         credits.add(linha2);
 
         JLabel linha3 = new JLabel();
-        linha1.setText("João Antas a22002629");
+        linha3.setText("João Antas a22002629");
         credits.add(linha3);
-
+        credits.setSize(new Dimension(300, 300));
 
         return credits;
     }
