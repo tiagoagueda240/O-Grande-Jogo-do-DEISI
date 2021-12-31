@@ -2,13 +2,20 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
 
 public class GameManager {
-    ArrayList<Programmer> programadores = new ArrayList<>();
-    ArrayList<Abismo> abismos = new ArrayList<>();
-    ArrayList<Ferramenta> ferramentas = new ArrayList<>();
+    List<Programmer> programadores = new ArrayList<>();
+    List<Abismo> abismos = new ArrayList<>();
+    List<Ferramenta> ferramentas = new ArrayList<>();
     int nrCasas;
     int nrTurnos = 1; // nr de turnos jogados
     int turnoAtual = 0; // turno atual, pode ser: 0, 1, 2 ou 3
@@ -376,11 +383,100 @@ public class GameManager {
         return credits;
     }
 
+    public boolean saveGame(File file) throws IOException {
+        FileWriter arq = new FileWriter("game.txt");
+        PrintWriter gravarArq = new PrintWriter(arq);
+        gravarArq.printf("Turnos");
+        gravarArq.printf("%d", nrTurnos);
+        gravarArq.printf("Turno Atual");
+        gravarArq.printf("%d", turnoAtual);
+        gravarArq.printf("Tamanho tabuleiro");
+        gravarArq.printf("%d", nrCasas);
+
+        gravarArq.printf("Jogadores");
+        for (Programmer jogador : programadores){
+            gravarArq.printf("%s", jogador.toString() + " | " + jogador.getColor());
+        }
+        gravarArq.printf("Ferramentas");
+
+        for (Ferramenta ferramenta : ferramentas){
+            gravarArq.printf("%s", ferramenta.toString() +  " | "  + ferramenta.getPosicao());
+        }
+
+        gravarArq.printf("Abismos");
+
+        for (Abismo abismo : abismos){
+            gravarArq.printf("%s", abismo.toString());
+        }
+
+        arq.close();
+        return true;
+    }
+
+    public boolean loadGame(File file) throws IOException {
+        Path path = Paths.get("game.txt");
+
+        List<String> linhasArquivo = Files.readAllLines(path);
+        for (int n = 0; n < linhasArquivo.size(); n++){
+            switch (linhasArquivo.get(n)) {
+                case "Turnos":
+                    n++;
+                    nrTurnos = Integer.parseInt(linhasArquivo.get(n));
+                    break;
+                case "Turno Atual":
+                    n++;
+                    turnoAtual = Integer.parseInt(linhasArquivo.get(n));
+                    break;
+                case "Tamanho tabuleiro":
+                    n++;
+                    nrCasas = Integer.parseInt(linhasArquivo.get(n));
+                    break;
+                case "Jogadores":
+                    while (!linhasArquivo.get(n).equals("Ferramentas")) {
+                        n++;
+                        if (!linhasArquivo.get(n).equals("Ferramentas")) {
+                            ArrayList<String> playersInfo = new ArrayList(Arrays.asList(linhasArquivo.get(n).split(" | ")));
+                            ArrayList<String> languages = new ArrayList(Arrays.asList(playersInfo.get(4).split("; ")));
+                            ArrayList<String> ferramentas = new ArrayList(Arrays.asList(playersInfo.get(3).split(";")));
+                            Programmer player = new Programmer(playersInfo.get(1), languages, Integer.parseInt(playersInfo.get(0)), encontrarCor(playersInfo.get(6).toUpperCase()), Integer.parseInt(playersInfo.get(2)), playersInfo.get(5));
+                            for (String ferramenta : ferramentas) {
+                                player.addFerramenta(ferramenta);
+                            }
+                            programadores.add(player);
+                        }
+                    }
+
+                    break;
+                case "Ferramentas":
+                    while (!linhasArquivo.get(n).equals("Abismos")) {
+                        n++;
+                        if (!linhasArquivo.get(n).equals("Abismos")) {
+                            ArrayList<String> ferramentaInfo = new ArrayList(Arrays.asList(linhasArquivo.get(n).split(" | ")));
+                            ferramentas.add(criarFerramentas(ferramentaInfo.get(0), Integer.parseInt(ferramentaInfo.get(1))));
+                        }
+                    }
+
+                    break;
+                case "Abismos":
+                    while (n <= linhasArquivo.size()) {
+                        n++;
+                        if (n <= linhasArquivo.size()) {
+                            ArrayList<String> abismoInfo = new ArrayList(Arrays.asList(linhasArquivo.get(n).split(" | ")));
+                            abismos.add(criarAbismo(abismoInfo.get(0), Integer.parseInt(abismoInfo.get(1))));
+                        }
+                    }
+
+                    break;
+            }
+        }
+        return true;
+    }
+
     private Abismo criarAbismo(String info, int posicao) {
         return switch (info) {
             case "0" -> new ErroDeSintaxe(0, posicao);
             case "1" -> new ErroDeLogica(1, posicao);
-            case "2" -> new Exception(2, posicao);
+            case "2" -> new Exceptions(2, posicao);
             case "3" -> new FileNotFoundException(3, posicao);
             case "4" -> new Crash(4, posicao);
             case "5" -> new DuplicatedCode(5, posicao);

@@ -53,8 +53,8 @@ class ErroDeLogica extends Abismo {
     }
 }
 
-class Exception extends Abismo {
-    Exception(int id, int posicao) {
+class Exceptions extends Abismo {
+    Exceptions(int id, int posicao) {
         super(id, posicao);
         titulo = "Exception";
         listaFerramentas.add("Ajuda Do Professor");

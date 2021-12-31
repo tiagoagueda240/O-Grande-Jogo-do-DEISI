@@ -3,10 +3,11 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 public class Programmer {
     String name;
-    ArrayList<String> languages = new ArrayList();
+    List<String> languages = new ArrayList();
     int iD;
     ProgrammerColor colorAvatar;
     int posicao = 1; // primeira posição do tabuleiro
@@ -65,6 +66,10 @@ public class Programmer {
 
     public String getEstado() {
         return estado;
+    }
+
+    public List<String> getLinguagens() {
+        return languages;
     }
 
     public ProgrammerColor getColor() {
