@@ -11,7 +11,7 @@ public class TestProgrammer {
     GameManager gameManagerTestes = new GameManager();
 
     @Test
-    public void test01_criarJogador() {
+    public void test01_criarJogador() throws InvalidInitialBoardException {
         Programmer programador = new Programmer();
         ArrayList<String> languages = new ArrayList(Arrays.asList("Java; C; Kotlin".split(";")));
         Programmer programador2 = new Programmer("Tiago Águeda", languages, Integer.parseInt("22001757"), ProgrammerColor.PURPLE, 1, "Em Jogo");
@@ -23,7 +23,7 @@ public class TestProgrammer {
         programador.saberPosicaoJogadas(2);
         programador.recuar(3);
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        boolean iniciar = gameManagerTestes.createInitialBoard(info, 0);
+        gameManagerTestes.createInitialBoard(info, 0);
         assertEquals(false, iniciar);
 
     }

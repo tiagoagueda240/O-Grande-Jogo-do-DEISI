@@ -34,38 +34,37 @@ public class GameManager {
     public GameManager() {
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
+    public void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) throws InvalidInitialBoardException {
         // reset
         abismos.clear();
         ferramentas.clear();
-        boolean verifica = createInitialBoard(playerInfo, worldSize);
-        if (!verifica) {
+        createInitialBoard(playerInfo, worldSize);
+        /*if (!verifica) {
             return false;
-        }
+        }*/
         for (String[] abyssesAndTool : abyssesAndTools) {
             if (abyssesAndTool[0].equals("0")) {
                 if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 9 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
                     abismos.add(criarAbismo(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
                 } else {
-                    return false;
+                    throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " | Abismo com informações incorretas.");
                 }
 
             } else if (abyssesAndTool[0].equals("1")) {
                 if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 5 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
                     ferramentas.add(criarFerramentas(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
                 } else {
-                    return false;
+                    throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " | Ferramenta com informações incorretas.");
                 }
             } else {
-                return false;
+                throw new InvalidInitialBoardException("Não é um abismo nem ferramenta.");
             }
         }
         abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));
         ferramentas.sort(Comparator.comparing((Ferramenta ferramenta1) -> ferramenta1.getPosicao()));
-        return true;
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+    public void createInitialBoard(String[][] playerInfo, int boardSize) throws InvalidInitialBoardException {
         /*
          *  Fazer reset
          */
@@ -74,7 +73,7 @@ public class GameManager {
         turnoAtual = 0;
 
         if (boardSize <= 1) { // Verifica o tamanho do tabuleiro
-            return false;
+            throw new InvalidInitialBoardException("Tamanho do tabuleiro incorreto");
         }
 
         nrCasas = boardSize;
@@ -87,7 +86,7 @@ public class GameManager {
 
         // Valida tamanho do tabuleiro
         if (programadores.size() > 4 || programadores.size() < 2 || nrCasas < programadores.size() * 2) {
-            return false;
+            throw new InvalidInitialBoardException("Tamanho do tabuleiro incorreto");
         }
 
         HashSet<ProgrammerColor> colorDuplicado = new HashSet<>(); // não pode haver cores repetidas
@@ -97,7 +96,7 @@ public class GameManager {
         for (Programmer programmer : programadores) {
             if (programmer.getId() == 0 || colorDuplicado.contains(programmer.getColor()) || idDuplicated.contains(programmer.getId()) ||
                     programmer.getColor() == null || programmer.getName().equals("")) {
-                return false;
+                throw new InvalidInitialBoardException("Informações do programador incorretas");
             }
             idDuplicated.add(programmer.getId());
             colorDuplicado.add(programmer.getColor());
@@ -107,7 +106,6 @@ public class GameManager {
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getId()));
         getImagePng(1);
         getImagePng(boardSize);
-        return true;
     }
 
     public String getImagePng(int position) {
