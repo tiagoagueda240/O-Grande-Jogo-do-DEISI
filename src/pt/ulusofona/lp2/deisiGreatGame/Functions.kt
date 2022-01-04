@@ -1,32 +1,43 @@
 package pt.ulusofona.lp2.deisiGreatGame
 
 
-enum class CommandType(var nome: String) {
-    GET_PLAYER("getPlayer"), GET_PLAYERS_BY_LANGUAGE("GET PLAYERS_BY_LANGUAGE"),
-    GET_POLYGLOTS("GET POLYGLOTS"), GET_MOST_USED_POSITIONS("GET MOST_USED_POSITIONS"),
-    GET_MOST_USED_ABYSSES("GET MOST_USED_ABYSSES"), POST_MOVE("POST MOVE"), POST_ABYSS("POST ABYSS");
+enum class CommandType {
+    GET,
+    POST
+}
 
-    @Override
-    override fun toString(): String {
-        return nome
+fun router() : (CommandType) -> (GameManager,List<String>) -> String? {
+    return { commandType -> comandos(commandType)}
+}
+
+fun comandos(manager : CommandType) : (GameManager, List<String>) -> String? {
+    when(manager){
+        CommandType.GET-> return {i1,i2 -> getFunctions(i1,i2) }
+        CommandType.POST -> return {i1,i2 -> postFunctions(i1,i2) }
     }
 }
 
-fun router(comando : CommandType, args: List<String>) : (GameManager, List<String>) -> String? {
-    return when (comando.toString()) {
-        "getPlayer" -> ::getPlayer
-        "GET PLAYERS_BY_LANGUAGE" -> ::getPlayersByLanguage
-        "GET POLYGLOTS" -> ::getPolyglots
-        "GET MOST_USED_POSITIONS" -> ::getMostUsedPositions
-        "GET MOST_USED_ABYSSES" -> ::getMostUsedAbysses
-        "POST MOVE" -> ::getMove
-        "POST ABYSS" -> ::getAbyss
-        else -> ::erro
+fun postFunctions(manager: GameManager, args: List<String>): String? {
+    when(args.get(0)){
+        "MOVE"-> return ::postMove.invoke(manager,args)
+        "ABYSS" -> return ::postAbyss.invoke(manager,args)
+        else ->  return ::erro.invoke(manager,args)
+    }
+}
+
+fun getFunctions(manager: GameManager, args: List<String>): String? {
+    when(args[0]){
+        "PLAYER"-> return ::getPlayer.invoke(manager,args)
+        "PLAYERS_BY_LANGUAGE" -> return ::getPlayersByLanguage.invoke(manager,args)
+        "POLYGLOTS" -> return ::getPolyglots.invoke(manager,args)
+        "MOST_USED_POSITIONS" -> return ::getMostUsedPositions.invoke(manager,args)
+        "MOST_USED_ABYSSES" -> return ::getMostUsedAbysses.invoke(manager,args)
+        else ->  return ::erro.invoke(manager,args)
     }
 }
 
 fun erro(manager: GameManager, args: List<String>): String?{
-    return "o comando indicado não existe"
+    return "O comando indicado não existe"
 }
 
 fun getPlayer(manager: GameManager, args: List<String>): String?{
@@ -40,15 +51,19 @@ fun getPlayer(manager: GameManager, args: List<String>): String?{
 }
 
 fun getPlayersByLanguage(manager: GameManager, args: List<String>): String?{
-    var lista : List<Programmer>? =  manager.programadores.filter{(it.getLinguagens().filter{it == args[1]}[0] == args[0])}
+    val lista : List<Programmer>? =  manager.programadores.filter{(it.getLinguagens().filter{it == args[1]}[0] == args[0])}
 
     lista?.forEach { if (it == lista.last()){ print(it.getName() + ", ") }else{ print(it.getName()) } }
     return lista.toString()
 }
 
 fun getPolyglots(manager: GameManager, args: List<String>): String?{
-    var lista : List<Programmer>? =  manager.programadores.filter{it.getLinguagens().count() > 1}.sortedBy { it.getLinguagens().count() }
-    return null
+    val lista : String =  manager.programadores.filter{it.getLinguagens().count() > 1}.sortedBy { it.getLinguagens().count()}.joinToString(","){ it.getName() + ":" + it.getLinguagens().count()}
+    if (lista == ""){
+        return "Inexistent player"
+    }else{
+        return lista
+    }
 }
 
 fun getMostUsedPositions(manager: GameManager, args: List<String>): String?{
@@ -59,10 +74,10 @@ fun getMostUsedAbysses(manager: GameManager, args: List<String>): String?{
     return null
 }
 
-fun getMove(manager: GameManager, args: List<String>): String?{
+fun postMove(manager: GameManager, args: List<String>): String?{
     return null
 }
 
-fun getAbyss(manager: GameManager, args: List<String>): String?{
+fun postAbyss(manager: GameManager, args: List<String>): String?{
     return null
 }
