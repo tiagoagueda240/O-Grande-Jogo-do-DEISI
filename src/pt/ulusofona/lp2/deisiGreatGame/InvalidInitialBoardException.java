@@ -27,4 +27,7 @@ public class InvalidInitialBoardException extends Exception {
         }
     }
 
+    public String getTypeId() {
+        return "4";
+    }
 }

@@ -15,6 +15,7 @@ public class Programmer {
     ArrayList<String> ferramentas = new ArrayList();
     boolean preso = false;
     ArrayList<Integer> historicoPosicoes = new ArrayList<>();
+    ArrayList<String> historicoAbismos = new ArrayList<>();
 
     public Programmer(String name, ArrayList<String> languages, int iD, ProgrammerColor colorAvatar, int posicao, String estado) {
         this.name = name;
@@ -46,6 +47,9 @@ public class Programmer {
         } else {
             posicao = 1;
         }
+    }
+    public void adicionaListaAbismos(String titulo){
+        historicoAbismos.add(titulo);
     }
 
     public void posicaoInicial() {

@@ -228,6 +228,7 @@ public class GameManager {
         for (Abismo abismo : abismos) {
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(abismo.getFerramentas())) {
+                    programadores.get(turnoAtual).adicionaListaAbismos(abismo.getTitulo());
                     switch (abismo.getTitulo()) {
                         case "Erro de sintaxe" -> {
                             programadores.get(turnoAtual).recuar(1);
@@ -392,18 +393,18 @@ public class GameManager {
         gravarArq.printf("%d", nrCasas);
 
         gravarArq.printf("Jogadores");
-        for (Programmer jogador : programadores){
+        for (Programmer jogador : programadores) {
             gravarArq.printf("%s", jogador.toString() + " | " + jogador.getColor());
         }
         gravarArq.printf("Ferramentas");
 
-        for (Ferramenta ferramenta : ferramentas){
-            gravarArq.printf("%s", ferramenta.toString() +  " | "  + ferramenta.getPosicao());
+        for (Ferramenta ferramenta : ferramentas) {
+            gravarArq.printf("%s", ferramenta.toString() + " | " + ferramenta.getPosicao());
         }
 
         gravarArq.printf("Abismos");
 
-        for (Abismo abismo : abismos){
+        for (Abismo abismo : abismos) {
             gravarArq.printf("%s", abismo.toString());
         }
 
@@ -415,7 +416,7 @@ public class GameManager {
         Path path = Paths.get("game.txt");
 
         List<String> linhasArquivo = Files.readAllLines(path);
-        for (int n = 0; n < linhasArquivo.size(); n++){
+        for (int n = 0; n < linhasArquivo.size(); n++) {
             switch (linhasArquivo.get(n)) {
                 case "Turnos":
                     n++;
