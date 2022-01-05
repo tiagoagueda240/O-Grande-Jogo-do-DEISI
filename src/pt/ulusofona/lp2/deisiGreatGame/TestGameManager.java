@@ -15,7 +15,7 @@ public class TestGameManager {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
         try {
             gameManagerTestes.createInitialBoard(info, 0);
-        } catch (InvalidInitialBoardException erro) {
+        }catch(InvalidInitialBoardException erro){
             assertEquals("Tamanho do tabuleiro incorreto", erro.getMessage());
         }
     }
@@ -25,7 +25,7 @@ public class TestGameManager {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
         try {
             gameManagerTestes.createInitialBoard(info, 2);
-        } catch (InvalidInitialBoardException erro) {
+        }catch(InvalidInitialBoardException erro) {
             assertEquals("Tamanho do tabuleiro incorreto", erro.getMessage());
         }
     }
@@ -36,7 +36,7 @@ public class TestGameManager {
         String[][] ferramentasEAbismo = {{"1", "10", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
         try {
             gameManagerTestes.createInitialBoard(info, 15, ferramentasEAbismo);
-        } catch (InvalidInitialBoardException erro) {
+        }catch(InvalidInitialBoardException erro) {
             assertEquals("10 | Ferramenta com informações incorretas.", erro.getMessage());
         }
     }
@@ -100,8 +100,7 @@ public class TestGameManager {
 
     @Test
     public void test09_jogadoresEmPosicao() throws InvalidInitialBoardException {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
-        String[][] ferramentasEAbismo = {{"0", "5", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
+        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};        String[][] ferramentasEAbismo = {{"0", "5", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
         gameManagerTestes.createInitialBoard(info, 20);
         boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
         String mensagem = gameManagerTestes.reactToAbyssOrTool();

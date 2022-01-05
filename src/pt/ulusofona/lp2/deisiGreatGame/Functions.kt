@@ -1,5 +1,8 @@
 package pt.ulusofona.lp2.deisiGreatGame
 
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 enum class CommandType {
     GET,
@@ -65,9 +68,7 @@ fun getPlayersByLanguage(manager: GameManager, args: List<String>): String? {
 }
 
 fun getPolyglots(manager: GameManager, args: List<String>): String? {
-    val lista: String =
-        manager.programadores.filter { it.getLinguagens().count() > 1 }.sortedBy { it.getLinguagens().count() }
-            .joinToString(",") { it.getName() + ":" + it.getLinguagens().count() }
+    val lista: String = manager.programadores.filter { it.getLinguagens().count() > 1 }.sortedBy { it.getLinguagens().count() }.joinToString(",") { it.getName() + ":" + it.getLinguagens().count() }
     if (lista == "") {
         return "Inexistent player"
     } else {
@@ -76,7 +77,11 @@ fun getPolyglots(manager: GameManager, args: List<String>): String? {
 }
 
 fun getMostUsedPositions(manager: GameManager, args: List<String>): String? {
-    return null
+        val numeroPosicoes = ArrayList<Int>()
+        manager.getProgrammers(true).map{it.getHistoricoPosicoes()}.forEach{it.forEach{numeroPosicoes.add(it)}}
+        numeroPosicoes.removeIf{it == 1}
+        numeroPosicoes.sortedWith{p1,p2 -> Collections.frequency(numeroPosicoes,p1) - Collections.frequency(numeroPosicoes,p2)}.reversed().distinct()
+        return numeroPosicoes.take(Integer.parseInt(args[1])).joinToString("\n"){it.toString() + ":" + Collections.frequency(numeroPosicoes,it)}
 }
 
 fun getMostUsedAbysses(manager: GameManager, args: List<String>): String? {

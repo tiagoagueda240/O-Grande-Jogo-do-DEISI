@@ -84,6 +84,8 @@ public class Programmer {
         return ferramentas;
     }
 
+    public ArrayList<Integer> getHistoricoPosicoes(){return  historicoPosicoes;}
+
     public void mover(int posicoes) {
         posicao += posicoes;
     }
