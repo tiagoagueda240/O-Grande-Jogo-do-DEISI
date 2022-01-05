@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestProgrammer {/*
+public class TestProgrammer {
     GameManager gameManagerTestes = new GameManager();
 
     @Test
@@ -23,9 +23,11 @@ public class TestProgrammer {/*
         programador.saberPosicaoJogadas(2);
         programador.recuar(3);
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
-        gameManagerTestes.createInitialBoard(info, 0);
-        assertEquals(false, iniciar);
+        try {
+            gameManagerTestes.createInitialBoard(info, 0);
+        } catch (InvalidInitialBoardException erro) {
+            assertEquals("Tamanho do tabuleiro incorreto", erro.getMessage());
 
+        }
     }
-*/
 }
