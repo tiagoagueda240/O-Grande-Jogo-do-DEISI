@@ -94,5 +94,13 @@ fun postMove(manager: GameManager, args: List<String>): String? {
 }
 
 fun postAbyss(manager: GameManager, args: List<String>): String? {
-    return null
+    val abismosIgual = manager.abismos.map { it.posicao }.filter { it == args[2].toInt() }
+    val ferramentaIgual = manager.ferramentas.map { it.posicao }.filter { it == args[2].toInt() }
+    if (abismosIgual.isNotEmpty() || ferramentaIgual.isNotEmpty()) {
+        return "Position is occupied"
+    } else {
+        val abismoNovo = Abismo(args[1].toInt(), args[2].toInt())
+        manager.abismos.add(abismoNovo)
+        return "OK"
+    }
 }
