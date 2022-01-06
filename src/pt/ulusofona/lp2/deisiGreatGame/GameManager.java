@@ -36,26 +36,29 @@ public class GameManager {
         /*if (!verifica) {
             return false;
         }*/
-        for (String[] abyssesAndTool : abyssesAndTools) {
-            if (abyssesAndTool[0].equals("0")) {
-                if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 9 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
-                    abismos.add(criarAbismo(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
-                } else {
-                    throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " | Abismo com informações incorretas.");
-                }
+        if(abyssesAndTools != null) {
+            for (String[] abyssesAndTool : abyssesAndTools) {
+                if (abyssesAndTool[0].equals("0")) {
+                    if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 9 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
+                        abismos.add(criarAbismo(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
+                    } else {
+                        throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " | Abismo com informações incorretas.");
+                    }
 
-            } else if (abyssesAndTool[0].equals("1")) {
-                if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 5 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
-                    ferramentas.add(criarFerramentas(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
+                } else if (abyssesAndTool[0].equals("1")) {
+                    if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 5 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
+                        ferramentas.add(criarFerramentas(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
+                    } else {
+                        throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " | Ferramenta com informações incorretas.");
+                    }
                 } else {
-                    throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " | Ferramenta com informações incorretas.");
+                    throw new InvalidInitialBoardException("Não é um abismo nem ferramenta.");
                 }
-            } else {
-                throw new InvalidInitialBoardException("Não é um abismo nem ferramenta.");
             }
+
+            abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));
+            ferramentas.sort(Comparator.comparing((Ferramenta ferramenta1) -> ferramenta1.getPosicao()));
         }
-        abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));
-        ferramentas.sort(Comparator.comparing((Ferramenta ferramenta1) -> ferramenta1.getPosicao()));
     }
 
     public void createInitialBoard(String[][] playerInfo, int boardSize) throws InvalidInitialBoardException {
