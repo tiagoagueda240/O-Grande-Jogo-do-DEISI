@@ -377,32 +377,16 @@ public class GameManager {
     }
 
     public boolean saveGame(File file) throws IOException {
-        FileWriter gravarArq = new FileWriter(file);
+        ObjectOutputStream gravarArq = new ObjectOutputStream(new FileOutputStream(file));
         try{
-        gravarArq.write("Turnos");
-        gravarArq.write(nrTurnos);
-        gravarArq.write("Turno Atual");
-        gravarArq.write(turnoAtual);
-        gravarArq.write("Tamanho tabuleiro");
-        gravarArq.write(nrCasas);
+            gravarArq.writeObject(nrTurnos);
+            gravarArq.writeObject(nrCasas);
+            gravarArq.writeObject(turnoAtual);
+            gravarArq.writeObject(programadores);
+            gravarArq.writeObject(ferramentas);
+            gravarArq.writeObject(abismos);
 
-        gravarArq.write("Jogadores");
-        for (Programmer jogador : programadores) {
-            gravarArq.write(jogador.toString() + " | " + jogador.getColor());
-        }
-        gravarArq.write("Ferramentas");
-
-        for (Ferramenta ferramenta : ferramentas) {
-            gravarArq.write(ferramenta.toString() + " | " + ferramenta.getPosicao());
-        }
-
-        gravarArq.write("Abismos");
-
-        for (Abismo abismo : abismos) {
-            gravarArq.write(abismo.toString());
-        }
-
-            gravarArq.close();
+            gravarArq.flush();
         } catch (IOException erro) {
             erro.printStackTrace();
     }
@@ -411,49 +395,19 @@ public class GameManager {
     }
 
     public boolean loadGame(File file) throws IOException {
+        ObjectInputStream objIs = new ObjectInputStream(new FileInputStream(file));
         try {
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-            switch (myReader.nextLine()) {
-                case "Turnos":
-                    nrTurnos = Integer.parseInt(myReader.nextLine());
-                    break;
-                case "Turno Atual":
-                    turnoAtual = Integer.parseInt(myReader.nextLine());
-                    break;
-                case "Tamanho tabuleiro":
-                    nrCasas = Integer.parseInt(myReader.nextLine());
-                    break;
-                case "Jogadores":
-                    while (myReader.nextLine().equals("Ferramentas")) {
-                            ArrayList<String> playersInfo = new ArrayList(Arrays.asList(myReader.nextLine().split(" | ")));
-                            ArrayList<String> languages = new ArrayList(Arrays.asList(playersInfo.get(4).split("; ")));
-                            ArrayList<String> ferramentas = new ArrayList(Arrays.asList(playersInfo.get(3).split(";")));
-                            Programmer player = new Programmer(playersInfo.get(1), languages, Integer.parseInt(playersInfo.get(0)), encontrarCor(playersInfo.get(6).toUpperCase()), Integer.parseInt(playersInfo.get(2)), playersInfo.get(5));
-                            for (String ferramenta : ferramentas) {
-                                player.addFerramenta(ferramenta);
-                            }
-                    }
+            int nrTurnos = (int) objIs.readObject();
+            int nrCasas= (int) objIs.readObject();
+            int turnoAtual = (int) objIs.readObject();
+            programadores = (List<Programmer>) objIs.readObject();
+            abismos = (List<Abismo>) objIs.readObject();
+            ferramentas = (List<Ferramenta>) objIs.readObject();
 
-                    break;
-                case "Ferramentas":
-                    while (!myReader.nextLine().equals("Abismos")) {
-                            ArrayList<String> ferramentaInfo = new ArrayList(Arrays.asList(myReader.nextLine().split(" | ")));
-                            ferramentas.add(criarFerramentas(ferramentaInfo.get(0), Integer.parseInt(ferramentaInfo.get(1))));
-                    }
-
-                    break;
-                case "Abismos":
-                    while (myReader.hasNextLine()) {
-                            ArrayList<String> abismoInfo = new ArrayList(Arrays.asList(myReader.nextLine().split(" | ")));
-                            abismos.add(criarAbismo(abismoInfo.get(0), Integer.parseInt(abismoInfo.get(1))));
-                    }
-
-                    break;
-            }
-        }
         } catch (IOException erro) {
             erro.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
         return true;
