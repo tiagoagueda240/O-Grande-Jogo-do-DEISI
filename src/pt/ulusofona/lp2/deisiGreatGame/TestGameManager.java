@@ -88,7 +88,11 @@ public class TestGameManager {
     public void test08_informacaoJogadores() throws InvalidInitialBoardException {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
         String[][] ferramentasEAbismo = {{"0", "7", "2"}, {"0", "3", "10"}, {"0", "5", "13"}};
-        gameManagerTestes.createInitialBoard(info, 20);
+        try {
+            gameManagerTestes.createInitialBoard(info, 20);
+        } catch (InvalidInitialBoardException erro) {
+
+        }
         assertEquals("Blue", gameManagerTestes.programadores.get(0).getColor().toString());
         boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
         String mensagem = gameManagerTestes.reactToAbyssOrTool();
@@ -101,7 +105,11 @@ public class TestGameManager {
     @Test
     public void test09_jogadoresEmPosicao() throws InvalidInitialBoardException {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};        String[][] ferramentasEAbismo = {{"0", "5", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
-        gameManagerTestes.createInitialBoard(info, 20);
+        try {
+            gameManagerTestes.createInitialBoard(info, 20);
+        } catch (InvalidInitialBoardException erro) {
+
+        }
         boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
         String mensagem = gameManagerTestes.reactToAbyssOrTool();
         assertEquals("22001757 | Tiago Águeda | 2 | No tools | Java, C, Kotlin | Em Jogo", gameManagerTestes.getProgrammers(2).get(0).toString());
@@ -112,7 +120,11 @@ public class TestGameManager {
     public void test10_moverIdIvalido() throws InvalidInitialBoardException {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
         String[][] ferramentasEAbismo = {{"0", "5", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
-        gameManagerTestes.createInitialBoard(info, 20);
+        try {
+            gameManagerTestes.createInitialBoard(info, 20);
+        } catch (InvalidInitialBoardException erro) {
+
+        }
         boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
         String mensagem = gameManagerTestes.reactToAbyssOrTool();
         assertEquals("22001757 | Tiago Águeda | 2 | No tools | Java, C, Kotlin | Em Jogo", gameManagerTestes.getProgrammers(2).get(0).toString());
@@ -123,9 +135,11 @@ public class TestGameManager {
     public void test11_imagemFerramentaAbismo() throws InvalidInitialBoardException {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
         String[][] ferramentasEAbismo = {{"1", "4", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
+        try {
+            gameManagerTestes.createInitialBoard(info, 25, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
 
-        gameManagerTestes.createInitialBoard(info, 25, ferramentasEAbismo);
-
+        }
         assertEquals("abismos/abismo2.png", gameManagerTestes.getImagePng(13));
         assertEquals("ferramentas/ferramenta4.png", gameManagerTestes.getImagePng(2));
         assertEquals(null, gameManagerTestes.getImagePng(26));
@@ -135,9 +149,11 @@ public class TestGameManager {
     public void test12_getTitulo() throws InvalidInitialBoardException {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
         String[][] ferramentasEAbismo = {{"1", "4", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
+        try {
+            gameManagerTestes.createInitialBoard(info, 25, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
 
-        gameManagerTestes.createInitialBoard(info, 25, ferramentasEAbismo);
-
+        }
         assertEquals("Exception", gameManagerTestes.getTitle(13));
         assertEquals("IDE", gameManagerTestes.getTitle(2));
         assertEquals(null, gameManagerTestes.getTitle(26));
@@ -149,7 +165,11 @@ public class TestGameManager {
     public void test13_AtivaFerramentas() throws InvalidInitialBoardException {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
         String[][] ferramentasEAbismo = {{"1", "4", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
-        gameManagerTestes.createInitialBoard(info, 20, ferramentasEAbismo);
+        try {
+            gameManagerTestes.createInitialBoard(info, 20, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
+
+        }
         boolean movimento = gameManagerTestes.moveCurrentPlayer(1);
         String mensagem = gameManagerTestes.reactToAbyssOrTool();
         movimento = gameManagerTestes.moveCurrentPlayer(3);
@@ -171,8 +191,11 @@ public class TestGameManager {
     public void test14_SemAjuda() throws InvalidInitialBoardException {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
         String[][] ferramentasEAbismo = {{"0", "4", "14"}, {"0", "9", "16"}, {"0", "7", "17"}, {"0", "8", "19"}};
+        try {
+            gameManagerTestes.createInitialBoard(info, 25, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
 
-        gameManagerTestes.createInitialBoard(info, 25, ferramentasEAbismo);
+        }
         boolean movimento = gameManagerTestes.moveCurrentPlayer(3);
         String mensagem = gameManagerTestes.reactToAbyssOrTool();
         movimento = gameManagerTestes.moveCurrentPlayer(4);
@@ -201,8 +224,11 @@ public class TestGameManager {
     public void test15_2Ferramentas() throws InvalidInitialBoardException {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Purple"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Brown"}};
         String[][] ferramentasEAbismo = {{"1", "0", "3"}, {"1", "0", "7"}, {"1", "4", "12"}, {"0", "6", "15"}};
+        try {
+            gameManagerTestes.createInitialBoard(info, 20, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
 
-        gameManagerTestes.createInitialBoard(info, 20, ferramentasEAbismo);
+        }
         assertEquals("Herança", gameManagerTestes.ferramentas.get(0).toString());
         assertEquals("Efeitos secundários", gameManagerTestes.abismos.get(0).toString());
         boolean movimento = gameManagerTestes.moveCurrentPlayer(2);
@@ -223,8 +249,11 @@ public class TestGameManager {
     public void test16_CicloInfinito() throws InvalidInitialBoardException {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Purple"}};
         String[][] ferramentasEAbismo = {{"1", "0", "3"}, {"1", "4", "12"}, {"0", "8", "19"}};
+        try {
+            gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
 
-        gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        }
         boolean movimento = gameManagerTestes.moveCurrentPlayer(2); //3
         String mensagem = gameManagerTestes.reactToAbyssOrTool();
         movimento = gameManagerTestes.moveCurrentPlayer(5); //6
@@ -256,8 +285,11 @@ public class TestGameManager {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Purple"}};
         String[][] ferramentasEAbismo = {{"1", "5", "3"}, {"1", "3", "6"}, {"1", "1", "11"}, {"1", "2", "12"}, {"1", "0", "18"}, {"1", "4", "23"},
                 {"0", "3", "8"}, {"0", "5", "15"}, {"0", "0", "17"}, {"0", "7", "28"}, {"0", "8", "26"}, {"0", "1", "25"}};
+        try {
+            gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
 
-        gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        }
         boolean movimento = gameManagerTestes.moveCurrentPlayer(2); //0 -> 3
         String mensagem = gameManagerTestes.reactToAbyssOrTool();
         gameManagerTestes.moveCurrentPlayer(5); //1 -> 6
@@ -306,8 +338,11 @@ public class TestGameManager {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Purple"}};
         String[][] ferramentasEAbismo = {{"1", "4", "3"}, {"1", "4", "6"}, {"1", "4", "11"}, {"1", "2", "12"}, {"1", "0", "18"}, {"1", "4", "23"},
                 {"0", "1", "8"}, {"0", "2", "10"}, {"0", "3", "15"}, {"0", "9", "19"}, {"0", "2", "26"}, {"0", "6", "20"}};
+        try {
+            gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
 
-        gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        }
         boolean movimento = gameManagerTestes.moveCurrentPlayer(2); //0 -> 3
         String mensagem = gameManagerTestes.reactToAbyssOrTool();
         gameManagerTestes.moveCurrentPlayer(5); //1 -> 6
@@ -344,8 +379,11 @@ public class TestGameManager {
     public void test19_efeitosSecundarios() throws InvalidInitialBoardException {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Purple"}};
         String[][] ferramentasEAbismo = {{"0", "6", "12"}, {"0", "2", "13"}};
+        try {
+            gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
 
-        gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
+        }
         boolean movimento = gameManagerTestes.moveCurrentPlayer(2); //0 -> 3
         gameManagerTestes.reactToAbyssOrTool();
         movimento = gameManagerTestes.moveCurrentPlayer(4); //1 -> 5

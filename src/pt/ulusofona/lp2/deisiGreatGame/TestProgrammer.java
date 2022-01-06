@@ -27,7 +27,6 @@ public class TestProgrammer {
             gameManagerTestes.createInitialBoard(info, 0);
         } catch (InvalidInitialBoardException erro) {
             assertEquals("Tamanho do tabuleiro incorreto", erro.getMessage());
-
         }
     }
 }
