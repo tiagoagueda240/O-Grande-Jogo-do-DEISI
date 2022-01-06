@@ -1,11 +1,14 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-public class Programmer {
+public class Programmer implements Serializable {
     String name;
     List<String> languages = new ArrayList();
     int iD;

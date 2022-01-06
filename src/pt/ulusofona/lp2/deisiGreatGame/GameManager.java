@@ -376,40 +376,36 @@ public class GameManager {
         return credits;
     }
 
-    public boolean saveGame(File file) throws IOException {
-        ObjectOutputStream gravarArq = new ObjectOutputStream(new FileOutputStream(file));
+    public boolean saveGame(File file) {
         try{
-            gravarArq.writeObject(nrTurnos);
-            gravarArq.writeObject(nrCasas);
-            gravarArq.writeObject(turnoAtual);
+            ObjectOutputStream gravarArq = new ObjectOutputStream(new FileOutputStream(file));
+            gravarArq.writeInt(nrTurnos);
+            gravarArq.writeInt(nrCasas);
+            gravarArq.writeInt(turnoAtual);
             gravarArq.writeObject(programadores);
             gravarArq.writeObject(ferramentas);
             gravarArq.writeObject(abismos);
-
-            gravarArq.flush();
-        } catch (IOException erro) {
-            erro.printStackTrace();
-    }
-
+            gravarArq.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
-    public boolean loadGame(File file) throws IOException {
-        ObjectInputStream objIs = new ObjectInputStream(new FileInputStream(file));
+    public boolean loadGame(File file){
+
         try {
-            int nrTurnos = (int) objIs.readObject();
-            int nrCasas= (int) objIs.readObject();
-            int turnoAtual = (int) objIs.readObject();
+           ObjectInputStream objIs = new ObjectInputStream(new FileInputStream(file));
+            int nrTurnos = objIs.readInt();
+            int nrCasas= objIs.readInt();
+            int turnoAtual = objIs.readInt();
             programadores = (List<Programmer>) objIs.readObject();
             abismos = (List<Abismo>) objIs.readObject();
             ferramentas = (List<Ferramenta>) objIs.readObject();
-
-        } catch (IOException erro) {
-            erro.printStackTrace();
-        } catch (ClassNotFoundException e) {
+            objIs.close();
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return true;
     }
 

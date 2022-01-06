@@ -1,6 +1,8 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 
+import java.io.Serializable;
+
 public class Ferramenta {
     int id;
     String titulo;
@@ -30,44 +32,3 @@ public class Ferramenta {
     }
 }
 
-class Heranca extends Ferramenta {
-    Heranca(int id, int posicao) {
-        super(id, posicao);
-        titulo = "Herança";
-    }
-}
-
-class ProgramacaoFuncional extends Ferramenta {
-    ProgramacaoFuncional(int id, int posicao) {
-        super(id, posicao);
-        titulo = "Programação Funcional";
-    }
-}
-
-class TestesUnitarios extends Ferramenta {
-    TestesUnitarios(int id, int posicao) {
-        super(id, posicao);
-        titulo = "Testes unitários";
-    }
-}
-
-class TratamentoDeExcepcoes extends Ferramenta {
-    TratamentoDeExcepcoes(int id, int posicao) {
-        super(id, posicao);
-        titulo = "Tratamento de Excepções";
-    }
-}
-
-class IDE extends Ferramenta {
-    IDE(int id, int posicao) {
-        super(id, posicao);
-        titulo = "IDE";
-    }
-}
-
-class AjudaDoProfessor extends Ferramenta {
-    AjudaDoProfessor(int id, int posicao) {
-        super(id, posicao);
-        titulo = "Ajuda Do Professor";
-    }
-}
