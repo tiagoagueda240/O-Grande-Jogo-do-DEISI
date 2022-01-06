@@ -2,13 +2,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 
@@ -383,91 +377,85 @@ public class GameManager {
     }
 
     public boolean saveGame(File file) throws IOException {
-        FileWriter arq = new FileWriter("game.txt");
-        PrintWriter gravarArq = new PrintWriter(arq);
-        gravarArq.printf("Turnos");
-        gravarArq.printf("%d", nrTurnos);
-        gravarArq.printf("Turno Atual");
-        gravarArq.printf("%d", turnoAtual);
-        gravarArq.printf("Tamanho tabuleiro");
-        gravarArq.printf("%d", nrCasas);
+        FileWriter gravarArq = new FileWriter(file);
+        try{
+        gravarArq.write("Turnos");
+        gravarArq.write(nrTurnos);
+        gravarArq.write("Turno Atual");
+        gravarArq.write(turnoAtual);
+        gravarArq.write("Tamanho tabuleiro");
+        gravarArq.write(nrCasas);
 
-        gravarArq.printf("Jogadores");
+        gravarArq.write("Jogadores");
         for (Programmer jogador : programadores) {
-            gravarArq.printf("%s", jogador.toString() + " | " + jogador.getColor());
+            gravarArq.write(jogador.toString() + " | " + jogador.getColor());
         }
-        gravarArq.printf("Ferramentas");
+        gravarArq.write("Ferramentas");
 
         for (Ferramenta ferramenta : ferramentas) {
-            gravarArq.printf("%s", ferramenta.toString() + " | " + ferramenta.getPosicao());
+            gravarArq.write(ferramenta.toString() + " | " + ferramenta.getPosicao());
         }
 
-        gravarArq.printf("Abismos");
+        gravarArq.write("Abismos");
 
         for (Abismo abismo : abismos) {
-            gravarArq.printf("%s", abismo.toString());
+            gravarArq.write(abismo.toString());
         }
 
-        arq.close();
+            gravarArq.close();
+        } catch (IOException erro) {
+            erro.printStackTrace();
+    }
+
         return true;
     }
 
     public boolean loadGame(File file) throws IOException {
-        Path path = Paths.get("game.txt");
-
-        List<String> linhasArquivo = Files.readAllLines(path);
-        for (int n = 0; n < linhasArquivo.size(); n++) {
-            switch (linhasArquivo.get(n)) {
+        try {
+            Scanner myReader = new Scanner(file);
+            while (myReader.hasNextLine()) {
+            switch (myReader.nextLine()) {
                 case "Turnos":
-                    n++;
-                    nrTurnos = Integer.parseInt(linhasArquivo.get(n));
+                    nrTurnos = Integer.parseInt(myReader.nextLine());
                     break;
                 case "Turno Atual":
-                    n++;
-                    turnoAtual = Integer.parseInt(linhasArquivo.get(n));
+                    turnoAtual = Integer.parseInt(myReader.nextLine());
                     break;
                 case "Tamanho tabuleiro":
-                    n++;
-                    nrCasas = Integer.parseInt(linhasArquivo.get(n));
+                    nrCasas = Integer.parseInt(myReader.nextLine());
                     break;
                 case "Jogadores":
-                    while (!linhasArquivo.get(n).equals("Ferramentas")) {
-                        n++;
-                        if (!linhasArquivo.get(n).equals("Ferramentas")) {
-                            ArrayList<String> playersInfo = new ArrayList(Arrays.asList(linhasArquivo.get(n).split(" | ")));
+                    while (myReader.nextLine().equals("Ferramentas")) {
+                            ArrayList<String> playersInfo = new ArrayList(Arrays.asList(myReader.nextLine().split(" | ")));
                             ArrayList<String> languages = new ArrayList(Arrays.asList(playersInfo.get(4).split("; ")));
                             ArrayList<String> ferramentas = new ArrayList(Arrays.asList(playersInfo.get(3).split(";")));
                             Programmer player = new Programmer(playersInfo.get(1), languages, Integer.parseInt(playersInfo.get(0)), encontrarCor(playersInfo.get(6).toUpperCase()), Integer.parseInt(playersInfo.get(2)), playersInfo.get(5));
                             for (String ferramenta : ferramentas) {
                                 player.addFerramenta(ferramenta);
                             }
-                            programadores.add(player);
-                        }
                     }
 
                     break;
                 case "Ferramentas":
-                    while (!linhasArquivo.get(n).equals("Abismos")) {
-                        n++;
-                        if (!linhasArquivo.get(n).equals("Abismos")) {
-                            ArrayList<String> ferramentaInfo = new ArrayList(Arrays.asList(linhasArquivo.get(n).split(" | ")));
+                    while (!myReader.nextLine().equals("Abismos")) {
+                            ArrayList<String> ferramentaInfo = new ArrayList(Arrays.asList(myReader.nextLine().split(" | ")));
                             ferramentas.add(criarFerramentas(ferramentaInfo.get(0), Integer.parseInt(ferramentaInfo.get(1))));
-                        }
                     }
 
                     break;
                 case "Abismos":
-                    while (n <= linhasArquivo.size()) {
-                        n++;
-                        if (n <= linhasArquivo.size()) {
-                            ArrayList<String> abismoInfo = new ArrayList(Arrays.asList(linhasArquivo.get(n).split(" | ")));
+                    while (myReader.hasNextLine()) {
+                            ArrayList<String> abismoInfo = new ArrayList(Arrays.asList(myReader.nextLine().split(" | ")));
                             abismos.add(criarAbismo(abismoInfo.get(0), Integer.parseInt(abismoInfo.get(1))));
-                        }
                     }
 
                     break;
             }
         }
+        } catch (IOException erro) {
+            erro.printStackTrace();
+        }
+
         return true;
     }
 
