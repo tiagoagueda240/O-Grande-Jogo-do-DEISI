@@ -24,7 +24,7 @@ fun postFunctions(manager: GameManager, args: List<String>): String? {
     when (args.get(0)) {
         "MOVE" -> return ::postMove.invoke(manager, args)
         "ABYSS" -> return ::postAbyss.invoke(manager, args)
-        else -> return ::erro.invoke(manager, args)
+        else -> return null
     }
 }
 
@@ -35,12 +35,8 @@ fun getFunctions(manager: GameManager, args: List<String>): String? {
         "POLYGLOTS" -> return ::getPolyglots.invoke(manager, args)
         "MOST_USED_POSITIONS" -> return ::getMostUsedPositions.invoke(manager, args)
         "MOST_USED_ABYSSES" -> return ::getMostUsedAbysses.invoke(manager, args)
-        else -> return ::erro.invoke(manager, args)
+        else -> return null
     }
-}
-
-fun erro(manager: GameManager, args: List<String>): String? {
-    return "O comando indicado não existe"
 }
 
 fun getPlayer(manager: GameManager, args: List<String>): String? {
@@ -68,7 +64,7 @@ fun getPlayersByLanguage(manager: GameManager, args: List<String>): String? {
 }
 
 fun getPolyglots(manager: GameManager, args: List<String>): String? {
-    val lista: String = manager.programadores.filter { it.getLinguagens().count() > 1 }.sortedBy { it.getLinguagens().count() }.joinToString(",") { it.getName() + ":" + it.getLinguagens().count() }
+    val lista: String = manager.programadores.filter { it.getLinguagens().count() > 1 }.sortedBy { it.getLinguagens().count() }.joinToString("\n") { it.getName() + ":" + it.getLinguagens().count() }
     if (lista == "") {
         return "Inexistent player"
     } else {
