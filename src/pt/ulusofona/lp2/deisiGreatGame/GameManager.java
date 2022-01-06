@@ -428,7 +428,7 @@ public class GameManager {
         return switch (info) {
             case "0" -> new Heranca(0, posicao);
             case "1" -> new ProgramacaoFuncional(1, posicao);
-            case "2" -> new TestesUnitarios(2, posicao);
+            case "2" -> new Unitarios(2, posicao);
             case "3" -> new TratamentoDeExcepcoes(3, posicao);
             case "4" -> new IDE(4, posicao);
             default -> new AjudaDoProfessor(5, posicao);
