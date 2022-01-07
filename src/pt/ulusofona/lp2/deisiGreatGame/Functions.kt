@@ -50,17 +50,7 @@ fun getPlayer(manager: GameManager, args: List<String>): String? {
 }
 
 fun getPlayersByLanguage(manager: GameManager, args: List<String>): String? {
-    val lista: List<Programmer>? =
-        manager.programadores.filter { (it.getLinguagens().filter { it == args[1] }[0] == args[0]) }
-
-    lista?.forEach {
-        if (it == lista.last()) {
-            print(it.getName() + ", ")
-        } else {
-            print(it.getName())
-        }
-    }
-    return lista.toString()
+    return manager.programadores.filter { it.linguagens.count()>=2}.sortedBy{ it.languages.count()}.joinToString{ it.getName()}
 }
 
 fun getPolyglots(manager: GameManager, args: List<String>): String? {
