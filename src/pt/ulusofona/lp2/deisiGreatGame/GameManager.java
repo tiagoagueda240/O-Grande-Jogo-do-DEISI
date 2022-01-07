@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 
-public class GameManager {
+public class GameManager implements Serializable{
     List<Programmer> programadores = new ArrayList<>();
     List<Abismo> abismos = new ArrayList<>();
     List<Ferramenta> ferramentas = new ArrayList<>();
@@ -389,14 +389,13 @@ public class GameManager {
             gravarArq.writeObject(ferramentas);
             gravarArq.writeObject(abismos);
             gravarArq.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return false;
         }
         return true;
     }
 
     public boolean loadGame(File file){
-
         try {
            ObjectInputStream objIs = new ObjectInputStream(new FileInputStream(file));
             int nrTurnos = objIs.readInt();
@@ -407,8 +406,8 @@ public class GameManager {
             abismos = (List<Abismo>) objIs.readObject();
 
             objIs.close();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return false;
         }
         return true;
     }
