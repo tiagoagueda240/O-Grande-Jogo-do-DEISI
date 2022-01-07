@@ -398,12 +398,12 @@ public class GameManager implements Serializable{
     public boolean loadGame(File file){
         try {
            ObjectInputStream objIs = new ObjectInputStream(new FileInputStream(file));
-            int nrTurnos = objIs.readInt();
-            int nrCasas= objIs.readInt();
-            int turnoAtual = objIs.readInt();
-            programadores = (List<Programmer>) objIs.readObject();
-            ferramentas = (List<Ferramenta>) objIs.readObject();
-            abismos = (List<Abismo>) objIs.readObject();
+           nrTurnos = objIs.readInt();
+           nrCasas= objIs.readInt();
+           turnoAtual = objIs.readInt();
+            programadores = (ArrayList<Programmer>) objIs.readObject();
+            ferramentas = (ArrayList<Ferramenta>) objIs.readObject();
+            abismos = (ArrayList<Abismo>) objIs.readObject();
 
             objIs.close();
         } catch (Exception e) {
