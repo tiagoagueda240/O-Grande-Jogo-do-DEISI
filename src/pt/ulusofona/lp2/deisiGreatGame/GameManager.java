@@ -403,8 +403,9 @@ public class GameManager {
             int nrCasas= objIs.readInt();
             int turnoAtual = objIs.readInt();
             programadores = (List<Programmer>) objIs.readObject();
-            abismos = (List<Abismo>) objIs.readObject();
             ferramentas = (List<Ferramenta>) objIs.readObject();
+            abismos = (List<Abismo>) objIs.readObject();
+
             objIs.close();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
