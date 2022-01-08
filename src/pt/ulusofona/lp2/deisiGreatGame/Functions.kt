@@ -41,16 +41,16 @@ fun getFunctions(manager: GameManager, args: List<String>): String? {
 
 fun getPlayer(manager: GameManager, args: List<String>): String? {
     val lista: String? = manager.programadores.filter { it.getName().contains(args[1]) }.toString()
-    if (lista == null) {
+    if (lista == "" || lista == null) {
         return "Inexistent player"
     } else {
-        return lista.substring(1, lista.length - 1);
+            return lista.substring(1, lista.length - 1)
     }
 
 }
 
 fun getPlayersByLanguage(manager: GameManager, args: List<String>): String? {
-    return manager.programadores.filter { it.linguagens.count()>=2}.sortedBy{ it.languages.count()}.joinToString(separator = ","){it.getName()}
+    return manager.programadores.filter { it.linguagens.count()>=2}.sortedBy{ it.languages.count()}.joinToString(","){it.getName()}
 }
 
 fun getPolyglots(manager: GameManager, args: List<String>): String? {
@@ -68,16 +68,18 @@ fun getMostUsedPositions(manager: GameManager, args: List<String>): String? {
         manager.getProgrammers(true).map{it.getHistoricoPosicoes()}.forEach{it.forEach{numeroPosicoes.add(it)}}
         numeroPosicoes.removeIf{it == 1}
         return numeroPosicoes.sortedWith{p1,p2 -> Collections.frequency(numeroPosicoes,p1) - Collections.frequency(numeroPosicoes,p2)}.reversed().distinct()
-         .take(Integer.parseInt(args[1])).joinToString("\n"){it.toString() + ":" + Collections.frequency(numeroPosicoes,it)}
+         .take(args[1].toInt()).joinToString("\n"){it.toString() + ":" + Collections.frequency(numeroPosicoes,it)}
 }
+
+
 
 fun getMostUsedAbysses(manager: GameManager, args: List<String>): String? {
     var listaAbismos = ArrayList<String>()
-    manager.abismos.forEach { listaAbismos.add(it.titulo) }
+    manager.abismos.forEach {listaAbismos.add(it.titulo)}
     val abismosUsados = ArrayList<String>()
     manager.getProgrammers(true).map { it.historicoAbismos }.forEach { it.forEach { abismosUsados.add(it) } }
 
-    return listaAbismos.sortedWith { s1, s2 -> Collections.frequency(abismosUsados, s1) - Collections.frequency(abismosUsados, s2) }.reversed().distinct()
+    return listaAbismos.sortedWith { a1, a2 -> Collections.frequency(abismosUsados, a1) - Collections.frequency(abismosUsados, a2) }.reversed().distinct()
             .take(args[1].toInt()).joinToString("\n") { it + ":" + Collections.frequency(abismosUsados, it) }
 
 }
