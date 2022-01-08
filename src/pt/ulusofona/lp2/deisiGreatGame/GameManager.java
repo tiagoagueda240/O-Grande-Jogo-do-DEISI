@@ -42,14 +42,14 @@ public class GameManager implements Serializable{
                     if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 9 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
                         abismos.add(criarAbismo(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
                     } else {
-                        throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " | Abismo com informações incorretas.");
+                        throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " / Abismo com informações incorretas.");
                     }
 
                 } else if (abyssesAndTool[0].equals("1")) {
                     if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 5 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
                         ferramentas.add(criarFerramentas(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
                     } else {
-                        throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " | Ferramenta com informações incorretas.");
+                        throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " / Ferramenta com informações incorretas.");
                     }
                 } else {
                     throw new InvalidInitialBoardException("Não é um abismo nem ferramenta.");

@@ -12,23 +12,16 @@ public class InvalidInitialBoardException extends Exception {
     }
 
     public boolean isInvalidAbyss() {
-        if (message.contains("abismo")) {
-            return true;
-        } else {
-            return false;
-        }
+        return message.contains("abismo");
     }
 
     public boolean isInvalidTool() {
-        if (message.contains("ferramenta")) {
-            return true;
-        } else {
-            return false;
-        }
+        return message.contains("ferramenta");
     }
 
     public String getTypeId(){
-        return "4";
+        String[] info = getMessage().split("/");
+        return info.length > 1 ? info[0] : null;
     }
 
 }

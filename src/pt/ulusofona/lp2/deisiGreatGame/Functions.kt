@@ -50,15 +50,16 @@ fun getPlayer(manager: GameManager, args: List<String>): String? {
 }
 
 fun getPlayersByLanguage(manager: GameManager, args: List<String>): String? {
-    return manager.programadores.filter { it.linguagens.count()>=2}.sortedBy{ it.languages.count()}.joinToString{ it.getName()}
+    return manager.programadores.filter { it.linguagens.count()>=2}.sortedBy{ it.languages.count()}.joinToString{it.getName()}
 }
 
 fun getPolyglots(manager: GameManager, args: List<String>): String? {
     val lista: String = manager.programadores.filter { it.getLinguagens().count() > 1 }.sortedBy { it.getLinguagens().count() }.joinToString("\n") { it.getName() + ":" + it.getLinguagens().count() }
-    if (lista == "") {
-        return "Inexistent player"
-    } else {
-        return lista
+
+    return when (lista) {
+        "" -> "Inexistent player"
+        else -> lista
+
     }
 }
 
@@ -96,7 +97,7 @@ fun postAbyss(manager: GameManager, args: List<String>): String? {
     if (abismosIgual.isNotEmpty() || ferramentaIgual.isNotEmpty()) {
         return "Position is occupied"
     } else {
-        val abismoNovo = Abismo(args[1].toInt(), args[2].toInt())
+        val abismoNovo = ErroDeSintaxe(args[1].toInt(), args[2].toInt())
         manager.abismos.add(abismoNovo)
         return "OK"
     }
