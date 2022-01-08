@@ -44,13 +44,13 @@ fun getPlayer(manager: GameManager, args: List<String>): String? {
     if (lista == null) {
         return "Inexistent player"
     } else {
-        return lista
+        return lista.substring(1, lista.length - 1);
     }
 
 }
 
 fun getPlayersByLanguage(manager: GameManager, args: List<String>): String? {
-    return manager.programadores.filter { it.linguagens.count()>=2}.sortedBy{ it.languages.count()}.joinToString{it.getName()}
+    return manager.programadores.filter { it.linguagens.count()>=2}.sortedBy{ it.languages.count()}.joinToString(separator = ","){it.getName()}
 }
 
 fun getPolyglots(manager: GameManager, args: List<String>): String? {
@@ -67,18 +67,19 @@ fun getMostUsedPositions(manager: GameManager, args: List<String>): String? {
         val numeroPosicoes = ArrayList<Int>()
         manager.getProgrammers(true).map{it.getHistoricoPosicoes()}.forEach{it.forEach{numeroPosicoes.add(it)}}
         numeroPosicoes.removeIf{it == 1}
-        numeroPosicoes.sortedWith{p1,p2 -> Collections.frequency(numeroPosicoes,p1) - Collections.frequency(numeroPosicoes,p2)}.reversed().distinct()
-        return numeroPosicoes.take(Integer.parseInt(args[1])).joinToString("\n"){it.toString() + ":" + Collections.frequency(numeroPosicoes,it)}
+        return numeroPosicoes.sortedWith{p1,p2 -> Collections.frequency(numeroPosicoes,p1) - Collections.frequency(numeroPosicoes,p2)}.reversed().distinct()
+         .take(Integer.parseInt(args[1])).joinToString("\n"){it.toString() + ":" + Collections.frequency(numeroPosicoes,it)}
 }
 
 fun getMostUsedAbysses(manager: GameManager, args: List<String>): String? {
-    val listaAbismos = ArrayList<String>()
+    var listaAbismos = ArrayList<String>()
     manager.abismos.forEach { listaAbismos.add(it.titulo) }
     val abismosUsados = ArrayList<String>()
     manager.getProgrammers(true).map { it.historicoAbismos }.forEach { it.forEach { abismosUsados.add(it) } }
 
-    listaAbismos.sortedWith { s1, s2 -> Collections.frequency(abismosUsados, s1) - Collections.frequency(abismosUsados, s2) }.reversed().distinct()
-    return listaAbismos.take(args[1].toInt()).joinToString("\n") { it + ":" + Collections.frequency(abismosUsados, it) }
+    return listaAbismos.sortedWith { s1, s2 -> Collections.frequency(abismosUsados, s1) - Collections.frequency(abismosUsados, s2) }.reversed().distinct()
+            .take(args[1].toInt()).joinToString("\n") { it + ":" + Collections.frequency(abismosUsados, it) }
+
 }
 
 fun postMove(manager: GameManager, args: List<String>): String? {
@@ -97,8 +98,7 @@ fun postAbyss(manager: GameManager, args: List<String>): String? {
     if (abismosIgual.isNotEmpty() || ferramentaIgual.isNotEmpty()) {
         return "Position is occupied"
     } else {
-        val abismoNovo = ErroDeSintaxe(args[1].toInt(), args[2].toInt())
-        manager.abismos.add(abismoNovo)
+        manager.abismos.add(manager.criarAbismo(args[1], args[2].toInt()))
         return "OK"
     }
 }

@@ -37,7 +37,7 @@ public class TestGameManager {
         try {
             gameManagerTestes.createInitialBoard(info, 15, ferramentasEAbismo);
         }catch(InvalidInitialBoardException erro) {
-            assertEquals("10 | Ferramenta com informações incorretas.", erro.getMessage());
+            assertEquals("10 / Ferramenta com informações incorretas.", erro.getMessage());
         }
     }
 
@@ -48,7 +48,7 @@ public class TestGameManager {
         try {
             gameManagerTestes.createInitialBoard(info, 30, ferramentasEAbismo);
         } catch (InvalidInitialBoardException erro) {
-            assertEquals("10 | Abismo com informações incorretas.", erro.getMessage());
+            assertEquals("10 / Abismo com informações incorretas.", erro.getMessage());
         }
     }
 

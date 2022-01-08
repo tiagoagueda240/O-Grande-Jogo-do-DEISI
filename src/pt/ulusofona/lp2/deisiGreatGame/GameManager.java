@@ -412,7 +412,7 @@ public class GameManager implements Serializable{
         return true;
     }
 
-    private Abismo criarAbismo(String info, int posicao) {
+    public Abismo criarAbismo(String info, int posicao) {
         return switch (info) {
             case "0" -> new ErroDeSintaxe(0, posicao);
             case "1" -> new ErroDeLogica(1, posicao);
