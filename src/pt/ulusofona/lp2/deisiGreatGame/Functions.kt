@@ -2,6 +2,7 @@ package pt.ulusofona.lp2.deisiGreatGame
 
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
 
 enum class CommandType {
@@ -41,10 +42,9 @@ fun getFunctions(manager: GameManager, args: List<String>): String? {
 
 fun getPlayer(manager: GameManager, args: List<String>): String? {
     val lista: String? = manager.programadores.filter { it.getName().contains(args[1]) }.toString()
-    if (lista == "[]" || lista == null) {
-        return "Inexistent player"
-    } else {
-        return lista.substring(1, lista.length - 1)
+    return when (lista) {
+        "[]", null -> "Inexistent player"
+        else -> lista.substring(1, lista.length - 1)
     }
 
 }
@@ -64,42 +64,42 @@ fun getPolyglots(manager: GameManager, args: List<String>): String? {
 }
 
 fun getMostUsedPositions(manager: GameManager, args: List<String>): String? {
-    val numeroPosicoes = ArrayList<Int>()
+    val numeroPosicoes = HashSet<Int>()
     manager.getProgrammers(true).map{it.posicoes}.forEach{it.forEach{numeroPosicoes.add(it)}}
-    return numeroPosicoes.filter { it != 1 }.sortedWith{p1,p2 -> Collections.frequency(numeroPosicoes,p1) - Collections.frequency(numeroPosicoes,p2)}.reversed().distinct()
-            .take(args[1].toInt()).joinToString("\n"){it.toString() + ":" + Collections.frequency(numeroPosicoes,it)}
+    return numeroPosicoes.filter { it != 1 }.sortedWith{p1,p2 -> Collections.frequency(numeroPosicoes,p1) - Collections.frequency(numeroPosicoes,p2)}.distinct().reversed()
+            .take(Integer.parseInt(args[1])).joinToString("\n"){it.toString() + ":" + Collections.frequency(numeroPosicoes,it)}
 }
 
 
 
 fun getMostUsedAbysses(manager: GameManager, args: List<String>): String? {
-    var listaAbismos = ArrayList<String>()
+    var listaAbismos =HashSet<String>()
     manager.abismos.forEach {listaAbismos.add(it.titulo)}
     val abismosUsados = ArrayList<String>()
     manager.getProgrammers(true).map { it.historicoAbismos }.forEach { it.forEach { abismosUsados.add(it) } }
 
-    return listaAbismos.sortedWith { a1, a2 -> Collections.frequency(abismosUsados, a1) - Collections.frequency(abismosUsados, a2) }.reversed().distinct()
-            .take(args[1].toInt()).joinToString("\n") { it + ":" + Collections.frequency(abismosUsados, it) }
+    return listaAbismos.sortedWith {a1,a2 -> Collections.frequency(abismosUsados,a1) - Collections.frequency(abismosUsados,a2) }.distinct().reversed()
+            .take(Integer.parseInt(args[1])).joinToString("\n") { it + ":" + Collections.frequency(abismosUsados, it) }
 
 }
 
 fun postMove(manager: GameManager, args: List<String>): String? {
-    manager.moveCurrentPlayer(args[1].toInt())
+    manager.moveCurrentPlayer(Integer.parseInt(args[1]))
     val aviso = manager.reactToAbyssOrTool()
-    if (aviso == null) {
-        return "OK"
-    } else {
-        return aviso
+    return when (aviso) {
+        null -> "OK"
+        else -> aviso
     }
 }
 
 fun postAbyss(manager: GameManager, args: List<String>): String? {
-    val abismosIgual = manager.abismos.map { it.posicao }.filter { it == args[2].toInt() }
-    val ferramentaIgual = manager.ferramentas.map { it.posicao }.filter { it == args[2].toInt() }
-    if (abismosIgual.isNotEmpty() || ferramentaIgual.isNotEmpty()) {
-        return "Position is occupied"
-    } else {
-        manager.abismos.add(manager.criarAbismo(args[1], args[2].toInt()))
-        return "OK"
+    val abismosIgual = manager.abismos.map { it.posicao }.filter { it == Integer.parseInt(args[2]) }
+    val ferramentaIgual = manager.ferramentas.map { it.posicao }.filter { it == Integer.parseInt(args[2]) }
+    return when {
+        abismosIgual.isNotEmpty() || ferramentaIgual.isNotEmpty() -> "Position is occupied"
+        else -> {
+            manager.abismos.add(manager.criarAbismo(args[1], Integer.parseInt(args[2])))
+            "OK"
+        }
     }
 }
