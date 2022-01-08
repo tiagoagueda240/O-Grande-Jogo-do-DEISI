@@ -18,6 +18,7 @@ public class Programmer implements Serializable {
     ArrayList<String> ferramentas = new ArrayList();
     boolean preso = false;
     ArrayList<Integer> historicoPosicoes = new ArrayList<>();
+    ArrayList<Integer> posicoes = new ArrayList<>();
     ArrayList<String> historicoAbismos = new ArrayList<>();
 
     public Programmer(String name, ArrayList<String> languages, int iD, ProgrammerColor colorAvatar, int posicao, String estado) {
@@ -42,6 +43,10 @@ public class Programmer implements Serializable {
 
     public void adicionaPosicao(int posicao) {
         historicoPosicoes.add(posicao);
+    }
+
+    public void posicao(int posicao) {
+        posicoes.add(posicao);
     }
 
     public void saberPosicaoJogadas(int quantidade) {

@@ -226,6 +226,7 @@ public class GameManager implements Serializable{
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(abismo.getFerramentas())) {
                     programadores.get(turnoAtual).adicionaListaAbismos(abismo.getTitulo());
+                    programadores.get(turnoAtual).posicao(programadores.get(turnoAtual).getPosicao());
                     switch (abismo.getTitulo()) {
                         case "Erro de sintaxe" -> {
                             programadores.get(turnoAtual).recuar(1);
@@ -296,6 +297,7 @@ public class GameManager implements Serializable{
             }
         }
         programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
+
         turnoAtual++;
         nrTurnos++;
 
@@ -397,10 +399,10 @@ public class GameManager implements Serializable{
 
     public boolean loadGame(File file){
         try {
-           ObjectInputStream objIs = new ObjectInputStream(new FileInputStream(file));
-           nrTurnos = objIs.readInt();
-           nrCasas= objIs.readInt();
-           turnoAtual = objIs.readInt();
+            ObjectInputStream objIs = new ObjectInputStream(new FileInputStream(file));
+            nrTurnos = objIs.readInt();
+            nrCasas= objIs.readInt();
+            turnoAtual = objIs.readInt();
             programadores = (ArrayList<Programmer>) objIs.readObject();
             ferramentas = (ArrayList<Ferramenta>) objIs.readObject();
             abismos = (ArrayList<Abismo>) objIs.readObject();
