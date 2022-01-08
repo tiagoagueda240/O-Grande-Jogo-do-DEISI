@@ -222,11 +222,11 @@ public class GameManager implements Serializable{
                 mensagem = "Adquiriu a ferramenta " + ferramenta.getTitulo();
             }
         }
+        programadores.get(turnoAtual).posicao(programadores.get(turnoAtual).getPosicao());
         for (Abismo abismo : abismos) {
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(abismo.getFerramentas())) {
                     programadores.get(turnoAtual).adicionaListaAbismos(abismo.getTitulo());
-                    programadores.get(turnoAtual).posicao(programadores.get(turnoAtual).getPosicao());
                     switch (abismo.getTitulo()) {
                         case "Erro de sintaxe" -> {
                             programadores.get(turnoAtual).recuar(1);
