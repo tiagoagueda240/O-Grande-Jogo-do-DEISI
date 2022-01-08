@@ -226,6 +226,7 @@ public class GameManager implements Serializable{
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(abismo.getFerramentas())) {
                     programadores.get(turnoAtual).adicionaListaAbismos(abismo.getTitulo());
+                    programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
                     switch (abismo.getTitulo()) {
                         case "Erro de sintaxe" -> {
                             programadores.get(turnoAtual).recuar(1);
@@ -295,7 +296,6 @@ public class GameManager implements Serializable{
                 }
             }
         }
-        programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
         turnoAtual++;
         nrTurnos++;
 
