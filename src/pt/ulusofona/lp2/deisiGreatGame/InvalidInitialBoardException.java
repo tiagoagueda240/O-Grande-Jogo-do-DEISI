@@ -21,7 +21,7 @@ public class InvalidInitialBoardException extends Exception {
 
     public String getTypeId(){
         String[] info = getMessage().split("/");
-        return info.length > 1 ? info[0] : null;
+        return info.length > 1 ? info[0].toString() : null;
     }
 
 }

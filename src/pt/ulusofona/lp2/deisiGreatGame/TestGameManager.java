@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -371,6 +373,15 @@ public class TestGameManager {
         gameManagerTestes.moveCurrentPlayer(1); //1 -> 20
         gameManagerTestes.reactToAbyssOrTool();
         assertEquals(17, gameManagerTestes.programadores.get(1).getPosicao());
+        File guardar = new File("ficheiroTeste.txt");
+        File guardarFalse = null;
+        gameManagerTestes.saveGame(guardarFalse);
+        gameManagerTestes.saveGame(guardar);
+        gameManagerTestes.loadGame(guardarFalse);
+        gameManagerTestes.loadGame(guardar);
+        List<Integer> HistoricoPosicoes = gameManagerTestes.programadores.get(0).getHistoricoPosicoes();
+        List<Integer> linguagens = gameManagerTestes.programadores.get(0).getHistoricoPosicoes();
+
     }
 
     @Test
