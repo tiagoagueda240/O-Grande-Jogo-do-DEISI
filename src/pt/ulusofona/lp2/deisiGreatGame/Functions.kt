@@ -41,16 +41,16 @@ fun getFunctions(manager: GameManager, args: List<String>): String? {
 
 fun getPlayer(manager: GameManager, args: List<String>): String? {
     val lista: String? = manager.programadores.filter { it.getName().contains(args[1]) }.toString()
-    if (lista == "" || lista == null) {
+    if (lista == "[]" || lista == null) {
         return "Inexistent player"
     } else {
-            return lista.substring(1, lista.length - 1)
+        return lista.substring(1, lista.length - 1)
     }
 
 }
 
 fun getPlayersByLanguage(manager: GameManager, args: List<String>): String? {
-    return manager.programadores.filter { it.linguagens.count()>=2}.sortedBy{ it.languages.count()}.joinToString(","){it.getName()}
+    return manager.programadores.filter { it.linguagens.contains(args[1])}.sortedBy{ it.languages.count()}.joinToString(","){it.getName()}
 }
 
 fun getPolyglots(manager: GameManager, args: List<String>): String? {
