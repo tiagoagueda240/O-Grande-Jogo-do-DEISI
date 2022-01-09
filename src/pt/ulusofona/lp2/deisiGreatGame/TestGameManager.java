@@ -379,8 +379,10 @@ public class TestGameManager {
         gameManagerTestes.saveGame(guardar);
         gameManagerTestes.loadGame(guardarFalse);
         gameManagerTestes.loadGame(guardar);
-        List<Integer> HistoricoPosicoes = gameManagerTestes.programadores.get(0).getHistoricoPosicoes();
-        List<Integer> linguagens = gameManagerTestes.programadores.get(0).getHistoricoPosicoes();
+        List<Integer> historicoPosicoes = gameManagerTestes.programadores.get(0).getHistoricoPosicoes();
+        assertEquals(6, historicoPosicoes.size());
+        List<String> linguagens = gameManagerTestes.programadores.get(0).getLinguagens();
+        assertEquals(1, linguagens.size());
 
     }
 
