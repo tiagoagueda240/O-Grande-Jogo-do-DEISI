@@ -64,18 +64,18 @@ fun getPolyglots(manager: GameManager, args: List<String>): String? {
 }
 
 fun getMostUsedPositions(manager: GameManager, args: List<String>): String? {
-    val numeroPosicoes = ArrayList<Int>()
-    manager.getProgrammers(true).map{it.posicoes}.forEach{it.forEach{numeroPosicoes.add(it)}}
+    val numeroPosicoes = HashSet<Int>()
+    manager.programadores.map{it.posicoes}.forEach{it.forEach{numeroPosicoes.add(it)}}
 
-    return numeroPosicoes.filter { it != 1 }.sortedWith{p1,p2 -> Collections.frequency(numeroPosicoes,p1) - Collections.frequency(numeroPosicoes,p2)}.reversed().distinct()
+    return numeroPosicoes.sortedWith{p1,p2 -> Collections.frequency(numeroPosicoes,p1) - Collections.frequency(numeroPosicoes,p2)}.reversed().distinct()
             .take(args[1].toInt()).joinToString("\n"){it.toString() + ":" + Collections.frequency(numeroPosicoes,it)}
 }
 
 fun getMostUsedAbysses(manager: GameManager, args: List<String>): String? {
     val listaAbismos =HashSet<String>()
     manager.abismos.forEach {listaAbismos.add(it.titulo)}
-    val abismosUsados = ArrayList<String>()
-    manager.getProgrammers(true).map { it.historicoAbismos }.forEach { it.forEach { abismosUsados.add(it) } }
+    val abismosUsados = HashSet<String>()
+    manager.programadores.map { it.historicoAbismos }.forEach { it.forEach { abismosUsados.add(it) } }
 
     return listaAbismos.sortedWith {a1,a2 -> Collections.frequency(abismosUsados,a1) - Collections.frequency(abismosUsados,a2) }.distinct().reversed()
             .take(Integer.parseInt(args[1])).joinToString("\n") { it + ":" + Collections.frequency(abismosUsados, it) }
