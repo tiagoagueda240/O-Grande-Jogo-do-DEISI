@@ -33,9 +33,7 @@ public class GameManager implements Serializable{
         abismos.clear();
         ferramentas.clear();
         createInitialBoard(playerInfo, worldSize);
-        /*if (!verifica) {
-            return false;
-        }*/
+
         if(abyssesAndTools != null) {
             for (String[] abyssesAndTool : abyssesAndTools) {
                 if (abyssesAndTool[0].equals("0")) {
