@@ -14,6 +14,7 @@ public class GameManager implements Serializable{
     int nrTurnos = 1; // nr de turnos jogados
     int turnoAtual = 0; // turno atual, pode ser: 0, 1, 2 ou 3
     int nrDado;
+    int empatado = 0;
 
     private ProgrammerColor encontrarCor(String cor) { //Função que retorna o enum
         return switch (cor) {
@@ -37,7 +38,7 @@ public class GameManager implements Serializable{
         if(abyssesAndTools != null) {
             for (String[] abyssesAndTool : abyssesAndTools) {
                 if (abyssesAndTool[0].equals("0")) {
-                    if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 9 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
+                    if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 10 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
                         abismos.add(criarAbismo(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
                     } else {
                         throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " / Abismo com informações incorretas.");
@@ -287,10 +288,11 @@ public class GameManager implements Serializable{
                             }
                             mensagem = "Segmentation Fault! Se tiver companhia recue 3 casas.";
                         }
-                        /*}case "Vamos Fazer Contas" -> {
+                        case "Vamos Fazer Contas" -> {
+                            programadores.get(turnoAtual).colocaPosicaoMedia();
                             mensagem = "Vamos Fazer Contas!";
-                         */
                         }
+                    }
                 } else {
                     mensagem = "Utilizou uma ferramenta";
                 }

@@ -112,6 +112,20 @@ public class Programmer implements Serializable {
 
     }
 
+    public void colocaPosicaoMedia(){
+        int media = 0;
+        int counter = 0;
+        for (int i = historicoPosicoes.size() - 1 ; i >=0 || counter <= 3; i--){
+            media += historicoPosicoes.get(i);
+            counter++;
+        }
+        posicao = (int)Math.ceil(media / historicoPosicoes.size());
+    }
+
+    public int saberAvancarRecuar(int posicoes, int nrCasas) {
+        return nrCasas + (nrCasas - posicao - posicoes);
+    }
+
     public void avancarRecuar(int posicoes, int nrCasas) {
         posicao = nrCasas + (nrCasas - posicao - posicoes);
     }
@@ -168,6 +182,11 @@ public class Programmer implements Serializable {
                 listaLinguas.append("; ");
             }
         }
-        return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + listaLinguas + " | " + estado;
+        if (colorAvatar.toString().equals("Blue") && criaListaFerramentas().contains("IDE")){
+            return name + " : Blue Is IDE";
+        }else{
+            return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + listaLinguas + " | " + estado;
+        }
+
     }
 }
