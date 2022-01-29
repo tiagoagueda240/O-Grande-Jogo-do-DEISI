@@ -42,7 +42,6 @@ public class GameManager implements Serializable{
                     } else {
                         throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " / Abismo com informações incorretas.");
                     }
-
                 } else if (abyssesAndTool[0].equals("1")) {
                     if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 5 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
                         ferramentas.add(criarFerramentas(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
@@ -288,7 +287,10 @@ public class GameManager implements Serializable{
                             }
                             mensagem = "Segmentation Fault! Se tiver companhia recue 3 casas.";
                         }
-                    }
+                        /*}case "Vamos Fazer Contas" -> {
+                            mensagem = "Vamos Fazer Contas!";
+                         */
+                        }
                 } else {
                     mensagem = "Utilizou uma ferramenta";
                 }
@@ -323,7 +325,7 @@ public class GameManager implements Serializable{
     }
 
     public boolean gameIsOver() {
-        //Verifica se algum jogador chegou ao fim
+        // Verifica se algum jogador chegou ao fim
         int jogadoresEmJogo = 0;
         for (Programmer programador : programadores) {
             if (programador.getEstado().equals("Em Jogo")) {
@@ -369,12 +371,8 @@ public class GameManager implements Serializable{
         credits.add(linha1);
 
         JLabel linha2 = new JLabel();
-        linha2.setText("Tiago Águeda a22001757");
+        linha2.setText("João Antas a22002629");
         credits.add(linha2);
-
-        JLabel linha3 = new JLabel();
-        linha3.setText("João Antas a22002629");
-        credits.add(linha3);
 
         return credits;
     }
@@ -423,7 +421,8 @@ public class GameManager implements Serializable{
             case "6" -> new EfeitosSecundarios(6, posicao);
             case "7" -> new BlueScreenOfDeath(7, posicao);
             case "8" -> new CicloInfinito(8, posicao);
-            default -> new SegmentationFault(9, posicao);
+            case "9" -> new SegmentationFault(9, posicao);
+            default -> new VamosFazerContas(10, posicao);
         };
     }
 

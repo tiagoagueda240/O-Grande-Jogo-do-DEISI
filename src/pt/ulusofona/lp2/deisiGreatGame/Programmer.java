@@ -56,6 +56,7 @@ public class Programmer implements Serializable {
             posicao = 1;
         }
     }
+
     public void adicionaListaAbismos(String titulo){
         historicoAbismos.add(titulo);
     }
