@@ -57,7 +57,7 @@ public class Programmer implements Serializable {
         }
     }
 
-    public void adicionaListaAbismos(String titulo) {
+    public void adicionaListaAbismos(String titulo){
         historicoAbismos.add(titulo);
     }
 
@@ -97,9 +97,7 @@ public class Programmer implements Serializable {
         return ferramentas;
     }
 
-    public ArrayList<Integer> getHistoricoPosicoes() {
-        return historicoPosicoes;
-    }
+    public ArrayList<Integer> getHistoricoPosicoes(){return  historicoPosicoes;}
 
     public void mover(int posicoes) {
         posicao += posicoes;
@@ -114,14 +112,14 @@ public class Programmer implements Serializable {
 
     }
 
-    public void colocaPosicaoMedia() {
+    public void colocaPosicaoMedia(){
         int media = 0;
         int counter = 0;
-        for (int i = historicoPosicoes.size() - 1; i >= 0 && counter <= 3; i--) {
+        for (int i = historicoPosicoes.size() - 1 ; i >=0 && counter <= 3; i--){
             media += historicoPosicoes.get(i);
             counter++;
         }
-        posicao = (int) Math.ceil(media / historicoPosicoes.size());
+        posicao = (int)Math.ceil(media / historicoPosicoes.size());
     }
 
     public int saberAvancarRecuar(int posicoes, int nrCasas) {
@@ -184,9 +182,9 @@ public class Programmer implements Serializable {
                 listaLinguas.append("; ");
             }
         }
-        if (colorAvatar.toString().equals("Blue") && criaListaFerramentas().contains("IDE")) {
+        if (colorAvatar.toString().equals("Blue") && criaListaFerramentas().contains("IDE")){
             return name + " : Blue Is IDE";
-        } else {
+        }else{
             return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + listaLinguas + " | " + estado;
         }
 
