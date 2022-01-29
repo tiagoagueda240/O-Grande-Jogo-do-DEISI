@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 
-public class GameManager implements Serializable{
+public class GameManager implements Serializable {
     List<Programmer> programadores = new ArrayList<>();
     List<Abismo> abismos = new ArrayList<>();
     List<Ferramenta> ferramentas = new ArrayList<>();
@@ -35,7 +35,7 @@ public class GameManager implements Serializable{
         ferramentas.clear();
         createInitialBoard(playerInfo, worldSize);
 
-        if(abyssesAndTools != null) {
+        if (abyssesAndTools != null) {
             for (String[] abyssesAndTool : abyssesAndTools) {
                 if (abyssesAndTool[0].equals("0")) {
                     if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 10 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
@@ -340,7 +340,6 @@ public class GameManager implements Serializable{
                 return true;
             }
         }
-
         return false;
     }
 
@@ -381,7 +380,7 @@ public class GameManager implements Serializable{
     }
 
     public boolean saveGame(File file) {
-        try{
+        try {
             ObjectOutputStream gravarArq = new ObjectOutputStream(new FileOutputStream(file));
             gravarArq.writeInt(nrTurnos);
             gravarArq.writeInt(nrCasas);
@@ -396,11 +395,11 @@ public class GameManager implements Serializable{
         return true;
     }
 
-    public boolean loadGame(File file){
+    public boolean loadGame(File file) {
         try {
             ObjectInputStream objIs = new ObjectInputStream(new FileInputStream(file));
             nrTurnos = objIs.readInt();
-            nrCasas= objIs.readInt();
+            nrCasas = objIs.readInt();
             turnoAtual = objIs.readInt();
             programadores = (ArrayList<Programmer>) objIs.readObject();
             ferramentas = (ArrayList<Ferramenta>) objIs.readObject();
