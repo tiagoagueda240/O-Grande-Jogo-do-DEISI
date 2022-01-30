@@ -202,7 +202,6 @@ public class GameManager implements Serializable {
         for (Programmer programador : programadores) {
             if (programador.getId() == getCurrentPlayerID() && !programadores.get(turnoAtual).getValorPreso()) {
                 if (programador.getPosicao() + nrPositions <= nrCasas) { // Verifica se o jogador pode andar sem ultrapassar a meta
-                    programador.colocaPosicaoMedia();
                     programador.mover(nrPositions);
                 } else {
                     programador.avancarRecuar(nrPositions, nrCasas);
@@ -223,6 +222,7 @@ public class GameManager implements Serializable {
                 mensagem = "Adquiriu a ferramenta " + ferramenta.getTitulo();
             }
         }
+        programadores.get(turnoAtual).posicao(programadores.get(turnoAtual).getPosicao());
         for (Abismo abismo : abismos) {
             if (abismo.getPosicao() == programadores.get(turnoAtual).getPosicao()) {
                 if (!programadores.get(turnoAtual).contemFerramentaUtil(abismo.getFerramentas())) {
@@ -301,7 +301,6 @@ public class GameManager implements Serializable {
             }
         }
         programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
-        programadores.get(turnoAtual).posicao(programadores.get(turnoAtual).getPosicao());
 
         turnoAtual++;
         nrTurnos++;

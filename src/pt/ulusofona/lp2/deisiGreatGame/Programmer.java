@@ -28,7 +28,6 @@ public class Programmer implements Serializable {
         this.colorAvatar = colorAvatar;
         this.posicao = posicao;
         this.estado = estado;
-        this.posicoes.add(1);
     }
 
     public Programmer() {
@@ -117,16 +116,16 @@ public class Programmer implements Serializable {
     public void colocaPosicaoMedia() {
         float media = 0;
 
-        if (posicoes.size() >= 3) {
-            for (int i = posicoes.size() - 1; i >= posicoes.size() - 3; i--) {
-                media += posicoes.get(i);
+        if (historicoAbismos.size() >= 3) {
+            for (int i = historicoPosicoes.size() - 1; i >= historicoPosicoes.size() - 3; i--) {
+                media += historicoPosicoes.get(i);
             }
             posicao = (int) Math.ceil(media/3);
         } else {
-            for (Integer numero : posicoes) {
+            for (Integer numero : historicoPosicoes) {
                 media += numero;
             }
-            posicao = (int) Math.ceil(media/posicoes.size());
+            posicao = (int) Math.ceil(media/historicoPosicoes.size());
         }
     }
 
