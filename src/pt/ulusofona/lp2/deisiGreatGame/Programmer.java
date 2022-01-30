@@ -117,7 +117,7 @@ public class Programmer implements Serializable {
         float media = 0;
 
         if (historicoAbismos.size() >= 3) {
-            for (int i = historicoPosicoes.size() - 1; i >= 0; i--) {
+            for (int i = historicoPosicoes.size() - 1; i >= historicoPosicoes.size() - 3; i--) {
                 media += historicoPosicoes.get(i);
             }
             posicao = (int) Math.ceil(media/3);
@@ -127,10 +127,6 @@ public class Programmer implements Serializable {
             }
             posicao = (int) Math.ceil(media/historicoPosicoes.size());
         }
-    }
-
-    public int saberAvancarRecuar(int posicoes, int nrCasas) {
-        return nrCasas + (nrCasas - posicao - posicoes);
     }
 
     public void avancarRecuar(int posicoes, int nrCasas) {
