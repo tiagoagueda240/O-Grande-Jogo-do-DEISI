@@ -114,7 +114,7 @@ public class Programmer implements Serializable {
     }
 
     public void colocaPosicaoMedia() {
-        int media = 0;
+        double media = 0;
         int counter = 0;
         for (int i = historicoPosicoes.size() - 1; i >= 0 && counter <= 3; i--) {
             media += historicoPosicoes.get(i);
@@ -128,10 +128,11 @@ public class Programmer implements Serializable {
             tamanho = historicoPosicoes.size();
         }
         // Arredondamento
-        if ((media / tamanho) % 1 == 0) {
-            posicao = Math.round(media / tamanho);
+        if ((media / tamanho) % 1 == 0) { // Caso seja um numero inteiro
+            posicao = (int) (media / tamanho);
         }else{
-            posicao = media / tamanho;
+            posicao = (int) (media / tamanho);
+            posicao++;
         }
     }
 
