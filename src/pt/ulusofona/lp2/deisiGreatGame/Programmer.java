@@ -114,24 +114,18 @@ public class Programmer implements Serializable {
     }
 
     public void colocaPosicaoMedia() {
-        double media = 0;
-        int counter = 0;
-        for (int i = historicoPosicoes.size() - 1; i >= 0 && counter <= 3; i--) {
-            media += historicoPosicoes.get(i);
-            counter++;
-        }
+        float media = 0;
 
-        int tamanho = 0;
-        if (historicoPosicoes.size() > 3) {
-            tamanho = 3;
+        if (historicoAbismos.size() >= 3) {
+            for (int i = historicoPosicoes.size() - 1; i >= 0; i--) {
+                media += historicoPosicoes.get(i);
+            }
+            posicao = (int) Math.ceil(media/3);
         } else {
-            tamanho = historicoPosicoes.size();
-        }
-        // Arredondamento
-        if ((media / tamanho) == (int)(media / tamanho)) { // Caso seja um numero inteiro
-            posicao = (int) (media / tamanho);
-        }else{
-            posicao = (int) (media / tamanho);
+            for (Integer numero : historicoPosicoes) {
+                media += numero;
+            }
+            posicao = (int) Math.ceil(media/historicoPosicoes.size());
         }
     }
 
