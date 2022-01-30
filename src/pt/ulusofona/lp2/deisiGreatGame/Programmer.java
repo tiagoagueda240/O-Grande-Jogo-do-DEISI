@@ -131,7 +131,8 @@ public class Programmer implements Serializable {
         if ((media / tamanho) % 1 == 0) {
             posicao = (int) Math.ceil(media / tamanho);
         }else{
-            posicao = (int) Math.ceil(media / tamanho) + 1;
+            posicao = (int) (media / tamanho);
+        posicao++;
         }
     }
 
