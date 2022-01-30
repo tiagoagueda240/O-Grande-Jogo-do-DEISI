@@ -128,7 +128,7 @@ public class Programmer implements Serializable {
             tamanho = historicoPosicoes.size();
         }
         // Arredondamento
-        if ((media / tamanho) % 1 == 0) { // Caso seja um numero inteiro
+        if ((media / tamanho) == (int)(media / tamanho)) { // Caso seja um numero inteiro
             posicao = (int) (media / tamanho);
         }else{
             posicao = (int) (media / tamanho);
