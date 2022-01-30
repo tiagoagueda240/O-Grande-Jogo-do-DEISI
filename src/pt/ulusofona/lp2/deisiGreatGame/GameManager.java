@@ -14,7 +14,7 @@ public class GameManager implements Serializable {
     int nrTurnos = 1; // nr de turnos jogados
     int turnoAtual = 0; // turno atual, pode ser: 0, 1, 2 ou 3
     int nrDado;
-    int empatado = 0;
+    boolean empatado = false;
 
     private ProgrammerColor encontrarCor(String cor) { //Função que retorna o enum
         return switch (cor) {
@@ -66,6 +66,7 @@ public class GameManager implements Serializable {
         programadores.clear();
         nrTurnos = 1;
         turnoAtual = 0;
+        this.empatado = false;
 
         if (boardSize <= 1) { // Verifica o tamanho do tabuleiro
             throw new InvalidInitialBoardException("Tamanho do tabuleiro incorreto");
@@ -340,6 +341,16 @@ public class GameManager implements Serializable {
                 return true;
             }
         }
+        int jogadoresImpedidosMover = 0;
+        for (Programmer programmer : getProgrammers(false)) {
+            if(programmer.preso) {
+                jogadoresImpedidosMover++;
+            }
+        }
+        if(jogadoresImpedidosMover == getProgrammers(false).size()) {
+            this.empatado = true;
+            return true;
+        }
         return false;
     }
 
@@ -350,6 +361,20 @@ public class GameManager implements Serializable {
         resultados.add("NR. DE TURNOS");
         resultados.add(String.valueOf(nrTurnos));
         resultados.add("");
+        if(this.empatado){
+            resultados.add("O jogo terminou empatado");
+            resultados.add("");
+            resultados.add("Participantes:");
+            programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getName()));
+            programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
+            for (Programmer programador : programadores) {
+                if (programadores.get(0).getId() == programador.getId()) { // percorre os jogadores
+                    continue;
+                }
+                resultados.add(programador.getName() + " : " + programador.getPosicao() + " : " + programador.historicoAbismos.get(programador.historicoAbismos.size()-1)); // adiciona o nome e o valor da posição
+            }
+            return resultados;
+        }
         resultados.add("VENCEDOR");
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getName()));
         programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
