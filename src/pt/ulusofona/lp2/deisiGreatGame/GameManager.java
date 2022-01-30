@@ -343,11 +343,11 @@ public class GameManager implements Serializable {
         }
         int jogadoresImpedidosMover = 0;
         for (Programmer programmer : getProgrammers(false)) {
-            if(programmer.preso) {
+            if (programmer.preso) {
                 jogadoresImpedidosMover++;
             }
         }
-        if(jogadoresImpedidosMover == getProgrammers(false).size()) {
+        if (jogadoresImpedidosMover == getProgrammers(false).size()) {
             this.empatado = true;
             return true;
         }
@@ -361,14 +361,14 @@ public class GameManager implements Serializable {
         resultados.add("NR. DE TURNOS");
         resultados.add(String.valueOf(nrTurnos));
         resultados.add("");
-        if(this.empatado){
-            resultados.add("O jogo terminou empatado");
+        if (this.empatado) {
+            resultados.add("O jogo terminou empatado.");
             resultados.add("");
             resultados.add("Participantes:");
             programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getName()));
             programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
             for (Programmer programador : programadores) {
-                resultados.add(programador.getName() + " " + programador.getPosicao() + " " + programador.historicoAbismos.get(programador.historicoAbismos.size()-1)); // adiciona o nome e o valor da posição
+                resultados.add(programador.getName() + " " + programador.getPosicao() + " " + programador.historicoAbismos.get(programador.historicoAbismos.size() - 1)); // adiciona o nome e o valor da posição
             }
             return resultados;
         }

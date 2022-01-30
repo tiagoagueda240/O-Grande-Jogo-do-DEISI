@@ -132,7 +132,6 @@ public class Programmer implements Serializable {
             posicao = (int) (media / tamanho);
         }else{
             posicao = (int) (media / tamanho);
-            posicao++;
         }
     }
 
