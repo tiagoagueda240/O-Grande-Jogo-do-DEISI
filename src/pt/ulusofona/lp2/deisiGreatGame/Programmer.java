@@ -122,12 +122,17 @@ public class Programmer implements Serializable {
         }
 
         int tamanho = 0;
-        if(historicoPosicoes.size() > 3){
+        if (historicoPosicoes.size() > 3) {
             tamanho = 3;
-        }else{
+        } else {
             tamanho = historicoPosicoes.size();
         }
-        posicao = (int) Math.ceil(media / tamanho);
+        // Arredondamento
+        if ((media / tamanho) % 1 == 0) {
+            posicao = (int) Math.ceil(media / tamanho);
+        }else{
+            posicao = (int) Math.ceil(media / tamanho) + 1;
+        }
     }
 
     public int saberAvancarRecuar(int posicoes, int nrCasas) {
