@@ -260,7 +260,7 @@ public class GameManager implements Serializable {
                             programadores.get(turnoAtual).perdeu();
                             mensagem = "Blue Screen of Death! Perdeu o jogo.";
                         }
-                        case "Ciclo infinito" -> {
+                        case "Ciclo Infinito" -> {
                             HashSet<Programmer> programadoresPosicao = new HashSet<>();
                             for (Programmer programador : programadores) {
                                 if (programador.getPosicao() == abismo.getPosicao()) {
@@ -274,7 +274,7 @@ public class GameManager implements Serializable {
                                     programador.alteraValorPreso(!programador.getValorPreso());
                                 }
                             }
-                            mensagem = "Ciclo infinito! Aguarde por ajuda.";
+                            mensagem = "Ciclo Infinito! Aguarde por ajuda.";
                         }
                         case "Segmentation Fault" -> {
                             ArrayList<Programmer> jogadoresEmPosicao = new ArrayList<>();
@@ -292,7 +292,7 @@ public class GameManager implements Serializable {
                         }
                         case "Vamos Fazer Contas" -> {
                             programadores.get(turnoAtual).colocaPosicaoMedia();
-                            mensagem = "Vamos Fazer Contas!";
+                            mensagem = "Vamos Fazer Contas! Bora fazer uns calculos matemáticos.";
                         }
                     }
                 } else {
