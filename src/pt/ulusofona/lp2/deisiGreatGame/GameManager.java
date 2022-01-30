@@ -424,7 +424,8 @@ public class GameManager implements Serializable {
             case "7" -> new BlueScreenOfDeath(7, posicao);
             case "8" -> new CicloInfinito(8, posicao);
             case "9" -> new SegmentationFault(9, posicao);
-            default -> new VamosFazerContas(10, posicao);
+            case "10" -> new VamosFazerContas(10, posicao);
+            default -> null;
         };
     }
 
