@@ -129,7 +129,7 @@ public class Programmer implements Serializable {
         }
         // Arredondamento
         if ((media / tamanho) % 1 == 0) {
-            posicao = (int) Math.ceil(media / tamanho);
+            posicao = Math.round(media / tamanho);
         }else{
             posicao = media / tamanho;
         }
