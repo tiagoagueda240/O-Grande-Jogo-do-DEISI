@@ -42,7 +42,6 @@ public class GameManager implements Serializable {
                     } else {
                         throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " / Abismo com informações incorretas.");
                     }
-
                 } else if (abyssesAndTool[0].equals("1")) {
                     if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 5 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
                         ferramentas.add(criarFerramentas(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
@@ -53,7 +52,6 @@ public class GameManager implements Serializable {
                     throw new InvalidInitialBoardException("Não é um abismo nem ferramenta.");
                 }
             }
-
             abismos.sort(Comparator.comparing((Abismo abismo1) -> abismo1.getPosicao()));
             ferramentas.sort(Comparator.comparing((Ferramenta ferramenta1) -> ferramenta1.getPosicao()));
         }
