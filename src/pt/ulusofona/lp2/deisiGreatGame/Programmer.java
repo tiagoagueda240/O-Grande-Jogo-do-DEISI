@@ -116,16 +116,16 @@ public class Programmer implements Serializable {
     public void colocaPosicaoMedia() {
         float media = 0;
 
-        if (historicoAbismos.size() >= 3) {
+        if (historicoPosicoes.size() >= 3) {
             for (int i = historicoPosicoes.size() - 1; i >= historicoPosicoes.size() - 3; i--) {
                 media += historicoPosicoes.get(i);
             }
-            posicao = (int) Math.ceil(media/3);
+            posicao = (int) Math.ceil(media / 3);
         } else {
             for (Integer numero : historicoPosicoes) {
                 media += numero;
             }
-            posicao = (int) Math.ceil(media/historicoPosicoes.size());
+            posicao = (int) Math.ceil(media / historicoPosicoes.size());
         }
     }
 

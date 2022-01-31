@@ -188,8 +188,6 @@ public class GameManager implements Serializable {
                     listaJogadores.append(" | ");
                 }
             }
-
-
         }
         return listaJogadores.toString();
     }
@@ -395,8 +393,12 @@ public class GameManager implements Serializable {
         credits.add(linha1);
 
         JLabel linha2 = new JLabel();
-        linha2.setText("João Antas a22002629");
+        linha2.setText("Tiago Águeda a22001757");
         credits.add(linha2);
+
+        JLabel linha3 = new JLabel();
+        linha2.setText("João Antas a22002629");
+        credits.add(linha3);
 
         return credits;
     }
