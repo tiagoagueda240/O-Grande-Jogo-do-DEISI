@@ -299,7 +299,6 @@ public class GameManager implements Serializable {
             }
         }
         programadores.get(turnoAtual).adicionaPosicao(programadores.get(turnoAtual).getPosicao());
-
         turnoAtual++;
         nrTurnos++;
 
