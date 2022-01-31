@@ -408,4 +408,29 @@ public class TestGameManager {
         assertEquals(3, gameManagerTestes.programadores.get(0).getPosicao());
 
     }
+
+    @Test
+    public void test20_novoAbismo() throws InvalidInitialBoardException {
+        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Purple"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Brown"}};
+        String[][] ferramentasEAbismo = {{"0", "10", "15"}};
+        try {
+            gameManagerTestes.createInitialBoard(info, 40, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
+
+        }
+
+        boolean movimento = gameManagerTestes.moveCurrentPlayer(4);
+        String mensagem = gameManagerTestes.reactToAbyssOrTool();
+        movimento = gameManagerTestes.moveCurrentPlayer(4);
+        mensagem = gameManagerTestes.reactToAbyssOrTool();
+        movimento = gameManagerTestes.moveCurrentPlayer(6);
+        mensagem = gameManagerTestes.reactToAbyssOrTool();
+        movimento = gameManagerTestes.moveCurrentPlayer(6);
+        mensagem = gameManagerTestes.reactToAbyssOrTool();
+        movimento = gameManagerTestes.moveCurrentPlayer(4);
+        assertEquals("Vamos Fazer Contas! Bora fazer uns calculos matemáticos.", gameManagerTestes.reactToAbyssOrTool());
+        mensagem = gameManagerTestes.reactToAbyssOrTool();
+        assertEquals(8, gameManagerTestes.programadores.get(0).getPosicao());
+    }
+
 }
