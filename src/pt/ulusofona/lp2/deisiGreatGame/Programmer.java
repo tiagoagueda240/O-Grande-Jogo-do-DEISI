@@ -185,10 +185,6 @@ public class Programmer implements Serializable {
                 listaLinguas.append("; ");
             }
         }
-        if (colorAvatar.toString().equals("Blue") && criaListaFerramentas().contains("IDE")) {
-            return name + " : Blue Is IDE";
-        } else {
-            return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + listaLinguas + " | " + estado;
-        }
+        return iD + " | " + name + " | " + posicao + " | " + criaListaFerramentas() + " | " + listaLinguas + " | " + estado;
     }
 }

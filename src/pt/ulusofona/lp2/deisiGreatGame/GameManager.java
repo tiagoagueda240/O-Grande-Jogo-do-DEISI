@@ -37,7 +37,7 @@ public class GameManager implements Serializable {
         if (abyssesAndTools != null) {
             for (String[] abyssesAndTool : abyssesAndTools) {
                 if (abyssesAndTool[0].equals("0")) {
-                    if ((Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 10) || Integer.parseInt(abyssesAndTool[2]) >= 0 || Integer.parseInt(abyssesAndTool[2]) < worldSize) {
+                    if (Integer.parseInt(abyssesAndTool[1]) >= 0 && Integer.parseInt(abyssesAndTool[1]) <= 10 && Integer.parseInt(abyssesAndTool[2]) >= 0 && Integer.parseInt(abyssesAndTool[2]) < worldSize) {
                         abismos.add(criarAbismo(abyssesAndTool[1], Integer.parseInt(abyssesAndTool[2])));
                     } else {
                         throw new InvalidInitialBoardException(Integer.parseInt(abyssesAndTool[1]) + " / Abismo com informações incorretas.");
@@ -445,8 +445,7 @@ public class GameManager implements Serializable {
             case "7" -> new BlueScreenOfDeath(7, posicao);
             case "8" -> new CicloInfinito(8, posicao);
             case "9" -> new SegmentationFault(9, posicao);
-            case "10" -> new VamosFazerContas(10, posicao);
-            default -> null;
+            default ->  new VamosFazerContas(10, posicao);
         };
     }
 
