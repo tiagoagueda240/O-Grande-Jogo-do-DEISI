@@ -363,7 +363,7 @@ public class GameManager implements Serializable {
             programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getName()));
             programadores.sort(Comparator.comparing((Programmer programador1) -> programador1.getPosicao()).reversed());
             for (Programmer programador : programadores) {
-                resultados.add(programador.getName() + " : " + programador.getPosicao() + " : " + programador.historicoAbismos.get(programador.historicoAbismos.size() - 1)); // adiciona o nome e o valor da posição
+                resultados.add(programador.getName() + " " + programador.getPosicao() + " " + programador.historicoAbismos.get(programador.historicoAbismos.size() - 1)); // adiciona o nome e o valor da posição
             }
             return resultados;
         }
