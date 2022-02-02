@@ -22,6 +22,11 @@ public class TestProgrammer {
         assertEquals("22001757 | Tiago Águeda | 1 | Herança;Programação Funcional;Testes unitários |  C;  Kotlin; Java | Em Jogo", programador2.toString());
         programador.saberPosicaoJogadas(2);
         programador.recuar(3);
+        programador.historicoPosicoes.add(5);
+        programador.historicoPosicoes.add(10);
+        programador.historicoPosicoes.add(12);
+        programador.colocaPosicaoMedia();
+        assertEquals(9, programador.posicao);
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
         try {
             gameManagerTestes.createInitialBoard(info, 0);

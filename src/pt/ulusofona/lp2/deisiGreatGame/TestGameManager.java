@@ -17,7 +17,7 @@ public class TestGameManager {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
         try {
             gameManagerTestes.createInitialBoard(info, 0);
-        }catch(InvalidInitialBoardException erro){
+        } catch (InvalidInitialBoardException erro) {
             assertEquals("Tamanho do tabuleiro incorreto", erro.getMessage());
         }
     }
@@ -27,7 +27,7 @@ public class TestGameManager {
         String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}, {"19999639", "Camelo Cabral", "Python, C++", "Purple"}};
         try {
             gameManagerTestes.createInitialBoard(info, 2);
-        }catch(InvalidInitialBoardException erro) {
+        } catch (InvalidInitialBoardException erro) {
             assertEquals("Tamanho do tabuleiro incorreto", erro.getMessage());
         }
     }
@@ -38,7 +38,7 @@ public class TestGameManager {
         String[][] ferramentasEAbismo = {{"1", "10", "2"}, {"1", "2", "4"}, {"1", "3", "6"}, {"0", "0", "9"}, {"0", "1", "10"}, {"0", "2", "13"}};
         try {
             gameManagerTestes.createInitialBoard(info, 15, ferramentasEAbismo);
-        }catch(InvalidInitialBoardException erro) {
+        } catch (InvalidInitialBoardException erro) {
             assertEquals("10 / Ferramenta com informações incorretas.", erro.getMessage());
         }
     }
@@ -106,7 +106,8 @@ public class TestGameManager {
 
     @Test
     public void test09_jogadoresEmPosicao() throws InvalidInitialBoardException {
-        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};        String[][] ferramentasEAbismo = {{"0", "5", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
+        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Blue"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Green"}};
+        String[][] ferramentasEAbismo = {{"0", "5", "2"}, {"0", "1", "10"}, {"0", "2", "13"}};
         try {
             gameManagerTestes.createInitialBoard(info, 20);
         } catch (InvalidInitialBoardException erro) {
@@ -433,4 +434,35 @@ public class TestGameManager {
         assertEquals(8, gameManagerTestes.programadores.get(0).getPosicao());
     }
 
+    @Test
+    public void test21_Empate() throws InvalidInitialBoardException {
+        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Purple"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Brown"}};
+        String[][] ferramentasEAbismo = {{"0", "8", "5"}, {"0", "8", "4"}};
+        try {
+            gameManagerTestes.createInitialBoard(info, 40, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
+
+        }
+
+        boolean movimento = gameManagerTestes.moveCurrentPlayer(4);
+        String mensagem = gameManagerTestes.reactToAbyssOrTool();
+        movimento = gameManagerTestes.moveCurrentPlayer(3);
+        mensagem = gameManagerTestes.reactToAbyssOrTool();
+
+        assertEquals(true, gameManagerTestes.gameIsOver());
+        List<String> resultados = gameManagerTestes.getGameResults();
+        mensagem = gameManagerTestes.reactToAbyssOrTool();
+        assertEquals("O jogo terminou empatado.", resultados.get(5));
+    }
+
+    @Test
+    public void test22_Exception() throws InvalidInitialBoardException {
+        String[][] info = {{"22001757", "Tiago Águeda", "Java, C, Kotlin", "Purple"}, {"22002629", "João Antas", "Javascript, C++, Assembly", "Brown"}};
+        String[][] ferramentasEAbismo = {{"0", "10", "50"}, {"0", "11", "4"}};
+        try {
+            gameManagerTestes.createInitialBoard(info, 40, ferramentasEAbismo);
+        } catch (InvalidInitialBoardException erro) {
+            assertEquals("8 / Abismo com informações incorretas.", erro.getMessage());
+        }
+    }
 }
