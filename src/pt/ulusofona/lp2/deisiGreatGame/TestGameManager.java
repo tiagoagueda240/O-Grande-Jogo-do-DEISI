@@ -462,7 +462,7 @@ public class TestGameManager {
         try {
             gameManagerTestes.createInitialBoard(info, 40, ferramentasEAbismo);
         } catch (InvalidInitialBoardException erro) {
-            assertEquals("8 / Abismo com informações incorretas.", erro.getMessage());
+            assertEquals("10 / Abismo com informações incorretas.", erro.getMessage());
         }
     }
 }
